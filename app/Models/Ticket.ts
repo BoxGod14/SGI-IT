@@ -5,6 +5,21 @@ export default class Ticket extends BaseModel {
   @column({ isPrimary: true })
   public id: number
 
+  @column()
+  public requestorId: number
+
+  @column()
+  public technicianId: number
+
+  @column()
+  public subject: string
+
+  @column()
+  public description: string
+
+  @column()
+  public state: string
+
   @column.dateTime({ autoCreate: true })
   public createdAt: DateTime
 
