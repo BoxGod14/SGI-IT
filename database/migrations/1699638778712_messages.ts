@@ -7,9 +7,18 @@ export default class extends BaseSchema {
     this.schema.createTable(this.tableName, (table) => {
       table.increments('id')
 
-      /**
-       * Uses timestamptz for PostgreSQL and DATETIME2 for MSSQL
-       */
+      table//Referencia al Id del usuario que ha escrito el mensaje
+        .integer('user_id')
+        .unsigned()
+        .references('users.id')
+        .notNullable()
+      table//Referencia al Id del ticket
+      .integer('ticket_id')
+      .unsigned()
+      .references('ticket.id')
+      .notNullable()
+      table.string('message').notNullable()//El mensaje
+
       table.timestamp('created_at', { useTz: true })
       table.timestamp('updated_at', { useTz: true })
     })

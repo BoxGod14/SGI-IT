@@ -1,12 +1,23 @@
 import BaseSchema from '@ioc:Adonis/Lucid/Schema'
+import Roles from 'App/Enums/Roles'
 
 export default class extends BaseSchema {
   protected tableName = 'profiles'
 
   public async up () {
     this.schema.createTable(this.tableName, (table) => {
-      table.increments('id')
-
+      table.increments('id')//Id del perfil
+      table//Referencia al Id del usuario
+        .integer('user_id')
+        .unsigned()
+        .references('users.id')
+        .onDelete('CASCADE')
+        .notNullable()
+      table.string('name').notNullable()//Nombre del usuario
+      table.string('surname').notNullable()//Apellido del usuario
+      table.date('birthday')//Fecha de nacimiento
+      table.string('picture')//URL de su foto de perfil
+      table.enum('roles', Object.values(Roles)).defaultTo(Roles.REQUESTER).notNullable()//Roles del usuario, toman referencia al enumerado Roles.ts
       /**
        * Uses timestamptz for PostgreSQL and DATETIME2 for MSSQL
        */
