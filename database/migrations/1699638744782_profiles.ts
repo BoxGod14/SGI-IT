@@ -1,5 +1,4 @@
 import BaseSchema from '@ioc:Adonis/Lucid/Schema'
-import Roles from 'App/Enums/Roles'
 
 export default class extends BaseSchema {
   protected tableName = 'profiles'
@@ -17,7 +16,6 @@ export default class extends BaseSchema {
       table.string('surname').notNullable()//Apellido del usuario
       table.date('birthday')//Fecha de nacimiento
       table.string('picture')//URL de su foto de perfil
-      table.enum('roles', Object.values(Roles)).defaultTo(Roles.REQUESTER).notNullable()//Roles del usuario, toman referencia al enumerado Roles.ts
       /**
        * Uses timestamptz for PostgreSQL and DATETIME2 for MSSQL
        */

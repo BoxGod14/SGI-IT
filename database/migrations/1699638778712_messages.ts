@@ -10,13 +10,18 @@ export default class extends BaseSchema {
       table//Referencia al Id del usuario que ha escrito el mensaje
         .integer('user_id')
         .unsigned()
-        .references('users.id')
+        .references('id')
+        .inTable('users')
         .notNullable()
+
       table//Referencia al Id del ticket
       .integer('ticket_id')
       .unsigned()
-      .references('ticket.id')
+      .references('id')
+      .inTable('tickets')
+      .onDelete('CASCADE')
       .notNullable()
+
       table.string('message').notNullable()//El mensaje
 
       table.timestamp('created_at', { useTz: true })
