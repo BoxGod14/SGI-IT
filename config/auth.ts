@@ -54,29 +54,11 @@ const authConfig: AuthConfig = {
         */
         identifierKey: 'id',
 
-        /*
-        |--------------------------------------------------------------------------
-        | Uids
-        |--------------------------------------------------------------------------
-        |
-        | Uids are used to search a user against one of the mentioned columns. During
-        | login, the auth module will search the user mentioned value against one
-        | of the mentioned columns to find their user record.
-        |
-        */
-        uids: ['email'],
+       //Los uids son las columnas que junto al password permitiran iniciar sesión
+       //En este caso se puede iniciar con usuario + psw o email + psw
+        uids: ['username','email'],
 
-        /*
-        |--------------------------------------------------------------------------
-        | Model
-        |--------------------------------------------------------------------------
-        |
-        | The model to use for fetching or finding users. The model is imported
-        | lazily since the config files are read way earlier in the lifecycle
-        | of booting the app and the models may not be in a usable state at
-        | that time.
-        |
-        */
+        
         model: () => import('App/Models/User'),
       },
     },
