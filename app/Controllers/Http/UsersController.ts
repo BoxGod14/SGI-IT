@@ -39,4 +39,11 @@ export default class UsersController {
   public async update({}: HttpContextContract) {}
 
   public async destroy({}: HttpContextContract) {}
+
+  public async login({}: HttpContextContract) {
+
+  }
+  public async loginForm({}: HttpContextContract) {
+    return "El formulario de login :D"
+  }
 }

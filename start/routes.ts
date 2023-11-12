@@ -24,6 +24,7 @@ Route.get('/', async ({ view }) => {
   return view.render('welcome')
 })
 
-//Rutas a los controladores
-
+//Rutas a los controladores y extra
 Route.resource('users', 'UsersController')
+Route.post('/login', 'UsersController.login')
+Route.get('/login', 'UsersController.loginForm')
