@@ -1,4 +1,5 @@
 import type { HttpContextContract } from '@ioc:Adonis/Core/HttpContext'
+import View from '@ioc:Adonis/Core/View'
 import User from 'App/Models/User'
 import CreateUserValidator from 'App/Validators/CreateUserValidator'
 
@@ -28,8 +29,8 @@ export default class UsersController {
     return user
   }
 
-  public async show({}: HttpContextContract) {
-    return "mostrar info del usuario"
+  public async show({ params }: HttpContextContract) {
+    return "mostrar info del usuario" +params.id
   }
 
   public async edit({}: HttpContextContract) {
@@ -40,10 +41,32 @@ export default class UsersController {
 
   public async destroy({}: HttpContextContract) {}
 
-  public async login({}: HttpContextContract) {
+  public async login({ auth, request, response }: HttpContextContract) {
+    const usernameOrEmail = request.input('usernameOrEmail')
+    const password = request.input('password')
 
+    try {
+      await auth.use('web').attempt(usernameOrEmail, password)
+      console.log('User: ' + auth.user?.id +' login')
+      response.redirect().toRoute('UsersController.show', { id: auth.user?.id })
+
+    } catch (error) {
+      return response.badRequest('Invalid credentials')
+    }
   }
-  public async loginForm({}: HttpContextContract) {
-    return "El formulario de login :D"
+  public async loginForm({ auth }: HttpContextContract) {
+    //Comprobar si ya se habia iniciado sesión
+    await auth.use('web').authenticate()
+    if (auth.use('web').isLoggedIn) {
+      return "Sesion iniciada"
+    }
+    //Devolver vista de login
+    const html = await View.render('auth/login',{})
+    return html
+  }
+  
+  public async logout({ auth, response }: HttpContextContract){
+    await auth.use('web').logout()
+    response.redirect('/')
   }
 }

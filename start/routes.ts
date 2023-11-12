@@ -28,3 +28,4 @@ Route.get('/', async ({ view }) => {
 Route.resource('users', 'UsersController')
 Route.post('/login', 'UsersController.login')
 Route.get('/login', 'UsersController.loginForm')
+Route.get('/logout', 'UsersController.logout')
