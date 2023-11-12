@@ -18,6 +18,9 @@ export default class User extends BaseModel {
   @column()
   public rememberMeToken: string | null
 
+  @column()
+  public roles: string
+
   @column.dateTime({ autoCreate: true })
   public createdAt: DateTime
 

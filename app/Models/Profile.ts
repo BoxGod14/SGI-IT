@@ -6,7 +6,20 @@ export default class Profile extends BaseModel {
   @column({ isPrimary: true })
   public id: number
 
+  @column()
+  public userId: number
 
+  @column()
+  public name: string
+
+  @column()
+  public surname: string
+  
+  @column()
+  public birtday: Date
+
+  @column()
+  public picture: string
 
   @column.dateTime({ autoCreate: true })
   public createdAt: DateTime

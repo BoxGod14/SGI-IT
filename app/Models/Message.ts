@@ -7,6 +7,15 @@ export default class Message extends BaseModel {
   @column({ isPrimary: true })
   public id: number
 
+  @column()
+  public userId: number
+
+  @column()
+  public ticketId: number
+
+  @column()
+  public message: string
+
   @column.dateTime({ autoCreate: true })
   public createdAt: DateTime
 
