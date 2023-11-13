@@ -1,16 +1,26 @@
 import type { HttpContextContract } from '@ioc:Adonis/Core/HttpContext'
-import View from '@ioc:Adonis/Core/View'
 import User from 'App/Models/User'
 import CreateUserValidator from 'App/Validators/CreateUserValidator'
-import session from 'Config/session'
 
 export default class AuthController {
 
-    public async registerForm({ }: HttpContextContract) {
+    public async registerForm({ response, auth }: HttpContextContract) {
+        //Comprobar si ya se habia iniciado sesión
+        await auth.use('web').authenticate()
+        if (auth.use('web').isLoggedIn) {
+            //Si ya tenias sesión te vas a la pagina de inicio
+            response.redirect('/')
+        }
         return "Aqui va la pagina para crear el usuario"
     }
 
-    public async register({ request, response }: HttpContextContract) {
+    public async register({ request, response, auth }: HttpContextContract) {
+        //Comprobar si ya se habia iniciado sesión
+        await auth.use('web').authenticate()
+        if (auth.use('web').isLoggedIn) {
+            //Si ya tenias sesión te vas a la pagina de inicio
+            response.redirect('/')
+        }
         const user = new User
         try {
             //Validación de datos
@@ -18,40 +28,47 @@ export default class AuthController {
             //Selecionar solo registros que necesito y guardar
             data = request.only(['username', 'email', 'password'])
             user.merge(data)
+            
             user.save()
-
         } catch (error) {
             response.badRequest(error.messages)
         }
         return user
     }
 
-    public async login({ auth, request, response }: HttpContextContract) {
-        const usernameOrEmail = request.input('usernameOrEmail')
+    public async login({ auth, request, response, session }: HttpContextContract) {
+        const uuid = request.input('uuid')
         const password = request.input('password')
-        session.flash('message', 'Hello world')
         try {
-            await auth.use('web').attempt(usernameOrEmail, password)
+            await auth.use('web').attempt(uuid, password)
             console.log('User: ' + auth.user?.id + ' login')
             response.redirect().toRoute('UsersController.show', { id: auth.user?.id })
 
         } catch (error) {            
-            session.flash('form', 'Tu usuario o contraseñas son incorrectos')
+            session.flash('errors', 'Tu usuario o contraseñas son incorrectos')
             return response.redirect().back()
         }
     }
-    public async loginForm({ auth }: HttpContextContract) {
+
+    public async loginForm({ auth, view, response }: HttpContextContract) {
         //Comprobar si ya se habia iniciado sesión
         await auth.use('web').authenticate()
         if (auth.use('web').isLoggedIn) {
-            return "Sesion iniciada"
+            //Si ya tenias sesión te vas a la pagina de inicio
+            response.redirect('/')
         }
         //Devolver vista de login
-        const html = await View.render('auth/login', {})
+        const html = await view.render('auth/login')
         return html
     }
 
     public async logout({ auth, response }: HttpContextContract) {
+        await auth.use('web').authenticate()
+        if (auth.use('web').isGuest) {
+            //Si no tenias sesión te vas a la pagina de login
+            response.redirect().toRoute('AuthController.loginForm')
+        }
+        //Cierre de sesión y redirección a pagina de login
         await auth.logout()
         response.redirect().toRoute('AuthController.loginForm')
     }

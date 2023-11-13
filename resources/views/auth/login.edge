@@ -9,13 +9,15 @@
 <body>
     
     <form action="{{ route('AuthController.login') }}" method="post">
-        @if(flashMessages)
-          <div role="alert">
-            {{ flashMessages.get('form') }}
+
+        @if(flashMessages.has('errors'))
+          <div role="errors">
+            {{ flashMessages.get('errors') }}
           </div>
-        @endif
-        <label for="usernameOrEmail">Usuario o correo</label>
-        <input type="text" name="usernameOrEmail">
+        @end
+
+        <label for="uuid">Usuario o correo</label>
+        <input type="text" name="uuid">
         <label for="password">Contraseña</label>
         <input type="password" name="password">
         <input type="submit" value="Iniciar sesión">
