@@ -23,7 +23,9 @@ import Server from '@ioc:Adonis/Core/Server'
 Server.middleware.register([
   () => import('@ioc:Adonis/Core/BodyParser'),
   //Importar SilentAuth permite transportar la sesión en la request.
-  () => import('App/Middleware/SilentAuth')
+  () => import('App/Middleware/SilentAuth'),
+  //Proteccion CSRF y otros
+  () => import('@ioc:Adonis/Addons/Shield')
 ])
 
 /*
