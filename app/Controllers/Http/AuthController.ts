@@ -4,23 +4,21 @@ import CreateUserValidator from 'App/Validators/CreateUserValidator'
 
 export default class AuthController {
 
-    public async registerForm({ response, auth }: HttpContextContract) {
+    public async registerForm({ response, auth, view }: HttpContextContract) {
+        this.comprobarYRedirigirSiAutenticado(auth , response)
         //Comprobar si ya se habia iniciado sesión
         await auth.use('web').authenticate()
         if (auth.use('web').isLoggedIn) {
             //Si ya tenias sesión te vas a la pagina de inicio
             response.redirect('/')
         }
-        return "Aqui va la pagina para crear el usuario"
+        //Devolver vista de login
+        const html = await view.render('auth/register')
+        return html
     }
 
-    public async register({ request, response, auth }: HttpContextContract) {
-        //Comprobar si ya se habia iniciado sesión
-        await auth.use('web').authenticate()
-        if (auth.use('web').isLoggedIn) {
-            //Si ya tenias sesión te vas a la pagina de inicio
-            response.redirect('/')
-        }
+    public async register({ request, response, auth, session }: HttpContextContract) {
+        this.comprobarYRedirigirSiAutenticado(auth , response)
         const user = new User
         try {
             //Validación de datos
@@ -31,12 +29,14 @@ export default class AuthController {
             
             user.save()
         } catch (error) {
-            response.badRequest(error.messages)
+            session.flash(error)
+            response.redirect().back()
         }
         return user
     }
 
     public async login({ auth, request, response, session }: HttpContextContract) {
+        this.comprobarYRedirigirSiAutenticado(auth , response)
         const uuid = request.input('uuid')
         const password = request.input('password')
         try {
@@ -51,12 +51,7 @@ export default class AuthController {
     }
 
     public async loginForm({ auth, view, response }: HttpContextContract) {
-        //Comprobar si ya se habia iniciado sesión
-        await auth.use('web').authenticate()
-        if (auth.use('web').isLoggedIn) {
-            //Si ya tenias sesión te vas a la pagina de inicio
-            response.redirect('/')
-        }
+        this.comprobarYRedirigirSiAutenticado(auth , response)
         //Devolver vista de login
         const html = await view.render('auth/login')
         return html
@@ -73,4 +68,12 @@ export default class AuthController {
         response.redirect().toRoute('AuthController.loginForm')
     }
 
+    private async comprobarYRedirigirSiAutenticado(auth , response) {
+        //Comprobar si ya se habia iniciado sesión
+        await auth.use('web').authenticate()
+        if (auth.use('web').isLoggedIn) {
+            //Si ya tenias sesión te vas a la pagina de inicio
+            response.redirect('/')
+        }
+    }
 }
