@@ -22,7 +22,9 @@ export default class CreateUserValidator {
     password: schema.string([
       rules.confirmed(),
       rules.minLength(4)
-    ])
+    ]),
+    name: schema.string(),
+    surname: schema.string()
   })
 
   public messages: CustomMessages = {}

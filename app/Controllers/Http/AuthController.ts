@@ -1,4 +1,5 @@
 import type { HttpContextContract } from '@ioc:Adonis/Core/HttpContext'
+import Database from '@ioc:Adonis/Lucid/Database'
 import User from 'App/Models/User'
 import CreateUserValidator from 'App/Validators/CreateUserValidator'
 
@@ -19,19 +20,30 @@ export default class AuthController {
 
     public async register({ request, response, auth, session }: HttpContextContract) {
         this.comprobarYRedirigirSiAutenticado(auth , response)
-        const user = new User
+        const user = new User        
+        // Inicia una transacción de la base de datos
+        const trx = await Database.transaction()
         try {
             //Validación de datos
-            let data = await request.validate(CreateUserValidator)
+            await request.validate(CreateUserValidator)
             //Selecionar solo registros que necesito y guardar
-            data = request.only(['username', 'email', 'password'])
-            user.merge(data)
-            
-            user.save()
+            const userData = request.only(['username', 'email', 'password'])  
+            const profileData = request.only(['name', 'surname',])
+            //creacion de usuario
+            user.merge(userData)
+            await user.save()
+            //Creación del perfil del usuario
+            await user.related('profile').create(profileData)            
+            //Cerrar transacción exitosa
+            trx.commit
         } catch (error) {
+            //Cancelar transacción
+            await trx.rollback()
             session.flash(error)
             response.redirect().back()
         }
+        session.flash('success', 'Usuario '+user.username+' creado exitosamente')
+        response.redirect().toRoute('AuthController.loginForm')
         return user
     }
 
@@ -58,6 +70,7 @@ export default class AuthController {
     }
 
     public async logout({ auth, response }: HttpContextContract) {
+        //Comprobar inicio de sesion
         await auth.use('web').authenticate()
         if (auth.use('web').isGuest) {
             //Si no tenias sesión te vas a la pagina de login

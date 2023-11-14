@@ -41,6 +41,19 @@
         @if(flashMessages.has('messages.password_confirmation'))
         {{ flashMessages.get('messages.password_confirmation')}}
         @end
+
+        <label for="name">Nombre</label>
+        <input type="text" name="name">
+        @if(flashMessages.has('messages.name'))
+        {{ flashMessages.get('messages.name')}}
+        @end
+
+        <label for="surname">Apellidos</label>
+        <input type="text" name="surname">
+        @if(flashMessages.has('messages.surname'))
+        {{ flashMessages.get('messages.surname')}}
+        @end
+
         <input type="submit" value="Registro">
     </form>
 </body>
