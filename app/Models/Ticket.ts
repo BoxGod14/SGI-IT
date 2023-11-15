@@ -37,14 +37,14 @@ export default class Ticket extends BaseModel {
   //Relacion con usuario solicitante
   @belongsTo(() => User, {
     foreignKey: 'requestor_id',
-    relatedKey: 'id',
+    relatedKey: 'id',//En caso de verse error no preocuparse, es el IDE
   })
   public requestor: BelongsTo<typeof User>
 
   //Relacion con usuario tecnico
   @belongsTo(() => User, {
     foreignKey: 'technician_id',
-    relatedKey: 'id',
+    relatedKey: 'id',//En caso de verse error no preocuparse, es el IDE
   })
   public technician: BelongsTo<typeof User>
 }
