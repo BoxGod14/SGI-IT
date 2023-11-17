@@ -25,6 +25,7 @@ Route.get('/', async ({ view }) => {
 })
 
 //Rutas a los controladores y extra
+Route.resource('tickets', 'TicketsController').middleware('auth')
 Route.resource('users', 'UsersController')
 Route.post('/register', 'AuthController.register').as('auth.register')
 Route.get('/register', 'AuthController.registerForm').as('auth.register.show')
