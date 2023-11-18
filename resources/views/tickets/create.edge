@@ -9,7 +9,11 @@
 <body>
     <form action="{{ route('TicketsController.store') }}" method="post">
         {{ csrfField() }}
-    <input type="submit" value="a">
+        <label for="subject">Asunto</label>
+        <input type="text" name="subject">
+        <label for="description">Descripcion</label>
+        <input type="text" name="description">
+    <input type="submit" value="Crear ticket">
     </form>
 </body>
 </html>

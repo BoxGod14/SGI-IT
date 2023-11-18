@@ -41,6 +41,7 @@ export default class AuthController {
             await trx.rollback()
             session.flash(error)
             response.redirect().back()
+            return //Si no se hace el return puede continuar el codigo
         }
         session.flash('success', 'Usuario '+user.username+' creado exitosamente')
         response.redirect().toRoute('AuthController.loginForm')

@@ -18,7 +18,7 @@ export default class CreateUserValidator {
       rules.confirmed(),
       rules.unique({ table: 'users', column: 'email'}),
     ]),
-    //La contraseña tendra una longitud minima de 4 caracteres y sera confirmada por el usuario
+    //La contraseña tendra una longitud minima de 4 caracteres y sera confirmada por el usuariximopedra@gmail.como
     password: schema.string([
       rules.confirmed(),
       rules.minLength(4)
@@ -27,5 +27,17 @@ export default class CreateUserValidator {
     surname: schema.string()
   })
 
-  public messages: CustomMessages = {}
+  public messages: CustomMessages = {
+    'username.required': 'El campo de usuario es obligatorio.',
+    'username.unique': 'El usuario no esta disponible. Por favor, elige otro.',
+    'email.required': 'El campo de correo electrónico es obligatorio.',
+    'email.email': 'Por favor, introduce una dirección de correo electrónico válida.',
+    'email.unique': 'Este correo electrónico no esta disponible. Utiliza otro.',
+    'email.confirmed': 'La confirmación de correo electrónico no coincide.',
+    'password.required': 'El campo de contraseña es obligatorio.',
+    'password.minLength': 'La contraseña debe tener al menos 4 caracteres.',
+    'password.confirmed': 'La confirmación de contraseña no coincide.',
+    'name.required': 'El campo de nombre es obligatorio.',
+    'surname.required': 'El campo de apellido es obligatorio.',
+  }
 }

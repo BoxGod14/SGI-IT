@@ -1,6 +1,7 @@
 import type { HttpContextContract } from '@ioc:Adonis/Core/HttpContext'
 import Ticket from 'App/Models/Ticket'
 import User from 'App/Models/User'
+import CreateTicketValidator from 'App/Validators/CreateTicketValidator'
 
 export default class TicketsController {
   public async index({}: HttpContextContract) {
@@ -14,19 +15,21 @@ export default class TicketsController {
     return html
   }
 
-  public async store({ auth }: HttpContextContract) {
+  public async store({ request, response, auth, session }: HttpContextContract) {
     const ticket = new Ticket
     try {
-      const user = await auth.use('web').authenticate()  
+      await request.validate(CreateTicketValidator)
+      const user = await auth.use('web').authenticate() 
+      const ticketData = request.only(['subject', 'description',]) 
+      ticket.merge(ticketData)
       ticket.requestorId = user.id
-      ticket.subject = "test"
-      ticket.description = "testagain"
       ticket.save()
     } catch (error) {
-      return 'error'
-    }
-    
-    
+      console.log("a")
+      session.flash(error)
+      response.redirect().back()
+      return //Si no se hace el return puede continuar el codigo
+    }    
     return "ok"
   }
 
