@@ -7,49 +7,63 @@
     <title>Register</title>
 </head>
 <body>
-    
     <form action="{{ route('AuthController.register') }}" method="post">
         {{ csrfField() }}
-             
-        
         <label for="username">Usuario</label>
-        <input type="text" name="username">
+        <input type="text" name="username"        
+        @if(flashMessages.has('username'))
+          value="{{flashMessages.get('username')}}"
+        @end
+        >
+        <br>
         @if(flashMessages.has('messages.username')) 
         <p>{{ flashMessages.get('messages.username')}}</p>        
         @end
 
         <label for="email">Correo electronico</label>
-        <input type="email" name="email">
+        <input type="email" name="email"        
+        @if(flashMessages.has('email'))
+          value="{{flashMessages.get('email')}}"
+        @end
+        >
         @if(flashMessages.has('messages.email'))
         {{ flashMessages.get('messages.email')}}
         @end
-
+        <br>
         <label for="email_confirmation">Confirmación correo electronico</label>
         <input type="email" name="email_confirmation">
         @if(flashMessages.has('messages.email_confirmation'))
         {{ flashMessages.get('messages.email_confirmation')}}
         @end
-
+        <br>
         <label for="password">Contraseña</label>
         <input type="password" name="password">
         @if(flashMessages.has('messages.password'))
         {{ flashMessages.get('messages.password')}}
         @end
-
+        <br>
         <label for="password_confirmation">Confirmar contraseña</label>
         <input type="password" name="password_confirmation">
         @if(flashMessages.has('messages.password_confirmation'))
         {{ flashMessages.get('messages.password_confirmation')}}
         @end
-
+        <br>
         <label for="name">Nombre</label>
-        <input type="text" name="name">
+        <input type="text" name="name"        
+        @if(flashMessages.has('name'))
+          value="{{flashMessages.get('name')}}"
+        @end
+        >
         @if(flashMessages.has('messages.name'))
         {{ flashMessages.get('messages.name')}}
         @end
-
+        <br>
         <label for="surname">Apellidos</label>
-        <input type="text" name="surname">
+        <input type="text" name="surname"        
+        @if(flashMessages.has('surname'))
+          value="{{flashMessages.get('surname')}}"
+        @end
+        >
         @if(flashMessages.has('messages.surname'))
         {{ flashMessages.get('messages.surname')}}
         @end

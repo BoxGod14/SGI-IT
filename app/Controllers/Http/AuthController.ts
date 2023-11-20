@@ -20,15 +20,16 @@ export default class AuthController {
 
     public async register({ request, response, auth, session }: HttpContextContract) {
         this.comprobarYRedirigirSiAutenticado(auth , response)
-        const user = new User        
+        const user = new User
+        //Selecionar solo registros que necesito y guardar
+        const userData = request.only(['username', 'email', 'password'])  
+        const profileData = request.only(['name', 'surname',])        
         // Inicia una transacción de la base de datos
         const trx = await Database.transaction()
         try {
             //Validación de datos
             await request.validate(CreateUserValidator)
-            //Selecionar solo registros que necesito y guardar
-            const userData = request.only(['username', 'email', 'password'])  
-            const profileData = request.only(['name', 'surname',])
+            
             //creacion de usuario
             user.merge(userData)
             await user.save()
@@ -39,7 +40,10 @@ export default class AuthController {
         } catch (error) {
             //Cancelar transacción
             await trx.rollback()
+            //Enviar comentarios sobre error y datos del formulario
             session.flash(error)
+            session.flash(userData)
+            session.flash(profileData)
             response.redirect().back()
             return //Si no se hace el return puede continuar el codigo
         }

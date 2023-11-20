@@ -25,9 +25,6 @@ Route.get('/', async ({ view }) => {
 })
 
 //Rutas a los controladores y extra
-
-Route.resource('users', 'UsersController')
-
 Route.group(() => {
   Route.post('/register', 'AuthController.register').as('auth.register')
   Route.get('/register', 'AuthController.registerForm').as('auth.register.show')
@@ -37,5 +34,6 @@ Route.group(() => {
 //Rutas y recursos que requieren estar logueados, en caso de no estarlos te llevan a login
 Route.group(() => {
   Route.resource('tickets', 'TicketsController')
+  Route.resource('users', 'UsersController')
   Route.get('/logout', 'AuthController.logout').as('auth.logout')
 }).middleware('auth')

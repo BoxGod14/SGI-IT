@@ -4,15 +4,31 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Document</title>
+    <title>Crear ticket</title>
 </head>
 <body>
     <form action="{{ route('TicketsController.store') }}" method="post">
         {{ csrfField() }}
         <label for="subject">Asunto</label>
-        <input type="text" name="subject">
+        <input type="text" name="subject"        
+        @if(flashMessages.has('subject'))
+          value="{{flashMessages.get('subject')}}"
+        @end
+        >
+        <br>
+        @if(flashMessages.has('messages.subject')) 
+        <p>{{ flashMessages.get('messages.subject')}}</p>        
+        @end
         <label for="description">Descripcion</label>
-        <input type="text" name="description">
+        <input type="text" name="description"        
+        @if(flashMessages.has('description'))
+          value="{{flashMessages.get('description')}}"
+        @end
+        >
+        <br>
+        @if(flashMessages.has('messages.description')) 
+        <p>{{ flashMessages.get('messages.description')}}</p>        
+        @end
     <input type="submit" value="Crear ticket">
     </form>
 </body>
