@@ -1,5 +1,6 @@
 import type { HttpContextContract } from '@ioc:Adonis/Core/HttpContext'
 import Roles from 'App/Enums/Roles'
+import Api_Token from 'App/Models/Api_Token'
 import User from 'App/Models/User'
 
 export default class UsersController {
@@ -20,10 +21,8 @@ export default class UsersController {
       response.redirect().toRoute('UsersController.edit', [user.id])
     }
     //Obtener datos del usuario que se va a editar y obtencion/generacion del token necesario para la API
-    const userEdit = (await User.findByOrFail('id', params.id))
-    const token = await auth.use('api').generate(user, {
-      expiresIn: '30 mins'
-    })
+    const userEdit = await User.findByOrFail('id', params.id)
+    const token = await Api_Token.findBy('userId', user.id);
     view.share({
       user: userEdit,
       token: token
@@ -39,6 +38,7 @@ export default class UsersController {
     if (user.roles != Roles.ADMIN && user.id != request.input('userId')) {
       return response.status(403).json({ message: 'Error al editar usuario' })
     }
+    
     const userEdit = await User.findByOrFail('id', request.input('userId'))
     userEdit.username = request.input('username')
     userEdit.save()

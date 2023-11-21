@@ -4,6 +4,7 @@ import { column, beforeSave, BaseModel, hasOne, HasOne, hasMany, HasMany } from 
 import Profile from './Profile'
 import Ticket from './Ticket'
 import Message from './Message'
+import Api_Token from './Api_Token'
 
 export default class User extends BaseModel {
   @column({ isPrimary: true })
@@ -50,4 +51,8 @@ export default class User extends BaseModel {
   //Relacion con mensajes
   @hasMany(() => Message)
   public message: HasMany<typeof Message>
+
+  //Relacion con los tokens
+  @hasOne(() => Api_Token)
+  public apiToken: HasOne<typeof Api_Token>
 }

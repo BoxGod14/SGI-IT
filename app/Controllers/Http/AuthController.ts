@@ -57,9 +57,19 @@ export default class AuthController {
         const uuid = request.input('uuid')
         const password = request.input('password')
         try {
-            await auth.use('web').attempt(uuid, password)
-            console.log('User: ' + auth.user?.id + ' login')
-            response.redirect().toRoute('UsersController.show', { id: auth.user?.id })
+            //Intentar login
+            const user = await auth.use('web').attempt(uuid, password)
+            
+            //Comprobar si existe el token api para borrarlo
+            const apiToken = user.related('apiToken').query()
+            if (apiToken) {
+                apiToken.delete
+            }
+            //Crear token api
+            await auth.use('api').generate(user, {
+                expiresIn: '180 mins'
+            })
+            response.redirect().toRoute('UsersController.show', { id: user.id })
 
         } catch (error) {            
             session.flash('errors', 'Tu usuario o contraseñas son incorrectos')
@@ -76,12 +86,14 @@ export default class AuthController {
 
     public async logout({ auth, response }: HttpContextContract) {
         //Comprobar inicio de sesion
-        await auth.use('web').authenticate()
+        const user = await auth.use('web').authenticate()
         if (auth.use('web').isGuest) {
             //Si no tenias sesión te vas a la pagina de login
             response.redirect().toRoute('AuthController.loginForm')
         }
         //Cierre de sesión y redirección a pagina de login
+        const apiToken = user.related('apiToken').query()
+        await apiToken.delete()
         await auth.logout()
         response.redirect().toRoute('AuthController.loginForm')
     }
