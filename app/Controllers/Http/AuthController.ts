@@ -66,9 +66,7 @@ export default class AuthController {
                 apiToken.delete
             }
             //Crear token api
-            await auth.use('api').generate(user, {
-                expiresIn: '180 mins'
-            })
+            await auth.use('api').generate(user)
             response.redirect().toRoute('UsersController.show', { id: user.id })
 
         } catch (error) {            
