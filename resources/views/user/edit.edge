@@ -8,10 +8,11 @@
     <title>Editar {{user.username}}</title>
     {{--Incluir el script--}}
     @include('partials/scripts/updateUser_js.edge')
+
 </head>
 <body>
     <p>Editar el perfil del usuario</p>
-    <form action="" method="post">       
+    <form>       
         {{ csrfField() }} 
         <label for="username">Usuario</label>
         <input type="text" value="{{user.username}}" name="username" id="username"><br>
@@ -28,21 +29,21 @@
         <label for="birthday">Cumpleaños</label>
         <input type="date" value="{{profile.birthday}}" name="birthday" id="birthday"><br>
 
-        @if( auth.user.roles == 'admin' )
+        @if( auth.user.roles == roles.ADMIN )
         <label for="roles">Rol</label>
         <select name="roles" id="roles">
-            <option value="{{ roles.admin }}"
-            @if(user.roles == roles.admin)
+            <option value="{{ roles.ADMIN }}"
+            @if(user.roles == roles.ADMIN)
               selected
             @end
             >Administrador</option>
-            <option value="{{ roles.requester }}"
-            @if(user.roles == roles.requester)
+            <option value="{{ roles.REQUESTER }}"
+            @if(user.roles == roles.REQUESTER)
               selected
             @end
             >Solicitante</option>
-            <option value="{{ roles.technician }}"
-            @if(user.roles == roles.technician)
+            <option value="{{ roles.TECHNICIAN }}"
+            @if(user.roles == roles.TECHNICIAN)
               selected
             @end
             >Tecnico</option>

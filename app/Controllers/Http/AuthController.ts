@@ -72,13 +72,6 @@ export default class AuthController {
       //Intentar login
       const user = await auth.use("web").attempt(uuid, password);
 
-      //Comprobar si existe el token api para borrarlo
-      const apiToken = user.related("apiToken").query();
-      if (apiToken) {
-        apiToken.delete;
-      }
-      //Crear token api
-      await auth.use("api").generate(user);
       response.redirect().toRoute("UsersController.show", { id: user.id });
     } catch (error) {
       session.flash("errors", "Tu usuario o contraseñas son incorrectos");
@@ -101,8 +94,6 @@ export default class AuthController {
       response.redirect().toRoute("AuthController.loginForm");
     }
     //Cierre de sesión y redirección a pagina de login
-    const apiToken = user.related("apiToken").query();
-    await apiToken.delete();
     await auth.logout();
     response.redirect().toRoute("AuthController.loginForm");
   }

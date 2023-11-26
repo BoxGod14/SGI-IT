@@ -1,9 +1,13 @@
 <script>
     function updateUser() {
-        //Obtencion de datos para la peticion ajax
         const data = {
             userId: {{ user.id }},
             username: document.querySelector('#username').value,
+            email: document.querySelector('#email').value,
+            name: document.querySelector('#name').value,
+            surname: document.querySelector('#surname').value,
+            birthday: document.querySelector('#birthday').value,
+            roles: document.querySelector('#roles').value,
             _csrf: document.querySelector('[name="_csrf"]').value,
         }
     //Peticion ajax
@@ -11,8 +15,6 @@
         method: 'PUT',
         headers: {
             'Content-Type': 'application/json', // Especificar el tipo de contenido si estás enviando datos en formato JSON
-            'Authorization': 'Bearer {{token.token}}'
-
         },
         body: JSON.stringify(data)
     })
