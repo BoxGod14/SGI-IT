@@ -6,46 +6,48 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Editar {{user.username}}</title>
+    {{--Incluir el script--}}
+    @include('partials/scripts/updateUser_js.edge')
 </head>
-<script>
-    function updateUser() {
-        //Obtencion de datos para la peticion ajax
-        const data = {
-            userId: {{ user.id }},
-            username: document.querySelector('#username').value,
-            _csrf: document.querySelector('[name="_csrf"]').value,
-        }
-        //Peticion ajax
-        fetch("{{ route('UsersController.update', [user.id]) }}", {
-            method: 'PUT',
-            headers: {
-                'Content-Type': 'application/json', // Especificar el tipo de contenido si estás enviando datos en formato JSON
-                'Authorization': 'Bearer {{token.token}}'
-
-            },
-            body: JSON.stringify(data)
-        })
-        .then(response => {
-            if (!response.ok) {
-                throw new Error('Error en la solicitud: ' + response.status);
-            }
-            return response.json(); // Devuelve la promesa resultante de parsear el cuerpo JSON
-        })
-        .then(data => {
-            console.log(data.message);
-            // Realizar más operaciones aquí con los datos actualizados
-        })
-        .catch(error => {
-            console.error(error);
-        })
-    }
-</script>
-
 <body>
+    <p>Editar el perfil del usuario</p>
     <form action="" method="post">       
         {{ csrfField() }} 
         <label for="username">Usuario</label>
-        <input type="text" value="{{user.username}}" name="username" id="username">
+        <input type="text" value="{{user.username}}" name="username" id="username"><br>
+
+        <label for="email">Correo electronico</label>
+        <input type="email" value="{{user.email}}" name="email" id="email"><br>
+
+        <label for="name">Nombre</label>
+        <input type="text" value="{{profile.name}}" name="name" id="name"><br>
+
+        <label for="surname">Apellido</label>
+        <input type="text" value="{{profile.surname}}" name="surname" id="surname"><br>
+        
+        <label for="birthday">Cumpleaños</label>
+        <input type="date" value="{{profile.birthday}}" name="birthday" id="birthday"><br>
+
+        @if( auth.user.roles == 'admin' )
+        <label for="roles">Rol</label>
+        <select name="roles" id="roles">
+            <option value="{{ roles.admin }}"
+            @if(user.roles == roles.admin)
+              selected
+            @end
+            >Administrador</option>
+            <option value="{{ roles.requester }}"
+            @if(user.roles == roles.requester)
+              selected
+            @end
+            >Solicitante</option>
+            <option value="{{ roles.technician }}"
+            @if(user.roles == roles.technician)
+              selected
+            @end
+            >Tecnico</option>
+        </select>
+        @endif
     </form>
     <button id="update" onclick="updateUser()">Actualizar</button>
 </body>

@@ -1,35 +1,35 @@
-import BaseSchema from '@ioc:Adonis/Lucid/Schema'
+import BaseSchema from "@ioc:Adonis/Lucid/Schema";
 
 export default class extends BaseSchema {
-  protected tableName = 'messages'
+  protected tableName = "messages";
 
-  public async up () {
+  public async up() {
     this.schema.createTable(this.tableName, (table) => {
-      table.increments('id')
+      table.increments("id");
 
-      table//Referencia al Id del usuario que ha escrito el mensaje
-        .integer('user_id')
+      table //Referencia al Id del usuario que ha escrito el mensaje
+        .integer("user_id")
         .unsigned()
-        .references('id')
-        .inTable('users')
-        .notNullable()
+        .references("id")
+        .inTable("users")
+        .notNullable();
 
-      table//Referencia al Id del ticket
-      .integer('ticket_id')
-      .unsigned()
-      .references('id')
-      .inTable('tickets')
-      .onDelete('CASCADE')
-      .notNullable()
+      table //Referencia al Id del ticket
+        .integer("ticket_id")
+        .unsigned()
+        .references("id")
+        .inTable("tickets")
+        .onDelete("CASCADE")
+        .notNullable();
 
-      table.string('message').notNullable()//El mensaje
+      table.string("message").notNullable(); //El mensaje
 
-      table.timestamp('created_at', { useTz: true })
-      table.timestamp('updated_at', { useTz: true })
-    })
+      table.timestamp("created_at", { useTz: true });
+      table.timestamp("updated_at", { useTz: true });
+    });
   }
 
-  public async down () {
-    this.schema.dropTable(this.tableName)
+  public async down() {
+    this.schema.dropTable(this.tableName);
   }
 }
