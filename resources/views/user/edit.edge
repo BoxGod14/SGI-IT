@@ -27,8 +27,8 @@
         <input type="text" value="{{profile.surname}}" name="surname" id="surname"><br>
         
         <label for="birthday">Cumpleaños</label>
-        <input type="date" value="{{profile.birthday}}" name="birthday" id="birthday"><br>
-
+        <input type="date" value="{{profile.birthday.toFormat('yyyy-MM-dd')}}" name="birthday" id="birthday"><br>
+        
         @if( auth.user.roles == roles.ADMIN )
         <label for="roles">Rol</label>
         <select name="roles" id="roles">
@@ -51,6 +51,7 @@
         @endif
     </form>
     <button id="update" onclick="updateUser()">Actualizar</button>
+    <p id="response"></p>
 </body>
 
 

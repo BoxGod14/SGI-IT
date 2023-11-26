@@ -19,17 +19,12 @@
         body: JSON.stringify(data)
     })
         .then(response => {
-            if (!response.ok) {
-                throw new Error('Error en la solicitud: ' + response.status);
-            }
             return response.json(); // Devuelve la promesa resultante de parsear el cuerpo JSON
         })
         .then(data => {
             console.log(data.message);
             // Realizar más operaciones aquí con los datos actualizados
-        })
-        .catch(error => {
-            console.error('error');
+            document.querySelector('#response').textContent = data.message;
         })
     }
 </script>
