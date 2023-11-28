@@ -12,8 +12,18 @@
         <p id="description">{{ ticket.description }}</p>
     </div>
     <div id="infoTicket">
-        <p>Solicitante</p>
-        <p>Tecnico</p>
+        <form action="">
+            <select name="state" id="state">                
+            </select>
+        </form>
+        <p>{{requester.profile.name}}</p>
+        <p>
+            @if(technician)
+                {{technician.profile.name}} 
+            @else
+                Sin tecnico
+            @endif
+        </p>
         <p>{{ticket.state}}</p>
     </div>
 </body>
