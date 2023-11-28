@@ -1,5 +1,5 @@
 import { DateTime } from 'luxon'
-import { BaseModel, BelongsTo, HasMany, belongsTo, column, hasMany } from '@ioc:Adonis/Lucid/Orm'
+import { BaseModel, BelongsTo, HasMany, ManyToMany, belongsTo, column, hasMany, manyToMany } from '@ioc:Adonis/Lucid/Orm'
 import Message from './Message'
 import User from './User'
 
@@ -35,16 +35,8 @@ export default class Ticket extends BaseModel {
   public message: HasMany<typeof Message>
 
   //Relacion con usuario solicitante
-  @belongsTo(() => User, {
-    foreignKey: 'requestor_id',
-    relatedKey: 'id',//En caso de verse error no preocuparse, es el IDE
+  @manyToMany(() => User, {
+    pivotColumns: ['role'],
   })
-  public requestor: BelongsTo<typeof User>
-
-  //Relacion con usuario tecnico
-  @belongsTo(() => User, {
-    foreignKey: 'technician_id',
-    relatedKey: 'id',//En caso de verse error no preocuparse, es el IDE
-  })
-  public technician: BelongsTo<typeof User>
+  public User: ManyToMany<typeof User>
 }

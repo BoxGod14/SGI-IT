@@ -8,15 +8,6 @@ export default class extends BaseSchema {
     this.schema.createTable(this.tableName, (table) => {
       table.increments("id").primary();
 
-      table //Referencia al Id del usuario el cual es el solicitante del ticket
-        .integer("requestor_id")
-        .unsigned()
-        .references("users.id")
-        .notNullable();
-      table //Referencia al Id del usuario el cual es el tecnico asignado al ticket
-        .integer("technician_id")
-        .unsigned()
-        .references("users.id");
       table.string("subject", 255).notNullable(); //Asunto del ticket, limitado a 255 caracteres (limitación general de correos electronicos)
       table.string("description").notNullable(); //Descripcion del ticket
       table
