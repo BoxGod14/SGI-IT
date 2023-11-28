@@ -12,7 +12,7 @@ export default class extends BaseSchema {
         .enum("role", Object.values(Roles))
         .defaultTo(Roles.REQUESTER)
         .notNullable();
-      table.unique(['user_id', 'ticket_id', 'role'])
+      table.unique(['ticket_id', 'role'])
       /**
        * Uses timestamptz for PostgreSQL and DATETIME2 for MSSQL
        */

@@ -22,7 +22,6 @@ export default class TicketsController {
     auth,
     session,
   }: HttpContextContract) {
-    //const ticket = new Ticket();
     const ticketData = request.only(["subject", "description"]);
     const trx = await Database.transaction();
     try {
@@ -36,17 +35,11 @@ export default class TicketsController {
       }, {
         role: Roles.REQUESTER
       })
-      /*
-      ticket.merge(ticketData);
-      ticket.requestorId = user.id;
-      ticket.save();    */  
-      ticket.save();
+      
       trx.commit;
       response.redirect().toRoute('TicketsController.show', [ticket.id]);
       return;
     } catch (error) {
-      console.log("--------------------error--------------------");
-      console.log(error);
       await trx.rollback();
       session.flash(error);
       session.flash(ticketData);
