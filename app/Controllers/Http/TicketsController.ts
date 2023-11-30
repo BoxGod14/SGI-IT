@@ -1,7 +1,9 @@
 import type { HttpContextContract } from "@ioc:Adonis/Core/HttpContext";
 import Database from "@ioc:Adonis/Lucid/Database";
 import Roles from "App/Enums/Roles";
+import State from "App/Enums/State";
 import Ticket from "App/Models/Ticket";
+import User from "App/Models/User";
 import CreateTicketValidator from "App/Validators/CreateTicketValidator";
 
 export default class TicketsController {
@@ -73,16 +75,22 @@ export default class TicketsController {
       return;
     }
     const technician = await ticket
-    .related("User") //Buscar en la relacion del usuario
-    .query() //Ejecutar consulta
-    .preload("profile") //Precargar de forma anticipada las relaciones para el modelo, en este caso el perfil a traves del usuario
-    .wherePivot("role", Roles.TECHNICIAN) //Condición en la tabla intermedia, en este caso el rol tiene que ser solicitante
-    .first(); //Obtener solo el primer valor, aunque solo habra 1 de forma nativa, la query devuelve un array, por lo que el primer elemento arregla esto
+      .related("User") //Buscar en la relacion del usuario
+      .query() //Ejecutar consulta
+      .wherePivot("role", Roles.TECHNICIAN) //Condición en la tabla intermedia, en este caso el rol tiene que ser solicitante
+      .first(); //Obtener solo el primer valor, aunque solo habra 1 de forma nativa, la query devuelve un array, por lo que el primer elemento arregla esto
+
+    const technicians = await User
+      .query()
+      .where('roles', Roles.TECHNICIAN)
+      .preload('profile')
 
     view.share({
       ticket: ticket,
       requester: requester,
       technician: technician,
+      technicians: technicians,
+      states: State,
       roles: Roles,
     });
     const html = await view.render("tickets/show");

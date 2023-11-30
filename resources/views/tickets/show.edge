@@ -12,19 +12,27 @@
         <p id="description">{{ ticket.description }}</p>
     </div>
     <div id="infoTicket">
-        <form action="">
-            <select name="state" id="state">                
+        <p>Solicitante</p>
+        <p>{{requester.profile.name}}</p>
+        <form>         
+            <select name="technician" id="technician">
+                <option value=""></option>
+                @each(technician_ in technicians)
+                <option value="{{technician_.id}}"
+                @if(technician && technician_.id == technician.id)
+                  selected
+                @end
+                >{{technician_.profile.name}}</option>
+                @endeach               
+            </select>
+
+            <p>Estado</p>
+            <select name="role" id="role">
+                @each(state in states)
+                  <option value="{{state}}">{{state}}</option>
+                @endeach               
             </select>
         </form>
-        <p>{{requester.profile.name}}</p>
-        <p>
-            @if(technician)
-                {{technician.profile.name}} 
-            @else
-                Sin tecnico
-            @endif
-        </p>
-        <p>{{ticket.state}}</p>
     </div>
 </body>
 </html>
