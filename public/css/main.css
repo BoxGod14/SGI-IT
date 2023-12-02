@@ -1,0 +1,34 @@
+body {
+  display: grid;
+  grid-template-columns: 20% 20% 20% 20% 20%;
+  background: #E7ECEF;
+}
+
+.button{
+  border-radius: 1.875rem;
+  background: #6096BA;
+  text-align: center;
+  padding-top: 2rem;
+  font-size: 2rem;
+  color: #274C77;
+  margin-left: 1rem;
+  margin-right: 1rem;
+  text-decoration: none;
+}
+.buttoner{
+  display: grid;
+  gap: 1rem;
+  grid-template-rows: 30% 25% 25% 20%;
+  grid-column-start: 3;
+  grid-column-end: 3;
+  margin-top: 15rem;
+  height: 25rem;
+  border-radius: 1.25rem;
+  background: #274C77;
+}
+.buttoner>h1{
+  grid-row: 1;
+  margin-top: 3rem;
+  color: #A3CEF1;
+  text-align: center;
+}
