@@ -4,23 +4,24 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Login</title>
+    <title>SGI-IT Login</title>
+  <link rel="stylesheet" href="../css/main.css">
 </head>
 <body>
+    <div class="formButtonersBaseStyle formButtonersBaseLayout" id="loginForm">
+      <h1>Iniciar sesión</h1>
+      <form action="{{ route('AuthController.login') }}" method="post" >
+        {{ csrfField() }}          
+          <input type="text" name="uuid" placeholder="Usuario o correo"><br>
+          <input type="password" name="password" placeholder="Contraseña"><br>
+          <input type="submit" value="Iniciar sesión" class="buttonBaseStyle">
+          @if(flashMessages.has('errors'))
+            <div class="errors">
+              <p>{{ flashMessages.get('errors') }}</p>
+            </div>
+          @end
+      </form>
+    </div>
     
-    <form action="{{ route('AuthController.login') }}" method="post">
-      {{ csrfField() }}
-        @if(flashMessages.has('errors'))
-          <div role="errors">
-            {{ flashMessages.get('errors') }}
-          </div>
-        @end
-
-        <label for="uuid">Usuario o correo</label>
-        <input type="text" name="uuid">
-        <label for="password">Contraseña</label>
-        <input type="password" name="password">
-        <input type="submit" value="Iniciar sesión">
-    </form>
 </body>
 </html>

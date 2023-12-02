@@ -1,34 +1,100 @@
+/** Se hacen clases todo lo genericas posibles para posteriormente poder mejorarlas mediante el uso de IDs */
+* {
+  box-sizing: border-box;
+}
 body {
   display: grid;
   grid-template-columns: 20% 20% 20% 20% 20%;
-  background: #E7ECEF;
+  background: #e7ecef;
 }
-
-.button{
+input {
   border-radius: 1.875rem;
-  background: #6096BA;
+  background: #6096ba;
+  color: #274c77;
+}
+input[type="submit"] {
+  border-radius: 0.5rem;
+}
+::placeholder {
+  color: #274c77;
+}
+.buttonBaseStyle {
+  border-radius: 1.875rem;
+  background: #6096ba;
   text-align: center;
-  padding-top: 2rem;
-  font-size: 2rem;
-  color: #274C77;
-  margin-left: 1rem;
-  margin-right: 1rem;
+  color: #274c77;
   text-decoration: none;
 }
-.buttoner{
+.formButtonersBaseStyle {
+  border-radius: 1.25rem;
+  background: #274c77;
+}
+.formButtonersBaseLayout {
   display: grid;
   gap: 1rem;
+  margin-top: 15rem;
+  height: 25rem;
+}
+.formButtonersBaseStyle > h1 {
+  grid-row: 1;
+  margin-top: 3rem;
+  color: #a3cef1;
+  text-align: center;
+}
+.errors {
+  color: red;
+}
+/* Id para el contenedor de los botones en la pagina de inicio */
+
+/* welcome.edge */
+#welcome {
   grid-template-rows: 30% 25% 25% 20%;
   grid-column-start: 3;
   grid-column-end: 3;
-  margin-top: 15rem;
-  height: 25rem;
-  border-radius: 1.25rem;
-  background: #274C77;
 }
-.buttoner>h1{
+#welcome > .buttonBaseStyle {
+  margin-left: 1rem;
+  margin-right: 1rem;
+  padding-top: 2rem;
+  font-size: 2rem;
+}
+/*FIN welcome.edge */
+
+/* login.edge */
+#loginForm {
+  grid-template-rows: 20% 20% 20% 20% 20%;
+  grid-column-start: 3;
+  grid-column-end: 3;
+}
+#loginForm > form {
+  display: grid;
+  grid-template-rows: 20% 20% 20% 20%;
+  grid-row: 2 / 6;
+  gap: 1rem;
+}
+#loginForm > form > * {
+  font-size: 1rem;
+}
+#loginForm > form > input[type="submit"] {
+  grid-row: 3;
+  margin-left: 1rem;
+  margin-right: 1rem;
+}
+#loginForm > form > input[type="text"]{
   grid-row: 1;
-  margin-top: 3rem;
-  color: #A3CEF1;
-  text-align: center;
+}
+#loginForm > form > input[type="password"] {
+  grid-row: 2;
+}
+#loginForm > form > input[type="text"],
+#loginForm > form > input[type="password"] {
+  margin-left: 1rem;
+  margin-right: 1rem;
+  width: 80%;
+  transition: width 1.5s;
+}
+#loginForm > form > input[type="text"]:focus,
+#loginForm > form > input[type="password"]:focus {
+  width: 90%;
+  transition: width 1.5s;
 }

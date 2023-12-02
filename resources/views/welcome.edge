@@ -1,25 +1,28 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>SGI-IT</title>
   <link rel="stylesheet" href="../css/main.css">
 </head>
-<body >
-  <div class="buttoner">
+
+<body>
+  <div class="formButtonersBaseLayout formButtonersBaseStyle" id="welcome">
     <h1>SGI-IT</h1>
     @!component('components/button-url.edge', {
-      url: route('AuthController.loginForm'),
-      text: 'Iniciar Sesion',
-      id: 'loginButton'
+    url: route('AuthController.loginForm'),
+    text: 'Iniciar Sesion',
+    id: 'loginButton'
     })
-    
+
     @!component('components/button-url.edge', {
-      url: route('AuthController.registerForm'),
-      text: 'Crear cuenta',
-      id: 'registerButton'      
+    url: route('AuthController.registerForm'),
+    text: 'Crear cuenta',
+    id: 'registerButton'
     })
   </div>
 </body>
+
 </html>
