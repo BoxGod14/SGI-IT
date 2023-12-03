@@ -6,23 +6,25 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>SGI-IT Login</title>
   <link rel="stylesheet" href="../css/main.css">
+  <link rel="stylesheet" href="../css/transitions.css">
 </head>
-<body>
-    <div class="formButtonersBaseStyle formButtonersBaseLayout" id="loginForm">
-      <h1>Iniciar sesión</h1>
-      <form action="{{ route('AuthController.login') }}" method="post">
-        {{ csrfField() }}          
-          <input type="text" name="uuid" placeholder="Usuario o correo">
-          <input type="password" name="password" placeholder="Contraseña">
-          <input type="submit" value="Iniciar sesión" class="buttonBaseStyle">          
-      </form>
-      <div>
-        <p class="redirectLoginRegister">No tengo cuenta: <a href="{{ route('AuthController.registerForm') }}">Crear cuenta</a></p>
-        @if(flashMessages.has('errors'))
-          <p class="errors">{{ flashMessages.get('errors') }}</p>
-        @end
-      </div>
+<body id="swup">
+  @include('partials/scripts/transitionsSwup_js.edge')
+  <div class="formButtonersBaseStyle formButtonersBaseLayout transition-fade" id="loginForm">
+    <h1>Iniciar sesión</h1>
+    <form action="{{ route('AuthController.login') }}" method="post">
+      {{ csrfField() }}          
+      <input type="text" name="uuid" placeholder="Usuario o correo">
+      <input type="password" name="password" placeholder="Contraseña">
+      <input type="submit" value="Iniciar sesión" class="buttonBaseStyle">          
+    </form>
+    <div>
+      <p class="redirectLoginRegister">No tengo cuenta: <a href="{{ route('AuthController.registerForm') }}">Crear cuenta</a></p>
+      @if(flashMessages.has('errors'))
+        <p class="errors">{{ flashMessages.get('errors') }}</p>
+      @end
     </div>
-    
+  </div>
+  
 </body>
 </html>

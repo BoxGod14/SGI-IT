@@ -6,23 +6,26 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>SGI-IT</title>
   <link rel="stylesheet" href="../css/main.css">
+  <link rel="stylesheet" href="../css/transitions.css">  
 </head>
 
-<body>
-  <div class="formButtonersBaseLayout formButtonersBaseStyle" id="welcome">
-    <h1>SGI-IT</h1>
-    @!component('components/button-url.edge', {
-    url: route('AuthController.loginForm'),
-    text: 'Iniciar Sesion',
-    id: 'loginButton'
-    })
+<body id="swup">
+  @include('partials/scripts/transitionsSwup_js.edge')
+    <div class="formButtonersBaseLayout formButtonersBaseStyle transition-fade" id="welcome">
+      <h1>SGI-IT</h1>
+      @!component('components/button-url.edge', {
+      url: route('AuthController.loginForm'),
+      text: 'Iniciar Sesion',
+      id: 'loginButton'
+      })
 
-    @!component('components/button-url.edge', {
-    url: route('AuthController.registerForm'),
-    text: 'Crear cuenta',
-    id: 'registerButton'
-    })
-  </div>
+      @!component('components/button-url.edge', {
+      url: route('AuthController.registerForm'),
+      text: 'Crear cuenta',
+      id: 'registerButton'
+      })
+    </div>
+    
 </body>
 
 </html>
