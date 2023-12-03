@@ -43,6 +43,16 @@ input[type="submit"] {
 }
 .errors {
   color: red;
+  text-align: center;
+}
+
+.redirectLoginRegister {
+  text-align: center;
+  color: #8B8C89;
+}
+.redirectLoginRegister > a{
+  color: #274C77;
+  text-decoration: none;
 }
 /* Id para el contenedor de los botones en la pagina de inicio */
 
@@ -62,21 +72,21 @@ input[type="submit"] {
 
 /* login.edge */
 #loginForm {
-  grid-template-rows: 20% 20% 20% 20% 20%;
+  grid-template-rows: 20% 20% 20% 20%;
   grid-column-start: 3;
   grid-column-end: 3;
 }
 #loginForm > form {
   display: grid;
-  grid-template-rows: 20% 20% 20% 20%;
-  grid-row: 2 / 6;
+  grid-template-rows: 20% 20% 20%;
+  grid-row: 2 / 5;
   gap: 1rem;
 }
 #loginForm > form > * {
   font-size: 1rem;
 }
 #loginForm > form > input[type="submit"] {
-  grid-row: 3;
+  grid-row: 4;
   margin-left: 1rem;
   margin-right: 1rem;
 }

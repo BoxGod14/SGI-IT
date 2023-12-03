@@ -10,17 +10,18 @@
 <body>
     <div class="formButtonersBaseStyle formButtonersBaseLayout" id="loginForm">
       <h1>Iniciar sesión</h1>
-      <form action="{{ route('AuthController.login') }}" method="post" >
+      <form action="{{ route('AuthController.login') }}" method="post">
         {{ csrfField() }}          
-          <input type="text" name="uuid" placeholder="Usuario o correo"><br>
-          <input type="password" name="password" placeholder="Contraseña"><br>
-          <input type="submit" value="Iniciar sesión" class="buttonBaseStyle">
-          @if(flashMessages.has('errors'))
-            <div class="errors">
-              <p>{{ flashMessages.get('errors') }}</p>
-            </div>
-          @end
+          <input type="text" name="uuid" placeholder="Usuario o correo">
+          <input type="password" name="password" placeholder="Contraseña">
+          <input type="submit" value="Iniciar sesión" class="buttonBaseStyle">          
       </form>
+      <div>
+        <p class="redirectLoginRegister">No tengo cuenta: <a href="{{ route('AuthController.registerForm') }}">Crear cuenta</a></p>
+        @if(flashMessages.has('errors'))
+          <p class="errors">{{ flashMessages.get('errors') }}</p>
+        @end
+      </div>
     </div>
     
 </body>
