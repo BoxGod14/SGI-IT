@@ -1,7 +1,8 @@
 html.is-changing .transition-fade {
-  transition: opacity 0.25s;
-  opacity: 1;
+  transition: transform 0.5s;
+  transform: rotateY(0deg);
 }
 html.is-animating .transition-fade {
-  opacity: 0;
+  transition: transform 0.5s;
+  transform: rotateY(90deg);
 }
