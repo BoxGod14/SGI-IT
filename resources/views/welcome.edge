@@ -9,10 +9,10 @@
   <link rel="stylesheet" href="../css/transitions.css">  
 </head>
 
-<body id="swup">
+<body id="swup" class="welcomeLoginRegisterBody">
   @include('partials/scripts/transitionsSwup_js.edge')
-    <div class="formButtonersBaseLayout formButtonersBaseStyle transition-fade" id="welcome">
-      <h1>SGI-IT</h1>
+    <main class="formButtonersBaseLayout formButtonersBaseStyle transition-fade" id="welcome">
+      <h2>SGI-IT</h2>
       @!component('components/button-url.edge', {
       url: route('AuthController.loginForm'),
       text: 'Iniciar Sesion',
@@ -24,7 +24,7 @@
       text: 'Crear cuenta',
       id: 'registerButton'
       })
-    </div>
+    </main>
     
 </body>
 
