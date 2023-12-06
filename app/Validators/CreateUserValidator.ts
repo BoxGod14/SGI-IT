@@ -24,7 +24,10 @@ export default class CreateUserValidator {
       rules.minLength(4)
     ]),
     name: schema.string(),
-    surname: schema.string()
+    surname: schema.string(),
+    birthday: schema.date({
+      format: 'yyyy-MM-dd',
+    })
   })
 
   public messages: CustomMessages = {
@@ -39,5 +42,7 @@ export default class CreateUserValidator {
     'password.confirmed': 'La confirmación de contraseña no coincide.',
     'name.required': 'El campo de nombre es obligatorio.',
     'surname.required': 'El campo de apellido es obligatorio.',
+    'birthday.required': 'El campo de fecha de nacimiento es obligatorio.',
+    'birthday.date': 'Por favor, introduce una fecha de nacimiento válida.',
   }
 }

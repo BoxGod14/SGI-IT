@@ -14,7 +14,7 @@ export default class extends BaseSchema {
         .notNullable();
       table.string("name").notNullable(); //Nombre del usuario
       table.string("surname").notNullable(); //Apellido del usuario
-      table.date("birthday"); //Fecha de nacimiento
+      table.date("birthday").notNullable(); //Fecha de nacimiento
       table.string("picture"); //URL de su foto de perfil
       /**
        * Uses timestamptz for PostgreSQL and DATETIME2 for MSSQL

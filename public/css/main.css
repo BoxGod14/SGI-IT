@@ -19,7 +19,7 @@ input[type="submit"] {
   text-align: center;
 }
 .welcomeLoginRegisterBody {
-  grid-template-columns: 20% 20% 20% 20% 20%;
+  grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
 }
 .buttonBaseStyle {
   border-radius: 1.875rem;
@@ -71,9 +71,3 @@ input[type="submit"] {
   padding-top: 2rem;
   font-size: 2rem;
 }
-/*FIN welcome.edge */
-
-/* login.edge */
-
-/*FIN login.edge */
-/* register.edge */

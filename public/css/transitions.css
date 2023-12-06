@@ -6,3 +6,10 @@ html.is-animating .transition-fade {
   transition: transform 0.5s;
   transform: rotateY(90deg);
 }
+
+.transition-form.is-changing {
+  transition: opacity 400ms;
+}
+.transition-form.is-animating {
+  opacity: 0;
+}

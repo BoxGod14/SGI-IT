@@ -27,7 +27,7 @@ export default class AuthController {
     const user = new User();
     //Selecionar solo registros que necesito y guardar
     const userData = request.only(["username", "email", "password"]);
-    const profileData = request.only(["name", "surname"]);
+    const profileData = request.only(["name", "surname", "birthday"]);
     // Inicia una transacción de la base de datos
     const trx = await Database.transaction();
     try {
