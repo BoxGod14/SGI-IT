@@ -1,0 +1,29 @@
+<script defer>
+  /**
+   * Función para crear los mensajes
+   */
+  function sendMessage() {
+    //Obtener datos necesarios para el mensaje
+    const data = {
+      _csrf: document.querySelector('[name="_csrf"]').value,
+      ticketId: {{ticket.id}},
+      message: messager.value,
+    }
+    //Peticion ajax
+    fetch("{{ route('MessagesController.store'}}", {
+      method: 'POST',
+      headers: {
+          'Content-Type': 'application/json', // Especificar el tipo de contenido si estás enviando datos en formato JSON
+      },
+      body: JSON.stringify(data)
+      })
+      .then(response => {
+          return response.json(); // Devuelve la promesa resultante de parsear el cuerpo JSON
+      })
+      .then(data => {
+          console.log(data.message);
+          // Realizar más operaciones aquí con los datos actualizados
+          document.querySelector('#response').textContent = data.message;
+      })
+  }
+</script>

@@ -6,18 +6,14 @@ import Ticket from "App/Models/Ticket";
 import User from "App/Models/User";
 import CreateTicketValidator from "App/Validators/CreateTicketValidator";
 
-
 export default class TicketsController {
   public async index({ view }: HttpContextContract) {
-    const ticket = await Ticket
-      .query()
-      .preload('User', (query) => {
-        query.pivotColumns(['role'])
-        .preload('profile')
-      })
+    const ticket = await Ticket.query().preload("User", (query) => {
+      query.pivotColumns(["role"]).preload("profile");
+    });
     view.share({
       tickets: ticket,
-      Roles: Roles
+      Roles: Roles,
     });
     const html = await view.render("tickets/index");
     return html;
@@ -62,35 +58,28 @@ export default class TicketsController {
   }
 
   public async show({ view, params, auth, response }: HttpContextContract) {
-    let ticket: Ticket;
     //Obtener usuario
     const user = await auth.use("web").authenticate();
-    //Obtener ticket
+    //Comprobar que existe el ticket
     try {
-      ticket = await Ticket.findOrFail(params.id);
+      await Ticket.findByOrFail('id',params.id)
     } catch (error) {
       //Si entra aqui es que no existe el ticket
       response.redirect().toRoute("TicketsController.index");
       return;
     }
-    //Obtener solicitante del ticket
-    const requester = await ticket
-      .related("User") //Buscar en la relacion del usuario
-      .query() //Ejecutar consulta
-      .preload("profile") //Precargar de forma anticipada las relaciones para el modelo, en este caso el perfil a traves del usuario
-      .wherePivot("role", Roles.REQUESTER) //Condición en la tabla intermedia, en este caso el rol tiene que ser solicitante
-      .first(); //Obtener solo el primer valor, aunque solo habra 1 de forma nativa, la query devuelve un array, por lo que el primer elemento arregla esto
-    //Comprobar que en caso de ser solitante, seas el usuario propietario
-    if (user.roles == Roles.REQUESTER && user.id != requester!.id) {
-      response.redirect().toRoute("TicketsController.index");
-      return;
-    }
-    const technician = await ticket
-      .related("User") //Buscar en la relacion del usuario
-      .query() //Ejecutar consulta
-      .wherePivot("role", Roles.TECHNICIAN) //Condición en la tabla intermedia, en este caso el rol tiene que ser solicitante
-      .first(); //Obtener solo el primer valor, aunque solo habra 1 de forma nativa, la query devuelve un array, por lo que el primer elemento arregla esto
-
+    //Obtener el ticket
+    const ticket = await Ticket.query()
+      .where("tickets.id", params.id)
+      .preload("User", (query) => {
+        query.pivotColumns(["role"]).preload("profile");
+      })
+      .preload('message')      
+      .first();//Aunque solo hay 1 ticket por id, hay que indicar que solo obtenga el primero
+    //TODO: Comprobar en caso de que sea un solicitante, que sea el mismo que el del ticket
+    
+    //Obtener perfil del usuario actual
+    await user.load('profile')
     const technicians = await User
       .query()
       .where('roles', Roles.TECHNICIAN)
@@ -98,11 +87,10 @@ export default class TicketsController {
 
     view.share({
       ticket: ticket,
-      requester: requester,
-      technician: technician,
       technicians: technicians,
+      user: user,
       states: State,
-      roles: Roles,
+      Roles: Roles,
     });
     const html = await view.render("tickets/show");
     return html;

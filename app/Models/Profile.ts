@@ -15,9 +15,7 @@ export default class Profile extends BaseModel {
   @column()
   public surname: string
   
-  @column.date({
-    serialize: (value) => value.toFormat('yyyy-MM-dd')
-  })
+  @column.date()
   public birthday: DateTime
 
   @column()

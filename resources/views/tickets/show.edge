@@ -1,38 +1,86 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible">
-    <title>Ver ticket</title>
+    <title>SGI-IT tickets</title>
+    <link rel="stylesheet" href="../css/main.css">
+    <link rel="stylesheet" href="../css/tickets.css">
+    <link rel="stylesheet" href="../css/transitions.css">
 </head>
 <body>
-    <div id="ticket">
-        <p id="subject">{{ ticket.subject }}</p>
-        <p id="description">{{ ticket.description }}</p>
-    </div>
-    <div id="infoTicket">
-        <p>Solicitante</p>
-        <p>{{requester.profile.name}}</p>
-        <form>         
-            <select name="technician" id="technician">
-                <option value=""></option>
-                @each(technician_ in technicians)
-                <option value="{{technician_.id}}"
-                @if(technician && technician_.id == technician.id)
-                  selected
+  <script defer src="../js/tickets.js"></script>
+    @include('partials/scripts/transitionsSwup_js.edge')   
+    <script defer>
+      /**
+       * Función para crear los mensajes
+       */
+      function sendMessage() {
+        //Obtener datos necesarios para el mensaje
+        const data = {
+          _csrf: document.querySelector('[name="_csrf"]').value,
+          ticketId: {{ticket.id}},
+          message: messager.value,
+        }
+        //Peticion ajax
+        fetch("{{ route('MessagesController.store'}}", {
+          method: 'POST',
+          headers: {
+              'Content-Type': 'application/json', // Especificar el tipo de contenido si estás enviando datos en formato JSON
+          },
+          body: JSON.stringify(data)
+          })
+          .then(response => {
+              return response.json(); // Devuelve la promesa resultante de parsear el cuerpo JSON
+          })
+          .then(data => {
+              console.log(data.message);
+              // Realizar más operaciones aquí con los datos actualizados
+              document.querySelector('#response').textContent = data.message;
+          })
+      }    
+      </script>
+    <section class="container">        
+        @include('partials/header.edge')
+        @include('partials/nav.edge')
+        <main class="tickets ticket" id="swup">
+          <section id="subject">
+            <p>{{ticket.subject}}</p>
+            <p class="requester">
+                @each(user in ticket.User)
+                  @if(user.$extras.pivot_role == Roles.REQUESTER)
+                    {{user.profile.fullName}}
+                  @endif
+                @endeach
+              </p>   
+          </section>
+          <section id="description">
+            <p>Descripción</p>
+            <p>{{ticket.description}}</p>
+          </section>
+          <section id="messages">
+            <div>
+                <p>Mensajes</p>
+                @each(message in ticket.message)
+                    <p>{{message.message}}</p>
                 @end
-                >{{technician_.profile.name}}</option>
-                @endeach               
-            </select>
-
-            <p>Estado</p>
-            <select name="role" id="role">
-                @each(state in states)
-                  <option value="{{state}}">{{state}}</option>
-                @endeach               
-            </select>
-        </form>
-    </div>
+            </div>
+            <div>
+                <div id="message">
+                  <p>De: {{ user.profile.fullName }}</p>
+                  <form >
+                      {{ csrfField() }}
+                      <textarea name="message" oninput="auto_grow(this)" placeholder="Escribe un mensaje"></textarea>
+                  </form>
+                  <button class="buttonBaseStyle" id="hideWriter">Cancelar</button>
+                  <button class="buttonBaseStyle" id="sendMessage">Enviar</button>
+                </div>                
+                <button class="buttonBaseStyle" id="showWriter">Escribir mensaje</button>
+            </div>
+          </section>
+        </main>
+        @include('partials/aside.edge')        
+    </section>
 </body>
 </html>

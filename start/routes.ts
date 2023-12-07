@@ -36,4 +36,5 @@ Route.group(() => {
   Route.resource('tickets', 'TicketsController')
   Route.resource('users', 'UsersController')
   Route.get('/logout', 'AuthController.logout').as('auth.logout')
+  Route.resource('messages', 'MessagesController')
 }).middleware('auth')

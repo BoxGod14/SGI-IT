@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>SGI-IT</title>
+    <title>SGI-IT tickets</title>
     <link rel="stylesheet" href="../css/main.css">
     <link rel="stylesheet" href="../css/tickets.css">
     <link rel="stylesheet" href="../css/transitions.css">
@@ -12,25 +12,16 @@
 
 <body>
     @include('partials/scripts/transitionsSwup_js.edge')    
-    <section class="container" id="swup">
-        <nav class="navigation">
-            Barra de Nav
-        </nav>
-        <header class="header">
-            header
-        </header>
-        <main class="tickets">
+    <section class="container">        
+        @include('partials/header.edge')
+        @include('partials/nav.edge')
+        <main class="tickets"  id="swup">
           <div>
             <p class="subject">Asunto</p>
-
-            <p class="requester">Solicitante</p>                
-            
+            <p class="requester">Solicitante</p> 
             <p class="state">Estado</p>
-
-            <p class="technician">Tecnico asignado</p>
-                            
-            <p class="createdAt">Fecha de creación</p>
-            
+            <p class="technician">Tecnico asignado</p>                            
+            <p class="createdAt">Fecha de creación</p>            
           </div>
           <hr>
             @each(ticket in tickets)
