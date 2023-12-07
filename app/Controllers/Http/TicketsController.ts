@@ -6,10 +6,21 @@ import Ticket from "App/Models/Ticket";
 import User from "App/Models/User";
 import CreateTicketValidator from "App/Validators/CreateTicketValidator";
 
+
 export default class TicketsController {
-  public async index({}: HttpContextContract) {
-    const ticket = await Ticket.all();
-    return ticket;
+  public async index({ view }: HttpContextContract) {
+    const ticket = await Ticket
+      .query()
+      .preload('User', (query) => {
+        query.pivotColumns(['role'])
+        .preload('profile')
+      })
+    view.share({
+      tickets: ticket,
+      Roles: Roles
+    });
+    const html = await view.render("tickets/index");
+    return html;
   }
 
   public async create({ view }: HttpContextContract) {

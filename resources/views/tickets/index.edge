@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SGI-IT</title>
+    <link rel="stylesheet" href="../css/main.css">
+    <link rel="stylesheet" href="../css/tickets.css">
+    <link rel="stylesheet" href="../css/transitions.css">
+</head>
+
+<body>
+    @include('partials/scripts/transitionsSwup_js.edge')    
+    <section class="container" id="swup">
+        <nav class="navigation">
+            Barra de Nav
+        </nav>
+        <header class="header">
+            header
+        </header>
+        <main class="tickets">
+          <div>
+            <p class="subject">Asunto</p>
+
+            <p class="requester">Solicitante</p>                
+            
+            <p class="state">Estado</p>
+
+            <p class="technician">Tecnico asignado</p>
+                            
+            <p class="createdAt">Fecha de creación</p>
+            
+          </div>
+          <hr>
+            @each(ticket in tickets)
+              <div>
+                <p class="subject">{{ticket.subject}}</p>
+
+                <p class="requester">
+                  @each(user in ticket.User)
+                    @if(user.$extras.pivot_role == Roles.REQUESTER)
+                      {{user.profile.fullName}}
+                    @endif
+                  @endeach
+                </p>                
+                
+                <p class="state">{{ticket.state}}</p>
+
+                <p class="technician">
+                  @each(user in ticket.User)
+                    @if(user.$extras.pivot_role == Roles.TECHNICIAN)
+                      {{user.profile.fullName}}
+                    @endif
+                  @endeach
+                </p>
+
+                <p class="createdAt">{{ticket.createdAt.toFormat('dd-MM-yyyy')}}  </p>
+                
+              </div>
+              <hr>
+            @end
+        </main>
+        <aside class="ticketInfo">
+            Info variaa
+        </aside>
+    </section>
+</body>
+
+</html>
