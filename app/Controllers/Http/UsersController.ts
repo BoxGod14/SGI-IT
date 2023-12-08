@@ -50,10 +50,10 @@ export default class UsersController {
         userEdit.roles = request.input("roles");
       }
       //*Aunque profile figure con error en rojo, es solo un aviso de que puede estar nulo, salvo casos muy raros jamas estara vacio
-      profile.name = request.input("name");
-      profile.surname = request.input("surname");
-      profile.birthday = request.input("birthday");
-      profile.save();
+      profile!.name = request.input("name");
+      profile!.surname = request.input("surname");
+      profile!.birthday = request.input("birthday");
+      profile!.save();
       userEdit.save();
       trx.commit();
     } catch (error) {

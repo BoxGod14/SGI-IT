@@ -10,7 +10,7 @@
       message: messager.value,
     }
     //Peticion ajax
-    fetch("{{ route('MessagesController.store'}}", {
+    fetch("{{ route('MessagesController.store')}}", {
       method: 'POST',
       headers: {
           'Content-Type': 'application/json', // Especificar el tipo de contenido si estás enviando datos en formato JSON
