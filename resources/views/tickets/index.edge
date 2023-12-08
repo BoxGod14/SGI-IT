@@ -50,8 +50,15 @@
                 
               </div>
               <hr>
-            @end
+            @end            
         </main>
+        <div>
+          @each(anchor in tickets.getUrlsForRange(1, tickets.lastPage))
+            <a href="{{ anchor.url }}">
+              {{ anchor.page }}
+            </a>
+          @endeach
+        </div>
         <aside class="ticketInfo">
             Info variaa
         </aside>

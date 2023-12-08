@@ -19,13 +19,13 @@
         <main class="tickets ticket" id="swup">
           <section id="subject">
             <p>{{ticket.subject}}</p>
-            <p class="requester">
+            <a class="requester"
                 @each(user in ticket.User)
                   @if(user.$extras.pivot_role == Roles.REQUESTER)
-                    {{user.profile.fullName}}
+                  href="{{ route('UsersController.show', [user.id]) }}">{{user.profile.fullName}}
                   @endif
                 @endeach
-              </p>   
+              </a>   
           </section>
           <section id="description">
             <p>Descripción</p>

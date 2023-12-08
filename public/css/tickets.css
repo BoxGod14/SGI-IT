@@ -25,10 +25,11 @@
   display: grid;
   grid-template-columns: 2fr 2fr 1fr 2fr 1fr;
 }
+/*
 .ticket{
   display: grid;
   grid-template-rows: 1fr 4fr 2fr;
-}
+}*/
 
 #description{
   background-color: #A3CEF1;

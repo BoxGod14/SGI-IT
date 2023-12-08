@@ -9,7 +9,7 @@ export default class extends BaseSchema {
       table.increments("id").primary();
 
       table.string("subject", 255).notNullable(); //Asunto del ticket, limitado a 255 caracteres (limitación general de correos electronicos)
-      table.string("description").notNullable(); //Descripcion del ticket
+      table.string("description", 1000).notNullable(); //Descripcion del ticket
       table
         .enum("state", Object.values(State))
         .defaultTo(State.OPEN)

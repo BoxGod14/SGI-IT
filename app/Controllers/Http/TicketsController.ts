@@ -7,15 +7,49 @@ import User from "App/Models/User";
 import CreateTicketValidator from "App/Validators/CreateTicketValidator";
 
 export default class TicketsController {
-  public async index({ view }: HttpContextContract) {
-    const ticket = await Ticket.query().preload("User", (query) => {
-      query.pivotColumns(["role"]).preload("profile");
-    });
-    view.share({
-      tickets: ticket,
-      Roles: Roles,
-    });
-    const html = await view.render("tickets/index");
+  public async index({ view, request }: HttpContextContract) {
+    const page = request.input('page', 1)//Paginas de la paginacion
+    const limit = 10; //Limite de tickets por pagina
+
+    //Sección de filtros
+    const technician = request.input('technician', '*')
+    const requester = request.input('requester', '*')
+    let state = request.input('state', '*')
+    const ticketsQuery = Ticket.query();
+
+    if (technician != '*') {
+        ticketsQuery.whereHas('User', (query) => {
+            query.where('id', technician);
+            query.wherePivot('role', Roles.TECHNICIAN);
+        });
+    }
+    
+    if (requester != '*') {
+      ticketsQuery.whereHas('User', (query) => {
+          query.where('id', requester);
+          query.wherePivot('role', Roles.REQUESTER);
+      });
+    }
+
+    if (Object.values(State).includes(state)) {
+      ticketsQuery.where('state', state);
+    }
+    else {
+      state = '*';
+    }
+    const tickets = await ticketsQuery
+        .preload("User", (query) => {
+            query.pivotColumns(["role"]).preload("profile");
+        })
+        .paginate(page, limit);
+    tickets.baseUrl('/tickets')
+    tickets.queryString({
+      page: page, 
+      technician: technician,
+      requester: requester,
+      state: state
+    })
+    const html = await view.render("tickets/index", { tickets, Roles });
     return html;
   }
 

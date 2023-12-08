@@ -19,11 +19,21 @@
 */
 
 import Route from '@ioc:Adonis/Core/Route'
+import Roles from 'App/Enums/Roles'
+import UserFactory from 'Database/factories/UserFactory'
 
 Route.get('/', async ({ view }) => {
   return view.render('welcome')
 })
-
+Route.get('/factories', async () => {
+  await UserFactory
+  .with('tickets', 3, (tickets) =>{
+    tickets.pivotAttributes({ role: Roles.REQUESTER })
+  })
+  .with('profile')
+  .createMany(20)
+  return 'ok'
+})
 //Rutas a los controladores y extra
 Route.group(() => {
   Route.post('/register', 'AuthController.register').as('auth.register')
