@@ -19,6 +19,7 @@
 */
 
 import Route from '@ioc:Adonis/Core/Route'
+import UsersController from 'App/Controllers/Http/UsersController'
 import Roles from 'App/Enums/Roles'
 import UserFactory from 'Database/factories/UserFactory'
 
@@ -47,4 +48,5 @@ Route.group(() => {
   Route.resource('users', 'UsersController')
   Route.get('/logout', 'AuthController.logout').as('auth.logout')
   Route.resource('messages', 'MessagesController')
+  Route.post('/users/getUsers', 'UsersController.getUsers').as('users.getUsers')
 }).middleware('auth')

@@ -1,6 +1,7 @@
 import type { HttpContextContract } from "@ioc:Adonis/Core/HttpContext";
 import Database from "@ioc:Adonis/Lucid/Database";
 import Roles from "App/Enums/Roles";
+import Profile from "App/Models/Profile";
 import User from "App/Models/User";
 
 export default class UsersController {
@@ -67,4 +68,26 @@ export default class UsersController {
   }
 
   public async destroy({}: HttpContextContract) {}
+  
+  /**
+   * Funcion AJAX para obtener los usuarios segun su rol
+   */
+  public async getUsers({ auth, request, response }) {
+    //Obtener usuario y comprobar su rol
+    const user = await auth.use("web").authenticate();
+    if (user.roles == Roles.REQUESTER) {
+      return response.status(403).json({ message: "Error al obtener usuario" });
+    }
+    //Comprobar si ha llegado el tipo de rol a buscar y sea Requester o Technician
+    const searchRole = request.input('role');
+    if (searchRole != Roles.REQUESTER && searchRole != Roles.TECHNICIAN) {
+      return response.status(404).json({ message: "Error al obtener usuario" });
+    }
+    //Si ha superado ambos filtros significa que se puede realizar la busqueda.
+    const name = '%'+request.input('name')+'%';
+    const usersFind = await Profile.query()
+    .whereRaw("name like ?",[name])//Se emplea whereRaw en vez de whereLike para evitar el fallo de COLLATE incorrecto.
+
+    return response.status(200).json(usersFind);    
+  }
 }

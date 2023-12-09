@@ -1,5 +1,59 @@
 <aside class="ticketInfo">
     <h3>Filtro</h3>
+    <form id="filterForm">
+        {{ csrfField() }}
+        <input type="text" id="requester">
+    </form>
+    <button id="applyFilters">Aplicar filtros</button>
+    <script>
+        const requesterInput = document.getElementById("requester");
+
+        requesterInput.addEventListener("input", function() {
+            getUsers('{{Roles.REQUESTER}}');
+        });
+
+        document.getElementById("applyFilters").addEventListener("click", applyFilters);
+        // Supongamos que tienes estos datos como filtros
+
+        function applyFilters() {
+            var filtro1 = "valor1";
+            var filtro2 = "valor2";        
+            var url = "{{route('TicketsController.index')}}?filtro1=" + encodeURIComponent(filtro1) + "&filtro2=" + encodeURIComponent(filtro2);
+            window.location.href = url;
+        }
+        
+        function getUsers(role) {
+            // Construye el cuerpo de la solicitud
+            const data = {
+                role: role,  // Asegúrate de tener el valor adecuado para 'role'
+                name: requesterInput.value,
+                _csrf: document.querySelector('[name="_csrf"]').value,
+            };
+
+            fetch("{{ route('UsersController.getUsers') }}", {
+                method: 'POST', // Puedes ajustar el método según tus necesidades
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(data),
+            })
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error(`Error al realizar la solicitud: ${response.status}`);
+                }
+                return response.json();
+            })
+            .then(data => {
+                // Maneja la respuesta exitosa aquí (data contiene la respuesta JSON)
+                console.log(data);
+            })
+            .catch(error => {
+                // Maneja los errores aquí
+                console.error('Error en la solicitud:', error.message);
+            });
+        }
+
     
-    <button>Aplicar filtros</button>
+    </script>
+    
 </aside>
