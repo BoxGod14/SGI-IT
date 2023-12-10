@@ -85,9 +85,12 @@ export default class UsersController {
     }
     //Si ha superado ambos filtros significa que se puede realizar la busqueda.
     const name = '%'+request.input('name')+'%';
-    const usersFind = await Profile.query()
-    .whereRaw("name like ?",[name])//Se emplea whereRaw en vez de whereLike para evitar el fallo de COLLATE incorrecto.
-
+    const usersFind = await Profile
+      .query()
+      .whereRaw("name like ?",[name])//Se emplea whereRaw en vez de whereLike para evitar el fallo de COLLATE incorrecto.
+      .preload('user', (userquery) => {
+        userquery.where('roles',searchRole)
+      })
     return response.status(200).json(usersFind);    
   }
 }

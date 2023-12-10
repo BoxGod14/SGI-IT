@@ -25,12 +25,20 @@
   display: grid;
   grid-template-columns: 2fr 2fr 1fr 2fr 1fr;
 }
+
+.suggestionList {
+  list-style-type: none;
+  padding: 0;
+  cursor: pointer;
+}
 /*
 .ticket{
   display: grid;
   grid-template-rows: 1fr 4fr 2fr;
 }*/
-
+#requesterId,#technicianId {
+  display: none;
+}
 #description{
   background-color: #A3CEF1;
   padding: 1rem 1rem 3rem 1rem;

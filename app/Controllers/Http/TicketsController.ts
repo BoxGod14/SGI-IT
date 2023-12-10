@@ -12,19 +12,19 @@ export default class TicketsController {
     const limit = 10; //Limite de tickets por pagina
 
     //Sección de filtros
-    const technician = request.input('technician', '*')
-    const requester = request.input('requester', '*')
+    const technician = request.input('technician', '')
+    const requester = request.input('requester', '')
     let state = request.input('state', '*')
     const ticketsQuery = Ticket.query();
 
-    if (technician != '*') {
+    if (technician != '*' && technician != "") {
         ticketsQuery.whereHas('User', (query) => {
             query.where('id', technician);
             query.wherePivot('role', Roles.TECHNICIAN);
         });
     }
     
-    if (requester != '*') {
+    if (requester != '*' && requester != "") {
       ticketsQuery.whereHas('User', (query) => {
           query.where('id', requester);
           query.wherePivot('role', Roles.REQUESTER);
@@ -49,7 +49,7 @@ export default class TicketsController {
       requester: requester,
       state: state
     })
-    const html = await view.render("tickets/index", { tickets, Roles });
+    const html = await view.render("tickets/index", { tickets, Roles, State });
     return html;
   }
 

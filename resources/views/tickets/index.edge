@@ -24,6 +24,7 @@
             <p class="createdAt">Fecha de creación</p>            
           </div>
           <hr>
+          {{--Bucle para mostrar tickets creados--}}
             @each(ticket in tickets)
               <div>
                 <p class="subject">{{ticket.subject}}</p>
@@ -50,15 +51,8 @@
                 
               </div>
               <hr>
-            @end            
+            @endeach            
         </main>
-        <div>
-          @each(anchor in tickets.getUrlsForRange(1, tickets.lastPage))
-            <a href="{{ anchor.url }}">
-              {{ anchor.page }}
-            </a>
-          @endeach
-        </div>
         @include('partials/aside.edge')
     </section>
 </body>
