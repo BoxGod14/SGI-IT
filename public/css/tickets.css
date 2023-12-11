@@ -4,16 +4,24 @@
   grid-template-rows: 1fr repeat(4, 3fr);
   grid-column-gap: 1rem;
   grid-row-gap: 0.5rem;
-  height: 98vh;
+  height: 100vh;
 }
 
 .navigation {
   grid-area: 1 / 1 / 6 / 2;
   background-color: #274C77;
+  height: 100%;
 }
-
+.navigation > ul {
+  position: sticky; 
+  top: 0;
+  left: 0;
+}
 .header {
   grid-area: 1 / 2 / 2 / 6;
+  background-color: red;
+  position: sticky; 
+  top: 0;
 }
 .ticketInfo {
   grid-area: 2 / 5 / 6 / 6;
