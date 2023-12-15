@@ -24,19 +24,28 @@
             <p class="createdAt">Fecha de creación</p>            
           </div>
           <hr>
+          <script defer>
+            document.addEventListener('DOMContentLoaded', (event) => {
+              document.querySelectorAll('.ticket').forEach((element) => {
+                  element.addEventListener('click', (event) => {
+                      window.location.href = element.dataset.url;
+                  });
+              });
+            });
+          </script>
           {{--Bucle para mostrar tickets creados--}}
             @each(ticket in tickets)
-              <div>
+              <div class="ticket" data-url="{{route('TicketsController.show', [ticket.id])}}">
                 <p class="subject">{{ticket.subject}}</p>
 
                 <p class="requester">
                   @each(user in ticket.User)
                     @if(user.$extras.pivot_role == Roles.REQUESTER)
-                      {{user.profile.fullName}}
+                      <a href="{{route('UsersController.show', [user.id])}}">{{user.profile.fullName}}</a>
                     @endif
                   @endeach
                 </p>                
-                
+
                 <p class="state">{{ticket.state}}</p>
 
                 <p class="technician">
@@ -48,10 +57,9 @@
                 </p>
 
                 <p class="createdAt">{{ticket.createdAt.toFormat('dd-MM-yyyy')}}  </p>
-                
               </div>
               <hr>
-            @endeach            
+            @endeach         
         </main>
         @include('partials/aside.edge')
     </section>
