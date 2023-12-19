@@ -10,9 +10,25 @@ export default class UsersController {
     return user;
   }
 
-  public async show({ params }: HttpContextContract) {
-    const user = await User.findByOrFail("id", params.id);
-    return "mostrar info del usuario " + user.username;
+  public async show({ params, view, response, auth }: HttpContextContract) {
+    let userShow: User;
+    //Intentar obtener usuario y comprobar si podemos visualizarlo
+    const user = await auth.use("web").authenticate();
+    try {
+      userShow = await User.findByOrFail("id", params.id);
+      await userShow.load('profile');
+      if (user != userShow && user.roles == Roles.REQUESTER) {
+        throw new Error();        
+      }
+    } catch (error) {
+      //Si da error, sin importar cual sea, se redirigira a mostrar su propio usuario
+      response.status(403).redirect().toRoute("UsersController.show", [user.id]);
+    }
+    view.share({
+      user: userShow!,
+    });
+    const html = view.render("user/show.edge", userShow!);
+    return html;
   }
 
   public async edit({ view, params, auth, response }: HttpContextContract) {

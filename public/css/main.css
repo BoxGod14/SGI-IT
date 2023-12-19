@@ -21,6 +21,12 @@ input[type="submit"] {
 .welcomeLoginRegisterBody {
   grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
 }
+.navigation {
+  background-color: #274C77;
+}
+.header {
+  background-color: red;  
+}
 .buttonBaseStyle {
   border-radius: 1.875rem;
   background: #6096ba;

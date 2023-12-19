@@ -19,7 +19,6 @@
 */
 
 import Route from '@ioc:Adonis/Core/Route'
-import UsersController from 'App/Controllers/Http/UsersController'
 import Roles from 'App/Enums/Roles'
 import UserFactory from 'Database/factories/UserFactory'
 

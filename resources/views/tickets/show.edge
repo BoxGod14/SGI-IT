@@ -12,10 +12,9 @@
 <body>
   <script defer src="../js/tickets.js"></script>
     @include('partials/scripts/transitionsSwup_js.edge')
-    @include('partials/scripts/createMessage_js.edge')  
-    <section class="container">        
-        @include('partials/header.edge')
-        @include('partials/nav.edge')
+    @include('partials/scripts/createMessage_js.edge') 
+    @include('partials/header.edge')
+    @include('partials/nav.edge')
         <main class="tickets ticket" id="swup">
           <section id="subject">
             <p>{{ticket.subject}}</p>
@@ -54,6 +53,5 @@
           </section>
         </main>
         {{--  @include('partials/aside.edge')          --}}
-    </section>
 </body>
 </html>

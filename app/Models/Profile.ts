@@ -21,6 +21,12 @@ export default class Profile extends BaseModel {
   @column()
   public picture: string
 
+  @column()
+  public jobPosition: string
+
+  @column()
+  public phoneNumber: string
+
   @column.dateTime({ autoCreate: true })
   public createdAt: DateTime
 

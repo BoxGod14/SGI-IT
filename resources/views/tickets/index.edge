@@ -12,18 +12,17 @@
 
 <body>
     @include('partials/scripts/transitionsSwup_js.edge')    
-    <section class="container">        
-        @include('partials/header.edge')
-        @include('partials/nav.edge')
+    @include('partials/header.edge')
+    @include('partials/nav.edge')
         <main class="tickets"  id="swup">
           <div>
             <p class="subject">Asunto</p>
             <p class="requester">Solicitante</p> 
             <p class="state">Estado</p>
             <p class="technician">Tecnico asignado</p>                            
-            <p class="createdAt">Fecha de creación</p>            
+            <p class="createdAt">Fecha de creación</p>           
           </div>
-          <hr>
+          
           <script defer>
             document.addEventListener('DOMContentLoaded', (event) => {
               document.querySelectorAll('.ticket').forEach((element) => {
@@ -61,8 +60,7 @@
               <hr>
             @endeach         
         </main>
-        @include('partials/aside.edge')
-    </section>
+        @include('partials/asideTickets.edge')
 </body>
 
 </html>

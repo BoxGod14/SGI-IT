@@ -16,6 +16,8 @@ export default class extends BaseSchema {
       table.string("surname").notNullable(); //Apellido del usuario
       table.date("birthday").notNullable(); //Fecha de nacimiento
       table.string("picture"); //URL de su foto de perfil
+      table.string("job_position"); //Puesto de trabajo
+      table.string("phone_number"); //Numero de telefono
       /**
        * Uses timestamptz for PostgreSQL and DATETIME2 for MSSQL
        */
