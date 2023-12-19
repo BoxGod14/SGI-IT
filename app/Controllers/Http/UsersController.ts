@@ -17,6 +17,9 @@ export default class UsersController {
     try {
       userShow = await User.findByOrFail("id", params.id);
       await userShow.load('profile');
+      await userShow.load('tickets' ,(tickets) => {
+        tickets.where('role', Roles.REQUESTER)
+      })
       if (user != userShow && user.roles == Roles.REQUESTER) {
         throw new Error();        
       }

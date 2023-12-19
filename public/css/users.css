@@ -1,6 +1,6 @@
 body {
     grid-template-columns: 1fr repeat(3, 3fr) 2fr;
-    grid-template-rows: 1fr repeat(4, 3fr);
+    grid-template-rows: 1fr 1fr repeat(3, 3fr);
     grid-column-gap: 1rem;
     grid-row-gap: 0.5rem;
     grid-auto-flow: column;
@@ -13,10 +13,12 @@ body {
 .header {
     grid-area: 1 / 2 / 2 / 6;
 }
-.userResume {
+.mainInfo {
     grid-area: 2 / 2 / 4 / 6; /* Ajusta las filas según sea necesario */
+    background-color: rebeccapurple;
 }
 
-.info {
+.extraInfo {
     grid-area: 4 / 2 / 6 / 6; /* Ajusta las filas según sea necesario */
+    background-color: royalblue;
 }

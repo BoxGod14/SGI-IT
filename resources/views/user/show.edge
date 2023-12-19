@@ -13,7 +13,7 @@
     @include('partials/scripts/transitionsSwup_js.edge')    
     @include('partials/header.edge')
     @include('partials/nav.edge')
-    <section>
+    <section class="mainInfo">
         <h4>Detalles del usuario</h4>
         <img src="" alt="Foto de usuario">
         <p>{{user.profile.fullName}}</p>
@@ -24,10 +24,74 @@
         </div>
 
         <div>
-            <p>Correo electronico</p>
-            <p>{{user.email}}</p>
+            <p>Puesto</p>
+            <p>
+                @if(user.profile.jobPosition)
+                    {{user.profile.jobPosition}}
+                @else
+                  -
+                @end
+            </p>
         </div>
         
+        <div>
+            <p>Número de teléfono</p>
+            <p>
+                @if(user.profile.phoneNumber)
+                    {{user.profile.phoneNumber}}
+                @else
+                    -
+                @end
+            </p>
+        </div>
+    </section>
+    <section class="extraInfo">
+        <div id="userInfo">
+            <div>
+                <p>Nombre</p>
+                <p>{{user.profile.name}}</p>
+            </div>
+            <div>
+                <p>Apellidos</p>
+                <p>{{user.profile.surname}}</p>
+            </div>
+            <div>
+                <p>Fecha de nacimiento</p>
+                <p>{{user.profile.birthday.toFormat('dd-MM-yyyy')}}</p>
+            </div>
+            <div>
+                <p>Fecha de creacion</p>
+                <p>{{user.profile.createdAt.toFormat('dd-MM-yyyy')}}</p>
+            </div>
+        </div>
+        <div id="tickets">
+            @each(ticket in user.tickets)
+              <div class="ticket" data-url="{{route('TicketsController.show', [ticket.id])}}">
+                <p class="subject">{{ticket.subject}}</p>
+
+                <p class="requester">
+                  @each(user in ticket.User)
+                    @if(user.$extras.pivot_role == Roles.REQUESTER)
+                      <a href="{{route('UsersController.show', [user.id])}}">{{user.profile.fullName}}</a>
+                    @endif
+                  @endeach
+                </p>                
+
+                <p class="state">{{ticket.state}}</p>
+
+                <p class="technician">
+                  @each(user in ticket.User)
+                    @if(user.$extras.pivot_role == Roles.TECHNICIAN)
+                      {{user.profile.fullName}}
+                    @endif
+                  @endeach
+                </p>
+
+                <p class="createdAt">{{ticket.createdAt.toFormat('dd-MM-yyyy')}}  </p>
+              </div>
+              <hr>
+            @endeach
+        </div>
     </section>
 </body>
 </html>
