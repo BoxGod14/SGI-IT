@@ -26,16 +26,7 @@
         
     </form>
     <button id="applyFilters">Aplicar filtros</button>
-    {{--En caso de que haya paginas, se mostrara la paginación--}}
-    @if(tickets.hasPages)
-        <div>        
-            @each(anchor in tickets.getUrlsForRange(1, tickets.lastPage))
-            <a href="{{ anchor.url }}">
-                {{ anchor.page }}
-            </a>
-            @endeach        
-        </div>
-    @end
+    
     <script>
         const requesterInput = document.getElementById("requesterName");
         const requesterId = document.getElementById("requesterId");

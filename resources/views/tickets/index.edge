@@ -58,7 +58,30 @@
                 <p class="createdAt">{{ticket.createdAt.toFormat('dd-MM-yyyy')}}  </p>
               </div>
               <hr>
-            @endeach         
+            @endeach 
+            {{--En caso de que haya paginas, se mostrara la paginación--}}
+            @if(tickets.hasPages)
+              <div>
+                  {{--  {{tickets.firstPage}}                       --}}
+                  @if(tickets.currentPage > 3)
+                    <a href="{{ tickets.getUrl(tickets.firstPage) }}">
+                      <<
+                    </a>
+                  @end
+                  @each(anchor in tickets.getUrlsForRange(tickets.currentPage - 2, tickets.currentPage + 3))
+                    @if(anchor.page >= tickets.firstPage && anchor.page <= tickets.lastPage)
+                    <a href="{{ anchor.url }}">
+                        {{ anchor.page }}
+                    </a>
+                    @endif        
+                  @endeach    
+                  @if(tickets.currentPage + 3 < tickets.lastPage)
+                    <a href="{{tickets.getUrl(tickets.lastPage)}}">
+                      >>
+                    </a> 
+                  @end            
+              </div>
+            @end        
         </main>
         @include('partials/asideTickets.edge')
 </body>
