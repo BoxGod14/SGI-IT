@@ -16,7 +16,7 @@ export default class extends BaseSeeder {
       });
       user.related("profile").create({
         name: "Administrador",
-        surname: "El fuking root",
+        surname: "Super administrador",
         birthday: DateTime.fromObject({
           year: 2000,
           month: 12,

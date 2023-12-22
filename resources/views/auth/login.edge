@@ -9,22 +9,24 @@
   <link rel="stylesheet" href="../css/login.css">
   <link rel="stylesheet" href="../css/transitions.css">
 </head>
-<body id="swup" class="welcomeLoginRegisterBody">
+<body id="swup">
   @include('partials/scripts/transitionsSwup_js.edge')
-  <main class="formButtonersBaseStyle formButtonersBaseLayout transition-fade" id="loginForm">
-    <h2>Iniciar sesión</h2>
-    <form action="{{ route('AuthController.login') }}" method="post">
-      {{ csrfField() }}          
-      <input type="text" name="uuid" placeholder="Usuario o correo">
-      <input type="password" name="password" placeholder="Contraseña">
-      <input type="submit" value="Iniciar sesión" class="buttonBaseStyle">          
-    </form>
-    <div>
-      <p class="redirectLoginRegister">No tengo cuenta: <a href="{{ route('AuthController.registerForm') }}">Crear cuenta</a></p>
-      @if(flashMessages.has('errors'))
-        <p class="errors">{{ flashMessages.get('errors') }}</p>
-      @end
-    </div>
+  <main>
+    <div class="container">
+      <h2>Iniciar sesión</h2>
+      <form action="{{ route('AuthController.login') }}" method="post">
+        {{ csrfField() }}          
+        <input type="text" name="uuid" placeholder="Usuario o correo">
+        <input type="password" name="password" placeholder="Contraseña">
+        <input type="submit" value="Iniciar sesión" class="btn_primary">          
+      </form>
+      <div>
+        <p class="redirect">No tengo cuenta: <a href="{{ route('AuthController.registerForm') }}">Crear cuenta</a></p>
+        @if(flashMessages.has('errors'))
+          <p class="errors">{{ flashMessages.get('errors') }}</p>
+        @end
+      </div>
+    </div>    
   </main>
   
 </body>

@@ -1,0 +1,146 @@
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@100;200;300;400;500;600;700;800;900&family=Poppins:wght@100;200;300;400;500;600;700;800;900&display=swap');
+ 
+:root {
+    /* Colores */
+    --color-primary: #3498db;
+    --color-secondary: #e74c3c;
+    --color-accent: #7b8e9f; /*Color para acentuar los input*/
+    --color-footer: #999;
+    --color-item-text: #6c6c6c;
+    --color-header: rgb(28, 28, 28);
+    --color-hover-text: #4b4b4b;
+    --color-nav: #6f6f6f;
+    --color-background: #ebeff3;
+    --color-bg-footer: #eaeaea;
+    --color-bg-card: rgba(18, 52, 77, 0.16);
+    --color-btn-light: rgb(38, 73, 102);
+    --color-btn-dark: rgb(18, 52, 77);
+ 
+    /* Tipografía */
+    --font-family-p: 'Montserrat', sans-serif;
+    --font-family-header: 'Poppins', sans-serif;
+    --font-size-xs: 12px;
+    --font-size-sm: 14px;
+    --font-size-base: 16px;
+    --font-size-lg: 18px;
+    --font-size-xl: 24px;
+    --font-size-h1: 82px;
+    --font-size-h2: 56px;
+    --font-size-h3: 48px;
+    --font-size-h4: 34px;
+    --font-weight-normal: 400;
+    --font-weight-bold: 700;
+ 
+    /* Espaciado */
+    --spacing-unit: 8px;
+    --spacing-xs: calc(0.25 * var(--spacing-unit));
+    --spacing-sm: calc(0.5 * var(--spacing-unit));
+    --spacing-md: calc(1.5 * var(--spacing-unit));
+    --spacing-lg: calc(2.5 * var(--spacing-unit));
+    --spacing-xl: calc(4 * var(--spacing-unit));
+ 
+    /* Dimensiones */
+    --header-height: 60px;
+    --footer-height: 60px;
+    --logo-height: 25px;
+ 
+    /* Bordes y sombras */
+    --border-radius-sm: 4px;
+    --border-radius-lg: 14px;
+    --box-shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.05);
+    --box-shadow-md: 0 4px 6px rgba(0, 0, 0, 0.1);
+    --box-shadow-lg: 0 10px 15px rgba(0, 0, 0, 0.1);
+    --box-shadow-xl: 0 20px 25px rgba(0, 0, 0, 0.1);
+ 
+    /* Animaciones */
+    --transition-duration: 0.3s;
+ 
+    /* Breakpoints */
+    --breakpoint-xs: 480px;
+    --breakpoint-sm: 768px;
+    --breakpoint-md: 1024px;
+    --breakpoint-lg: 1200px;
+    --breakpoint-xl: 1600px;
+}
+body {
+    margin: 0;
+    padding: 0;
+    background-color: var(--color-background);
+}
+
+h2 {
+    font-family: var(--font-family-header);
+    margin: 0;
+}
+main {
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 0 1rem;
+}
+
+a {
+    text-decoration: none;
+}
+
+form {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 1rem;
+}
+
+input {
+    border-radius: var(--border-radius-sm);
+    border: 1px solid var(--color-accent);
+    text-align: center;
+    font-size: 14px;
+    color: var(--color-accent);
+}
+
+form > section {
+    display: flex;
+}
+
+label {
+    font-size: 14px;
+    color: var(--color-accent);
+    flex: 80%
+}
+
+.container {
+    background-color: white;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    max-width: 30rem;
+    height: 100%;
+    max-height: 15rem;
+    padding: 2rem;
+    border-radius: var(--border-radius-lg);
+    border: 1px solid var(--color-bg-card);
+    box-shadow: var(--box-shadow-sm);
+    gap: 1rem;
+}
+
+.btn_primary {
+    font-family: var(--font-family-p);
+    padding: 0.5rem 1rem;
+    background-image: linear-gradient(var(--color-btn-light) 0%, var(--color-btn-dark) 100%);
+    color: white;
+    border-radius: var(--border-radius-sm);
+    border: var(--color-btn);
+}
+
+.btn_primary:hover {
+    background-image: linear-gradient(var(--color-btn-dark) 0%, var(--color-btn-dark) 100%);   
+}
+
+.redirect {
+    color: var(--color-accent);
+    font-size: 14px;
+}

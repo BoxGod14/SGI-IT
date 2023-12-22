@@ -11,12 +11,12 @@
   <link rel="stylesheet" href="../css/transitions.css">
 </head>
 
-<body id="swup" class="welcomeLoginRegisterBody">
+<body id="swup">
   @include('partials/scripts/transitionsSwup_js.edge')
-  <main class="formButtonersBaseStyle formButtonersBaseLayout transition-fade" id="registerForm">
-    <h2>Crear usuario</h2>
-    
-    <form action="{{ route('AuthController.register') }}" id="form-1" class="transition-form" data-swup-form data-swup-inline-form method="post">
+  <main>
+    <div class="container">
+      <h2>Crear usuario</h2>    
+    <form action="{{ route('AuthController.register') }}" method="post">
       {{ csrfField() }}
       <section>
         <label for="username">Usuario</label>
@@ -29,6 +29,7 @@
         <p class="errors">{{ flashMessages.get('messages.username')}}</p>
         @end
       </section>
+
       <section>
         <label for="email">Correo electronico</label>
         <input type="email" name="email" 
@@ -84,7 +85,6 @@
         <p class="errors">{{ flashMessages.get('messages.birthday')}}</p>
         @end
       </section>
-
       
       <section>
         <label for="password">Contraseña</label>
@@ -100,12 +100,12 @@
         @if(flashMessages.has('messages.password_confirmation'))
         <p class="errors">{{ flashMessages.get('messages.password_confirmation')}}</p>
         @end
-      </section>
-      
-      <input type="submit" value="Registro">
+      </section>      
+      <input type="submit" value="Registro" class="btn_primary">
 
     </form>
-    <p class="redirectLoginRegister">Ya tengo cuenta: <a href="{{ route('AuthController.loginForm') }}">Iniciar sesión</a></p>
+    <p class="redirect">Ya tengo cuenta: <a href="{{ route('AuthController.loginForm') }}">Iniciar sesión</a></p>
+    </div>    
   </main>
 </body>
 
