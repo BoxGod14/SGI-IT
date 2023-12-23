@@ -16,93 +16,99 @@
   <main>
     <div class="container">
       <h2>Crear usuario</h2>    
-    <form action="{{ route('AuthController.register') }}" method="post">
+    <form action="{{ route('AuthController.register') }}" method="post" class="registerForm">
       {{ csrfField() }}
-      <section>
-        <label for="username">Usuario</label>
-        <input type="text" name="username" 
-        @if(flashMessages.has('username')) 
-          value="{{flashMessages.get('username')}}"
-        @end
-        >
-        @if(flashMessages.has('messages.username'))
-        <p class="errors">{{ flashMessages.get('messages.username')}}</p>
-        @end
-      </section>
-
-      <section>
-        <label for="email">Correo electronico</label>
-        <input type="email" name="email" 
-        @if(flashMessages.has('email')) 
-          value="{{flashMessages.get('email')}}" 
-        @end
-        >
-        @if(flashMessages.has('messages.email'))
-          <p class="errors">{{ flashMessages.get('messages.email')}}</p>
-        @end
-      </section>
-
-      <section>
-        <label for="email_confirmation">Confirmación correo electronico</label>
-        <input type="email" name="email_confirmation">
-        @if(flashMessages.has('messages.email_confirmation'))
-        <p class="errors">{{ flashMessages.get('messages.email_confirmation')}}</p>
-        @end
-      </section>
-
-      <section>
-        <label for="name">Nombre</label>
-        <input type="text" name="name" 
-        @if(flashMessages.has('name')) 
-          value="{{flashMessages.get('name')}}" 
-        @end
-        >
-        @if(flashMessages.has('messages.name'))
-        <p class="errors">{{ flashMessages.get('messages.name')}}</p>
-        @end
-      </section>
-
-      <section>
-        <label for="surname">Apellidos</label>
-        <input type="text" name="surname" 
-        @if(flashMessages.has('surname')) 
-          value="{{flashMessages.get('surname')}}"
-        @end
-        >
-        @if(flashMessages.has('messages.surname'))
-        <p class="errors">{{ flashMessages.get('messages.surname')}}</p>
-        @end
-      </section>
-
-      <section>
-        <label for="birthday">Cumpleaños</label>
-        <input type="date" name="birthday" 
-        @if(flashMessages.has('birthday')) 
-          value="{{flashMessages.get('birthday')}}"
-        @end
-        >
-        @if(flashMessages.has('messages.birthday'))
-        <p class="errors">{{ flashMessages.get('messages.birthday')}}</p>
-        @end
-      </section>
+      <div class="form-columns">
+        <div>
+          <section class="inputWithLabel">
+            <label for="username">Usuario</label>
+            <input type="text" name="username" 
+            @if(flashMessages.has('username')) 
+              value="{{flashMessages.get('username')}}"
+            @end
+            >
+            @if(flashMessages.has('messages.username'))
+            <p class="errors">{{ flashMessages.get('messages.username')}}</p>
+            @end
+          </section>
+    
+          <section class="inputWithLabel">
+            <label for="email">Correo electronico</label>
+            <input type="email" name="email" 
+            @if(flashMessages.has('email')) 
+              value="{{flashMessages.get('email')}}" 
+            @end
+            >
+            @if(flashMessages.has('messages.email'))
+              <p class="errors">{{ flashMessages.get('messages.email')}}</p>
+            @end
+          </section>
+    
+          <section class="inputWithLabel">
+            <label for="email_confirmation">Confirmación correo electronico</label>
+            <input type="email" name="email_confirmation">
+            @if(flashMessages.has('messages.email_confirmation'))
+            <p class="errors">{{ flashMessages.get('messages.email_confirmation')}}</p>
+            @end
+          </section>
+          <section class="inputWithLabel">
+            <label for="password">Contraseña</label>
+            <input type="password" name="password">
+            @if(flashMessages.has('messages.password'))
+            <p class="errors">{{ flashMessages.get('messages.password')}}</p>
+            @end
+          </section>  
+          <section class="inputWithLabel">
+            <label for="password_confirmation">Confirmar contraseña</label>
+            <input type="password" name="password_confirmation">
+            @if(flashMessages.has('messages.password_confirmation'))
+            <p class="errors">{{ flashMessages.get('messages.password_confirmation')}}</p>
+            @end
+          </section>  
+        </div>
+        
+        <div>
+          <section class="inputWithLabel">
+            <label for="name">Nombre</label>
+            <input type="text" name="name" 
+            @if(flashMessages.has('name')) 
+              value="{{flashMessages.get('name')}}" 
+            @end
+            >
+            @if(flashMessages.has('messages.name'))
+            <p class="errors">{{ flashMessages.get('messages.name')}}</p>
+            @end
+          </section>
+    
+          <section class="inputWithLabel">
+            <label for="surname">Apellidos</label>
+            <input type="text" name="surname" 
+            @if(flashMessages.has('surname')) 
+              value="{{flashMessages.get('surname')}}"
+            @end
+            >
+            @if(flashMessages.has('messages.surname'))
+            <p class="errors">{{ flashMessages.get('messages.surname')}}</p>
+            @end
+          </section>
+    
+          <section class="inputWithLabel">
+            <label for="birthday">Cumpleaños</label>
+            <input type="date" name="birthday" 
+            @if(flashMessages.has('birthday')) 
+              value="{{flashMessages.get('birthday')}}"
+            @end
+            >
+            @if(flashMessages.has('messages.birthday'))
+            <p class="errors">{{ flashMessages.get('messages.birthday')}}</p>
+            @end
+          </section>        
+              
+          <input type="submit" value="Registro" class="btn_primary juan">
+    
+        </div>
+      </div>
       
-      <section>
-        <label for="password">Contraseña</label>
-        <input type="password" name="password">
-        @if(flashMessages.has('messages.password'))
-        <p class="errors">{{ flashMessages.get('messages.password')}}</p>
-        @end
-      </section>
-
-      <section>
-        <label for="password_confirmation">Confirmar contraseña</label>
-        <input type="password" name="password_confirmation">
-        @if(flashMessages.has('messages.password_confirmation'))
-        <p class="errors">{{ flashMessages.get('messages.password_confirmation')}}</p>
-        @end
-      </section>      
-      <input type="submit" value="Registro" class="btn_primary">
-
     </form>
     <p class="redirect">Ya tengo cuenta: <a href="{{ route('AuthController.loginForm') }}">Iniciar sesión</a></p>
     </div>    

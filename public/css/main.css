@@ -86,12 +86,32 @@ a {
 
 form {
     display: flex;
+    flex-wrap: wrap;
     flex-direction: column;
     justify-content: center;
     align-items: center;
     gap: 1rem;
+    width: 100%;
+    height: 100%;
 }
-
+.registerForm {
+    flex-direction: row;
+}
+.form-columns {
+    display: flex;
+    justify-content: space-between;
+    gap: 2rem;
+}
+.juan {
+    margin-top: calc(3 * var(--spacing-md));
+    width: 100%;
+}
+.inputWithLabel {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    width: 100%;
+}
 input {
     border-radius: var(--border-radius-sm);
     border: 1px solid var(--color-accent);
@@ -100,14 +120,9 @@ input {
     color: var(--color-accent);
 }
 
-form > section {
-    display: flex;
-}
-
 label {
     font-size: 14px;
     color: var(--color-accent);
-    flex: 80%
 }
 
 .container {
@@ -143,4 +158,7 @@ label {
 .redirect {
     color: var(--color-accent);
     font-size: 14px;
+}
+.errors {
+    color: var(--color-secondary);
 }
