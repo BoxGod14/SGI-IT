@@ -219,7 +219,7 @@ label {
 }
 .pagination {
     align-self: center;
-    display:ruby    ;
+    display: flex;
 }
 /*Los tamaños de cada sección de los tickets*/
 .subject {
