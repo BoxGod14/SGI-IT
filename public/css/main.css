@@ -11,7 +11,7 @@
     --color-hover-text: #4b4b4b;
     --color-nav: #6f6f6f;
     --color-background: #ebeff3;
-    --color-bg-footer: #eaeaea;
+    --color-bg-aside: #eaeaea;
     --color-bg-card: rgba(18, 52, 77, 0.16);
     --color-btn-light: rgb(38, 73, 102);
     --color-btn-dark: rgb(18, 52, 77);
@@ -77,7 +77,20 @@ main {
     display: flex;
     justify-content: center;
     align-items: center;
-    margin: 0 1rem;
+}
+
+main > div {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    width: 100%;    
+}
+
+main > div > div {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    height: 90%;
 }
 
 a {
@@ -94,24 +107,39 @@ form {
     width: 100%;
     height: 100%;
 }
-.registerForm {
-    flex-direction: row;
+
+nav {
+    background-color: var(--color-nav);
+    height: 100vh;
 }
-.form-columns {
-    display: flex;
-    justify-content: space-between;
-    gap: 2rem;
-}
-.juan {
-    margin-top: calc(3 * var(--spacing-md));
+
+header {
+    background-color: var(--color-header);
     width: 100%;
+    height: 10%;
 }
-.inputWithLabel {
+
+.tickets {
     display: flex;
     flex-direction: column;
-    justify-content: center;
-    width: 100%;
+    width: 85%;
+    height: 100%;
+    overflow: scroll;
 }
+.tickets > div {
+    display: flex;
+    flex-direction: row;
+}
+aside {
+    display: flex;
+    flex-direction: column;
+    padding: 0 1rem;
+    background-color: var(--color-aside);
+    width: 15%;
+    height: 100%;
+    background-color: yellow;
+}
+
 input {
     border-radius: var(--border-radius-sm);
     border: 1px solid var(--color-accent);
@@ -129,18 +157,27 @@ label {
     background-color: white;
     display: flex;
     flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    width: 100%;
-    max-width: 30rem;
+    justify-content: center;    
+    align-items: center;  
     height: 100%;
-    max-height: 15rem;
+    width: 100%;
     padding: 2rem;
     border-radius: var(--border-radius-lg);
     border: 1px solid var(--color-bg-card);
     box-shadow: var(--box-shadow-sm);
     gap: 1rem;
 }
+
+.container--index {  
+    max-width: 30rem;
+    max-height: 15rem;
+}
+
+.container--register {
+    max-width: 30rem;    
+    max-height: 15rem;
+}
+
 
 .btn_primary {
     font-family: var(--font-family-p);
@@ -161,4 +198,42 @@ label {
 }
 .errors {
     color: var(--color-secondary);
+}
+.registerForm {
+    flex-direction: row;
+}
+.form-columns {
+    display: flex;
+    justify-content: space-between;
+    gap: 2rem;
+}
+.juan {
+    margin-top: calc(3 * var(--spacing-md));
+    width: 100%;
+}
+.inputWithLabel {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    width: 100%;
+}
+.pagination {
+    align-self: center;
+    display:ruby    ;
+}
+/*Los tamaños de cada sección de los tickets*/
+.subject {
+    width: 45%;
+}
+.requester {
+    width: 15%;
+}
+.state {
+    width: 10%;
+}
+.technician {
+    width: 20%;
+}
+.createdAt {
+    width: 10%;
 }

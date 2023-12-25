@@ -2,88 +2,85 @@
 <html lang="en">
 
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>SGI-IT tickets</title>
-    <link rel="stylesheet" href="../css/main.css">
-    <link rel="stylesheet" href="../css/tickets.css">
-    <link rel="stylesheet" href="../css/transitions.css">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>SGI-IT tickets</title>
+  <link rel="stylesheet" href="../css/main.css">
 </head>
 
 <body>
-    @include('partials/scripts/transitionsSwup_js.edge')    
-    @include('partials/header.edge')
-    @include('partials/nav.edge')
-        <main class="tickets"  id="swup">
+  @include('partials/scripts/transitionsSwup_js.edge')
+  <main>
+    @include('partials/nav.edge')   
+    <div>      
+      @include('partials/header.edge')
+      <div>
+        <section class="tickets">
           <div>
             <p class="subject">Asunto</p>
-            <p class="requester">Solicitante</p> 
+            <p class="requester">Solicitante</p>
             <p class="state">Estado</p>
-            <p class="technician">Tecnico asignado</p>                            
-            <p class="createdAt">Fecha de creación</p>           
+            <p class="technician">Tecnico asignado</p>
+            <p class="createdAt">Fecha de creación</p>
           </div>
-          
+    
           <script defer>
             document.addEventListener('DOMContentLoaded', (event) => {
-              document.querySelectorAll('.ticket').forEach((element) => {
-                  element.addEventListener('click', (event) => {
-                      window.location.href = element.dataset.url;
+                    document.querySelectorAll('.ticket').forEach((element) => {
+                        element.addEventListener('click', (event) => {
+                            window.location.href = element.dataset.url;
+                        });
+                    });
                   });
-              });
-            });
           </script>
           {{--Bucle para mostrar tickets creados--}}
-            @each(ticket in tickets)
-              <div class="ticket" data-url="{{route('TicketsController.show', [ticket.id])}}">
-                <p class="subject">{{ticket.subject}}</p>
-
-                <p class="requester">
-                  @each(user in ticket.User)
-                    @if(user.$extras.pivot_role == Roles.REQUESTER)
-                      <a href="{{route('UsersController.show', [user.id])}}">{{user.profile.fullName}}</a>
-                    @endif
-                  @endeach
-                </p>                
-
-                <p class="state">{{ticket.state}}</p>
-
-                <p class="technician">
-                  @each(user in ticket.User)
-                    @if(user.$extras.pivot_role == Roles.TECHNICIAN)
-                      {{user.profile.fullName}}
-                    @endif
-                  @endeach
-                </p>
-
-                <p class="createdAt">{{ticket.createdAt.toFormat('dd-MM-yyyy')}}  </p>
-              </div>
-              <hr>
-            @endeach 
-            {{--En caso de que haya paginas, se mostrara la paginación--}}
-            @if(tickets.hasPages)
-              <div>
-                  {{--  {{tickets.firstPage}}                       --}}
-                  @if(tickets.currentPage > 3)
-                    <a href="{{ tickets.getUrl(tickets.firstPage) }}">
-                      <<
-                    </a>
-                  @end
-                  @each(anchor in tickets.getUrlsForRange(tickets.currentPage - 2, tickets.currentPage + 3))
-                    @if(anchor.page >= tickets.firstPage && anchor.page <= tickets.lastPage)
-                    <a href="{{ anchor.url }}">
-                        {{ anchor.page }}
-                    </a>
-                    @endif        
-                  @endeach    
-                  @if(tickets.currentPage + 3 < tickets.lastPage)
-                    <a href="{{tickets.getUrl(tickets.lastPage)}}">
-                      >>
-                    </a> 
-                  @end            
-              </div>
-            @end        
-        </main>
+          @each(ticket in tickets)
+          <div class="ticket" data-url="{{route('TicketsController.show', [ticket.id])}}">
+            <p class="subject">{{ticket.subject}}</p>
+    
+            <p class="requester">
+              @each(user in ticket.User)
+              @if(user.$extras.pivot_role == Roles.REQUESTER)
+              <a href="{{route('UsersController.show', [user.id])}}">{{user.profile.fullName}}</a>
+              @endif
+              @endeach
+            </p>
+    
+            <p class="state">{{ticket.state}}</p>
+    
+            <p class="technician">
+              @each(user in ticket.User)
+              @if(user.$extras.pivot_role == Roles.TECHNICIAN)
+              {{user.profile.fullName}}
+              @endif
+              @endeach
+            </p>
+    
+            <p class="createdAt">{{ticket.createdAt.toFormat('dd-MM-yyyy')}} </p>
+          </div>
+          <hr>
+          @endeach
+          {{--En caso de que haya paginas, se mostrara la paginación--}}
+          @if(tickets.hasPages)
+          <div class="pagination">
+            @if(tickets.currentPage > 3)
+              <a href="{{ tickets.getUrl(tickets.firstPage) }}"><<</a>
+            @end
+            @each(anchor in tickets.getUrlsForRange(tickets.currentPage - 2, tickets.currentPage + 3))
+              @if(anchor.page >= tickets.firstPage && anchor.page <= tickets.lastPage) 
+              <a href="{{ anchor.url }}">{{ anchor.page }}</a>
+              @endif
+            @endeach
+            @if(tickets.currentPage + 3 < tickets.lastPage)
+              <a href="{{tickets.getUrl(tickets.lastPage)}}">>></a>
+            @end
+          </div>
+        @end   
+        </section>
         @include('partials/asideTickets.edge')
+      </div>
+    </div>
+  </main> 
 </body>
 
 </html>
