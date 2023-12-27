@@ -156,7 +156,7 @@ Encore.configureDevServerOptions((options) => {
 | favorite CSS precompiler
 |
 */
-// Encore.enableSassLoader()
+Encore.enableSassLoader()
 // Encore.enableLessLoader()
 // Encore.enableStylusLoader()
 
@@ -197,12 +197,15 @@ Encore.configureDevServerOptions((options) => {
 | the level to "info".
 |
 */
+//Encore.addEntry es lo que permite añadir los ficheros css que necesitan procesamiento
+Encore.addEntry('scss', '/resources/css/app.scss')
 const config = Encore.getWebpackConfig()
+
 config.infrastructureLogging = {
   level: 'warn',
 }
 config.stats = 'errors-warnings'
-
+console.log(config);
 /*
 |--------------------------------------------------------------------------
 | Export config

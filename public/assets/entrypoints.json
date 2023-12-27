@@ -4,6 +4,14 @@
       "js": [
         "http://localhost:8080/assets/app.js"
       ]
+    },
+    "scss": {
+      "css": [
+        "http://localhost:8080/assets/scss.css"
+      ],
+      "js": [
+        "http://localhost:8080/assets/scss.js"
+      ]
     }
   }
 }
