@@ -10,7 +10,6 @@ export default class TicketsController {
   public async index({ view, request }: HttpContextContract) {
     const page = request.input('page', 1)//Paginas de la paginacion
     const limit = 10; //Limite de tickets por pagina
-
     //Sección de filtros
     const technician = request.input('technician', '')
     const requester = request.input('requester', '')
@@ -43,13 +42,7 @@ export default class TicketsController {
         })
         .paginate(page, limit);
     tickets.baseUrl('/tickets')
-    tickets.queryString({
-      page: page, 
-      technician: technician,
-      requester: requester,
-      state: state
-    })
-    const html = await view.render("tickets/index", { tickets, Roles, State });
+    const html = await view.render("tickets/index", { tickets, Roles, State, currentPath: request.url() });
     return html;
   }
 

@@ -13,45 +13,54 @@
   <script defer src="../js/tickets.js"></script>
     @include('partials/scripts/transitionsSwup_js.edge')
     @include('partials/scripts/createMessage_js.edge') 
-    @include('partials/header.edge')
-    @include('partials/nav.edge')
-        <main class="tickets ticket" id="swup">
-          <section id="subject">
-            <p>{{ticket.subject}}</p>
-            <a class="requester"
-                @each(user in ticket.User)
-                  @if(user.$extras.pivot_role == Roles.REQUESTER)
-                  href="{{ route('UsersController.show', [user.id]) }}">{{user.profile.fullName}}
-                  @endif
-                @endeach
+    
+    
+    <main>
+      @include('partials/nav.edge')
+      <div>
+        @include('partials/header.edge')
+        <div>
+          <section>
+            <div id="subject">
+              <p>{{ticket.subject}}</p>
+              <a class="requester"
+                  @each(user in ticket.User)
+                    @if(user.$extras.pivot_role == Roles.REQUESTER)
+                    href="{{ route('UsersController.show', [user.id]) }}">{{user.profile.fullName}}
+                    @endif
+                  @endeach
               </a>   
-          </section>
-          <section id="description">
-            <p>Descripción</p>
-            <p>{{ticket.description}}</p>
-          </section>
-          <section id="messages">
-            <div>
-                <p>Mensajes</p>
-                @each(message in ticket.message)
-                    <p>{{message.message}}</p>
-                @end
             </div>
-            <div>
-                <div id="message">
-                  <p>De: {{ user.profile.fullName }}</p>
-                  <form >
-                      {{ csrfField() }}
-                      <textarea name="message" oninput="auto_grow(this)" placeholder="Escribe un mensaje"></textarea>
-                  </form>
-                  <button class="buttonBaseStyle" id="hideWriter">Cancelar</button>
-                  <button class="buttonBaseStyle" id="sendMessage">Enviar</button>
-                </div>                
-                <button class="buttonBaseStyle" id="showWriter">Escribir mensaje</button>
-                <p id="response"></p>
+            <div id="description">
+              <p>Descripción</p>
+              <p>{{ticket.description}}</p>
             </div>
-          </section>
-        </main>
-        {{--  @include('partials/aside.edge')          --}}
+            <section id="messages">
+              <div>
+                  <p>Mensajes</p>
+                  @each(message in ticket.message)
+                      <p>{{message.message}}</p>
+                  @end
+              </div>
+              <div>
+                  <div id="message">
+                    <p>De: {{ user.profile.fullName }}</p>
+                    <form >
+                        {{ csrfField() }}
+                        <textarea name="message" oninput="auto_grow(this)" placeholder="Escribe un mensaje"></textarea>
+                    </form>
+                    <button class="buttonBaseStyle" id="hideWriter">Cancelar</button>
+                    <button class="buttonBaseStyle" id="sendMessage">Enviar</button>
+                  </div>                
+                  <button class="buttonBaseStyle" id="showWriter">Escribir mensaje</button>
+                  <p id="response"></p>
+              </div>
+            </section>
+          </section>          
+          
+          @include('partials/aside.edge')
+        </div>
+      </div>
+    </main>
 </body>
 </html>

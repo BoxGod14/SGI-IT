@@ -26,12 +26,13 @@
     
           <script defer>
             document.addEventListener('DOMContentLoaded', (event) => {
-                    document.querySelectorAll('.ticket').forEach((element) => {
-                        element.addEventListener('click', (event) => {
-                            window.location.href = element.dataset.url;
-                        });
-                    });
-                  });
+              document.querySelectorAll('.ticket').forEach((element) => {
+                element.addEventListener('click', (event) => {
+                    window.location.href = element.dataset.url;
+                });
+              });
+            });
+
           </script>
           {{--Bucle para mostrar tickets creados--}}
           @each(ticket in tickets)
@@ -77,7 +78,7 @@
           </div>
         @end   
         </section>
-        @include('partials/asideTickets.edge')
+        @include('partials/aside.edge')
       </div>
     </div>
   </main> 
