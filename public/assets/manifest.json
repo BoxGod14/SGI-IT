@@ -1,5 +1,5 @@
 {
   "assets/app.js": "http://localhost:8080/assets/app.js",
-  "assets/scss.css": "http://localhost:8080/assets/scss.css",
-  "assets/scss.js": "http://localhost:8080/assets/scss.js"
+  "assets/scss.js": "http://localhost:8080/assets/scss.js",
+  "assets/scss.css": "http://localhost:8080/assets/scss.css"
 }

@@ -205,7 +205,6 @@ config.infrastructureLogging = {
   level: 'warn',
 }
 config.stats = 'errors-warnings'
-console.log(config);
 /*
 |--------------------------------------------------------------------------
 | Export config
