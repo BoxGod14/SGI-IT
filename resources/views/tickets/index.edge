@@ -37,8 +37,7 @@
           {{--Bucle para mostrar tickets creados--}}
           @each(ticket in tickets)
           <div class="ticket" data-url="{{route('TicketsController.show', [ticket.id])}}">
-            <p class="subject">{{ticket.subject}}</p>
-    
+            <p class="subject">{{ticket.subject}}</p>    
             <p class="requester">
               @each(user in ticket.User)
               @if(user.$extras.pivot_role == Roles.REQUESTER)
@@ -58,8 +57,7 @@
             </p>
     
             <p class="createdAt">{{ticket.createdAt.toFormat('dd-MM-yyyy')}} </p>
-          </div>
-          <hr>
+          </div>          
           @endeach
           {{--En caso de que haya paginas, se mostrara la paginación--}}
           @if(tickets.hasPages)
@@ -69,7 +67,13 @@
             @end
             @each(anchor in tickets.getUrlsForRange(tickets.currentPage - 2, tickets.currentPage + 3))
               @if(anchor.page >= tickets.firstPage && anchor.page <= tickets.lastPage) 
-              <a href="{{ anchor.url }}">{{ anchor.page }}</a>
+                <a class= 
+                  @if(anchor.page == tickets.currentPage)
+                  "page page-active"
+                  @else
+                  "page" 
+                  @end
+                href="{{ anchor.url }}">{{ anchor.page }}</a>
               @endif
             @endeach
             @if(tickets.currentPage + 3 < tickets.lastPage)

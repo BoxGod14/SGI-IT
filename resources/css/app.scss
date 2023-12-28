@@ -29,7 +29,24 @@ main {
         } 
     }
 }
-
+.tickets {
+    display: flex;
+    flex-direction: column;
+    width: 85%;
+    height: 100%;
+    background-color: $color-background-card;
+    div {
+        display: flex;
+        flex-direction: row;
+        border-top: 1px solid $color-border;
+        &:first-child {
+            background-color: $color-background;
+            text-align: center;
+            border: 1px solid $color-border;
+        }
+    }
+    
+}
 a {
     text-decoration: none;
 }
@@ -47,7 +64,7 @@ form {
 
 nav {
     background-color: $color-nav;
-    height: 100vh;
+    height: 100vh;    
 }
 
 header {
@@ -56,24 +73,16 @@ header {
     height: 10%;
 }
 
-.tickets {
-    display: flex;
-    flex-direction: column;
-    width: 85%;
-    height: 100%;
-    overflow: scroll;
-    div {
-        display: flex;
-        flex-direction: row;
-    }
-}
+
 aside {
     display: flex;
     flex-direction: column;
     padding: 0 1rem;
     background-color: $color-aside;
+    border-left: 1px solid $color-border;
     width: 15%;
     height: 100%;
+    
 }
 
 input {
@@ -90,7 +99,7 @@ label {
 }
 
 .container {
-    background-color: white;
+    background-color: $color-background-card;
     display: flex;
     flex-direction: column;
     justify-content: center;    
@@ -152,10 +161,7 @@ label {
     justify-content: center;
     width: 100%;
 }
-.pagination {
-    align-self: center;
-    display: flex;
-}
+
 /*Los tamaños de cada sección de los tickets*/
 .subject {
     width: 45%;
@@ -171,4 +177,24 @@ label {
 }
 .createdAt {
     width: 10%;
+}
+
+.pagination {
+    display: flex;
+    align-self: center; 
+    justify-content: center;
+    align-items: center;
+    gap: 1rem;
+}
+.page {
+    text-align: center;
+    vertical-align: middle;    
+    border-radius: 1rem;
+    color: black;
+    min-width: 1rem;
+}
+
+.page-active {
+    background-color: $color-btn-light;
+    color: $color-background-card;
 }
