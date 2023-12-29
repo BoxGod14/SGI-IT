@@ -1,44 +1,48 @@
 <h3>Filtro</h3>
 {{--Formulario de filtros--}}
-<form id="filterForm">
+<form>
     {{ csrfField() }}
 
     {{--Solicitante--}}
-    <label for="requesterName">Solicitante</label><br>
-    <input name="requesterName" type="text" id="requesterName" placeholder="">
-    <input type="text" id="requesterId">
-    <ul class="suggestionList" id="suggestionListRequester"></ul>
+    <section> 
+        <label for="requesterName">Solicitante</label><br>
+        <input name="requesterName" type="text" id="requesterName" placeholder="">
+        <ul class="suggestionList" id="suggestionListRequester"></ul>
+    </section>
+    
 
     {{--Tecnico--}}
-    <label for="technicianName">Tecnico asignado</label><br>
-    <input name="technicianName" type="text" id="technicianName">
-    <input type="text" id="technicianId">
-    <ul class="suggestionList" id="suggestionListTechnician"></ul>
-
+    <section>
+        <label for="technicianName">Tecnico asignado</label><br>
+        <input name="technicianName" type="text" id="technicianName">
+        <ul class="suggestionList" id="suggestionListTechnician"></ul>
+    </section>
+    
     {{--Estado--}}
-    <label for="state">Estado</label><br>
-    <select name="state" id="state">
-        @each(state in State)
-        <option value="{{state}}">{{state}}</option>
-        @endeach
-    </select>
+    <section>
+        <label for="state">Estado</label><br>
+        <select name="state" id="state">
+            @each(state in State)
+            <option value="{{state}}">{{state}}</option>
+            @endeach
+        </select>
+    </section>
+    
     
 </form>
 <button id="applyFilters" class="btn_primary">Aplicar filtros</button>
 
 <script>
     const requesterInput = document.getElementById("requesterName");
-    const requesterId = document.getElementById("requesterId");
     const suggestionListRequester = document.getElementById('suggestionListRequester');
 
     const technicianInput = document.getElementById("technicianName");
-    const technicianId = document.getElementById("technicianId");
     const suggestionListTechnician = document.getElementById('suggestionListTechnician');
             
     const state = document.getElementById("state");
     //En ambos eventos, cuando el usuario modifique el input se borrara el id del usuario seleccionado para evitar filtros erroneos
     requesterInput.addEventListener("input", function () {  
-        requesterId.value = "";
+        requesterInput.removeAttribute('data-id');
         if (requesterInput.value.length > 2) {
             getUsers('{{Roles.REQUESTER}}',requesterInput.value);
         }
@@ -47,7 +51,7 @@
         }
     });
     technicianInput.addEventListener("input", function () {
-        technicianId.value = "";    
+        technicianInput.removeAttribute('data-id');
         if (technicianInput.value.length > 2) {
             getUsers('{{Roles.TECHNICIAN}}',technicianInput.value);
         }
@@ -109,11 +113,11 @@
             listItem.addEventListener('click', function () {
             if (role == '{{Roles.REQUESTER}}') {
                 requesterInput.value = user.name;
-                requesterId.value = user.id;
+                requesterInput.setAttribute('data-id',user.id);
             }
             else {
                 technicianInput.value = user.name;
-                technicianId.value = user.id;
+                technicianInput.setAttribute('data-id',user.id);
             }                    
             clearSuggestionList()
             });
@@ -134,7 +138,7 @@
      * Función para cargar los filtros de los tickets
      */
     function applyFilters() {
-        const url = "{{route('TicketsController.index')}}?page=1&technician="+encodeURIComponent(technicianId.value)+"&requester="+encodeURIComponent(requesterId.value)+"&state="+encodeURIComponent(state.value);
+        const url = "{{route('TicketsController.index')}}?page=1&technician="+encodeURIComponent(technicianInput.getAttribute('data-id'))+"&requester="+encodeURIComponent(requesterInput.getAttribute('data-id'))+"&state="+encodeURIComponent(state.value);
         window.location.href = url;
     }
 </script>

@@ -16,7 +16,7 @@ export default class TicketsController {
     let state = request.input('state', '*')
     const ticketsQuery = Ticket.query();
 
-    if (technician != '*' && technician != "") {
+    if (technician != '*' && technician != "" && technician != "null") {
         ticketsQuery.whereHas('User', (query) => {
             query.where('id', technician);
             query.wherePivot('role', Roles.TECHNICIAN);

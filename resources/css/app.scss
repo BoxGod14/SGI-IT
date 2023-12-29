@@ -1,5 +1,5 @@
 @import 'variables.scss';
-
+@import url('https://fonts.googleapis.com/icon?family=Material+Icons');
 body {
     margin: 0;
     padding: 0;
@@ -15,13 +15,12 @@ main {
     display: flex;
     justify-content: center;
     align-items: center;
-
-    div {
+    > div {//Se añade > para segurarse que sea la anidacion directa
         display: flex;
         flex-direction: column;
         height: 100%;
         width: 100%;   
-        div {
+        > div {//Se añade > para segurarse que sea la anidacion directa
             display: flex;
             flex-direction: row;
             justify-content: center;
@@ -29,17 +28,24 @@ main {
         } 
     }
 }
+
 .tickets {
     display: flex;
     flex-direction: column;
     width: 85%;
     height: 100%;
-    background-color: $color-background-card;
+    background-color: $color-background-card;  
+    padding: 0 1rem;  
     div {
         display: flex;
         flex-direction: row;
-        border-top: 1px solid $color-border;
+        justify-content: center;
+        align-items: center;
+        cursor: pointer;        
+        max-height: calc(100% / 12);
+        height: 100%;
         &:first-child {
+            cursor: default;
             background-color: $color-background;
             text-align: center;
             border: 1px solid $color-border;
@@ -63,26 +69,67 @@ form {
 }
 
 nav {
+    display: flex;
+    flex-direction: column;  
+    align-items: center;
+    justify-content: center;
+    width: 5%;
     background-color: $color-nav;
-    height: 100vh;    
+    height: 100vh;
+    .home {
+        display: flex;
+        flex-direction: column;  
+        align-items: center;
+        justify-content: center;
+        height: 10%;
+    } 
+    .other-url {
+        display: flex;
+        flex-direction: column;  
+        align-items: center;
+        height: 90%;
+        gap: 1rem;
+    }
+    a {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background-color: $color-background-card;
+    }
+    i {
+        color: black;
+        font-variation-settings: 'FILL' 0;
+    }        
 }
 
 header {
     background-color: $color-header;
-    width: 100%;
     height: 10%;
+    padding: 0 1rem;
 }
 
 
 aside {
     display: flex;
     flex-direction: column;
-    padding: 0 1rem;
+    justify-content: space-between;
     background-color: $color-aside;
     border-left: 1px solid $color-border;
     width: 15%;
-    height: 100%;
-    
+    height: calc(100% - 2rem);
+    h3 {
+        text-align: center;
+        height: 10%;
+        margin-top: 0;
+        border: 1px solid $color-border;
+    }
+    form {
+        justify-content: flex-start;
+        align-items: center;
+    }
+    button {
+        margin: 1rem;
+    }
 }
 
 input {
@@ -147,7 +194,7 @@ label {
     flex-direction: row;
 }
 .form-columns {
-    display: flex;
+    display: flex;    
     justify-content: space-between;
     gap: 2rem;
 }
@@ -163,7 +210,12 @@ label {
 }
 
 /*Los tamaños de cada sección de los tickets*/
+.ticket {
+    text-align: center;    
+    border: 1px solid $color-border;
+}
 .subject {
+    text-align: left;
     width: 45%;
 }
 .requester {
@@ -185,13 +237,14 @@ label {
     justify-content: center;
     align-items: center;
     gap: 1rem;
+    width: 100%;
 }
 .page {
     text-align: center;
-    vertical-align: middle;    
     border-radius: 1rem;
     color: black;
     min-width: 1rem;
+    
 }
 
 .page-active {
