@@ -1,4 +1,6 @@
 @import 'variables.scss';
+@import 'nav.scss';
+@import 'aside.scss';
 @import url('https://fonts.googleapis.com/icon?family=Material+Icons');
 body {
     margin: 0;
@@ -68,40 +70,6 @@ form {
     height: 100%;
 }
 
-nav {
-    display: flex;
-    flex-direction: column;  
-    align-items: center;
-    justify-content: center;
-    width: 5%;
-    background-color: $color-nav;
-    height: 100vh;
-    .home {
-        display: flex;
-        flex-direction: column;  
-        align-items: center;
-        justify-content: center;
-        height: 10%;
-    } 
-    .other-url {
-        display: flex;
-        flex-direction: column;  
-        align-items: center;
-        height: 90%;
-        gap: 1rem;
-    }
-    a {
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        background-color: $color-background-card;
-    }
-    i {
-        color: black;
-        font-variation-settings: 'FILL' 0;
-    }        
-}
-
 header {
     background-color: $color-header;
     height: 10%;
@@ -109,28 +77,6 @@ header {
 }
 
 
-aside {
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-    background-color: $color-aside;
-    border-left: 1px solid $color-border;
-    width: 15%;
-    height: calc(100% - 2rem);
-    h3 {
-        text-align: center;
-        height: 10%;
-        margin-top: 0;
-        border: 1px solid $color-border;
-    }
-    form {
-        justify-content: flex-start;
-        align-items: center;
-    }
-    button {
-        margin: 1rem;
-    }
-}
 
 input {
     border-radius: $border-radius-sm;
@@ -216,6 +162,7 @@ label {
 }
 .subject {
     text-align: left;
+    margin-left: 0.5rem;
     width: 45%;
 }
 .requester {

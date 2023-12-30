@@ -1,0 +1,22 @@
+aside {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    background-color: $color-aside;
+    border-left: 1px solid $color-border;
+    width: 15%;
+    height: calc(100% - 2rem);
+    h3 {
+        text-align: center;
+        height: 10%;
+        margin-top: 0;
+        border: 1px solid $color-border;
+    }
+    form {
+        justify-content: flex-start;
+        align-items: center;
+    }
+    button {
+        margin: 1rem;
+    }
+}

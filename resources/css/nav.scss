@@ -1,0 +1,36 @@
+nav {
+    display: flex;
+    flex-direction: column;  
+    align-items: center;
+    justify-content: center;
+    width: 5%;
+    background-color: $color-nav;
+    height: 100vh;
+    .home {
+        display: flex;
+        flex-direction: column;  
+        align-items: center;
+        justify-content: center;
+        height: 10%;
+    } 
+    .other-url {
+        display: flex;
+        flex-direction: column;  
+        align-items: center;
+        justify-content: center;
+        height: 90%;
+        gap: 1rem;
+    }
+    a {
+        display: flex;
+        align-items: center;
+        width: 2rem;
+        height: 2rem;
+        justify-content: center;
+        background-color: $color-background-card;
+        border-radius: $border-radius-lg;
+    }
+    i {
+        color: $color-nav;
+    }        
+}

@@ -20,10 +20,12 @@
         <input type="submit" value="Iniciar sesión" class="btn_primary">          
       </form>
       <div>
-        <p class="redirect">No tengo cuenta: <a href="{{ route('AuthController.registerForm') }}">Crear cuenta</a></p>
-        @if(flashMessages.has('errors'))
-          <p class="errors">{{ flashMessages.get('errors') }}</p>
+        <p class="redirect">No tengo cuenta: <a href="{{ route('AuthController.registerForm') }}">Crear cuenta</a><br>
+          @if(flashMessages.has('errors'))
+          <span class="errors">{{ flashMessages.get('errors') }}</span>
         @end
+        </p>
+        
       </div>
     </div>    
   </main>
