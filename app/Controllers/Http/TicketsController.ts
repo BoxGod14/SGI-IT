@@ -23,7 +23,7 @@ export default class TicketsController {
         });
     }
     
-    if (requester != '*' && requester != "") {
+    if (requester != '*' && requester != "" && requester != "null") {
       ticketsQuery.whereHas('User', (query) => {
           query.where('id', requester);
           query.wherePivot('role', Roles.REQUESTER);
@@ -84,7 +84,7 @@ export default class TicketsController {
     }
   }
 
-  public async show({ view, params, auth, response }: HttpContextContract) {
+  public async show({ view, params, auth, response, request }: HttpContextContract) {
     //Obtener usuario
     const user = await auth.use("web").authenticate();
     //Comprobar que existe el ticket
@@ -118,6 +118,7 @@ export default class TicketsController {
       user: user,
       states: State,
       Roles: Roles,
+      currentPath: request.url()
     });
     const html = await view.render("tickets/show");
     return html;

@@ -20,7 +20,7 @@ Route.group(() => {
   Route.get('/register', 'AuthController.registerForm').as('auth.register.show')
   Route.post('/login', 'AuthController.login').as('auth.login')
   Route.get('/login', 'AuthController.loginForm').as('auth.login.show')  
-})
+}).middleware('noAuth')
 //Rutas y recursos que requieren estar logueados, en caso de no estarlos te llevan a login
 Route.group(() => {
   Route.resource('tickets', 'TicketsController')

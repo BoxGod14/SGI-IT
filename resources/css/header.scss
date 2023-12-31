@@ -1,0 +1,32 @@
+header {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    background-color: $color-background-card;
+    height: 10%;
+    padding-left: 1rem;
+    border-bottom: 1px solid $color-border;
+    gap: 1rem;
+    > div {
+        width: 85%;
+        display: flex;
+        flex-direction: row;        
+        align-items: center;
+        justify-content: space-between;
+        > a {
+            margin-right: 1rem;
+            display: flex;
+            background-color: blue;
+            color: $color-background-card;
+            align-items: center;
+            width: 2rem;
+            height: 2rem;
+            justify-content: center;
+            border-radius: $border-radius-lg;
+        }
+    }
+    > p {
+        text-align: center;
+        width: 15%;
+    }
+}

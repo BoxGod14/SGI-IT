@@ -53,7 +53,9 @@ export default class MessagesController {
     }
     return response
       .status(200)
-      .json({ message: "Mensaje enviado" });
+      .json({ message: "Mensaje enviado",
+              newMessage: request.input('message')
+            });
   }
   
   public async show({}: HttpContextContract) {}

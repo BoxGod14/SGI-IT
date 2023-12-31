@@ -25,7 +25,7 @@ Server.middleware.register([
   //Importar SilentAuth permite transportar la sesión en la request.
   () => import('App/Middleware/SilentAuth'),
   //Proteccion CSRF y otros
-  () => import('@ioc:Adonis/Addons/Shield')
+  () => import('@ioc:Adonis/Addons/Shield'),
 ])
 
 /*
@@ -45,5 +45,8 @@ Server.middleware.register([
 |
 */
 Server.middleware.registerNamed({
-  auth: () => import('App/Middleware/Auth')
+  //Middleware para estar logueado
+  auth: () => import('App/Middleware/Auth'),
+  //Middleware para los no logueado
+  noAuth: () => import('App/Middleware/NoAuth')
 })
