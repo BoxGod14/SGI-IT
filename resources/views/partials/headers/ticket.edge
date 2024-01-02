@@ -1,4 +1,34 @@
 <div>
     <h3><a href="{{route('TicketsController.index')}}">Tickets</a> > Ticket-{{ticket.id}}</h3>
-    <a href="{{route('TicketsController.create')}}" title="Crear ticket"><i class="material-icons">add</i></a>
+    <button class="btn_delete" id="delete_button" title="Eliminar ticket"><i class="material-icons">remove</i></button>
 </div>
+<script>
+    const buttonDelete = document.getElementById('delete_button');
+    buttonDelete.addEventListener('click', destroy);
+
+    function destroy() {
+        const data = {
+            _csrf: document.querySelector('[name="_csrf"]').value,
+            ticketId: {{ticket.id}}
+        }
+        if (confirm('¿Estás seguro de que quieres eliminar este ticket?')) {
+            fetch("{{route('TicketsController.destroy', [ticket.id])}}", {
+            method: 'DELETE',
+            headers: {
+                'Content-Type': 'application/json', // Especificar el tipo de contenido si estás enviando datos en formato JSON
+            },
+            body: JSON.stringify(data)
+            })
+            .then(response => {
+                if (response.ok) {
+                    window.location.href = "{{route('TicketsController.index')}}";
+                } else {
+                    alert('Error al eliminar el Ticket');
+                }
+            })
+            .catch(console.log('Se intenta eliminar ticket'));
+        }
+        
+    }
+    
+</script>

@@ -121,6 +121,21 @@ label {
   }
 }
 
+.btn_delete {
+  display: flex; 
+  justify-content: center;
+  border: none;
+  background-color: red;
+  color: $color-background-card;
+  align-items: center;
+  width: 2rem;
+  height: 2rem;
+  border-radius: $border-radius-lg; 
+  &:hover {
+    background-color: darkred;
+  }
+}
+
 .redirect {
   color: $color-accent;
   font-size: 14px;

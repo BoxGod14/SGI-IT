@@ -1,11 +1,17 @@
-<h3>Filtro</h3>
+<h3>Datos</h3>
 {{--Formulario de filtros--}}
 <form>
     {{ csrfField() }}
     {{--Tecnico--}}
     <section>
         <label for="technicianName">Tecnico asignado</label><br>
-        <input name="technicianName" type="text" id="technicianName">
+        <input name="technicianName" type="text" id="technicianName"
+        @each(user in ticket.User)
+            @if(user.$extras.pivot_role == Roles.TECHNICIAN)
+            value="{{user.profile.name}}"
+            @endif
+        @endeach
+        >
         <ul class="suggestionList" id="suggestionListTechnician"></ul>
     </section>
     
@@ -13,15 +19,122 @@
     <section>
         <label for="state">Estado</label><br>
         <select name="state" id="state">
-            @each(state in State)
-            <option value="{{state}}">{{state}}</option>
+            @each(states in State)
+                <option value="{{states}}"
+                @if(states == ticket.state)
+                    selected
+                @end
+                >{{states}}</option>
             @endeach
         </select>
     </section>    
 </form>
 
-<button id="applyFilters" class="btn_primary">Aplicar filtros</button>
-
+<button id="applyChanges" class="btn_primary">Aplicar filtros</button>
+<p id="result"></p>
 <script>
+    //variables
+    const technicianInput = document.getElementById("technicianName");
+    const suggestionListTechnician = document.getElementById('suggestionListTechnician');
+    const state = document.getElementById('state');
+    const button = document.getElementById('applyChanges');
+    const result = document.getElementById('result');
 
+    technicianInput.addEventListener("input", function () {
+        technicianInput.removeAttribute('data-id');
+        if (technicianInput.value.length > 2) {
+            getUsers('{{Roles.TECHNICIAN}}',technicianInput.value);
+        }
+        else {
+            clearSuggestionList();  
+        }
+    });
+    button.addEventListener("click", applyChanges);
+    
+    //funciones
+    function getUsers(role, input) {
+        // Construye el cuerpo de la solicitud
+        const data = {
+            role: role,  // Asegúrate de tener el valor adecuado para 'role'
+            name: input,
+            _csrf: document.querySelector('[name="_csrf"]').value,
+        };
+
+        fetch("{{ route('UsersController.getUsers') }}", {
+            method: 'POST', // Puedes ajustar el método según tus necesidades
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(data),
+        })
+        .then(response => {
+            if (!response.ok) {
+                throw new Error(`Error al realizar la solicitud: ${response.status}`);
+            }
+            return response.json();
+        })
+        .then(users => {
+            // La peticion fue OK
+            fillSuggestionList(users, role)
+        })
+        .catch(error => {
+            // La peticion fallo
+            console.error('Error en la solicitud:', error.message);
+        });
+    }
+    /**
+     * 
+     * @param users JSON con los datos obtenidos tras la peticion ajax
+     * @param role Rol del usuario a buscar, sirve para saber donde se tienen que rellanar los datos
+     */
+    function fillSuggestionList(users, role) {  
+        clearSuggestionList();          
+        users.forEach(function (user) {
+            var listItem = document.createElement('li');
+            listItem.textContent = user.name;
+            listItem.addEventListener('click', function () {
+                technicianInput.value = user.name;
+                technicianInput.setAttribute('data-id',user.id);                                
+                clearSuggestionList()
+            });
+            suggestionListTechnician.appendChild(listItem);
+        });
+    }
+    function clearSuggestionList() {
+        suggestionListTechnician.innerHTML = "";
+    }
+
+    /**
+     * Función aplicar los cambios en el ticket
+     */
+    function applyChanges() { 
+    //Obtener datos necesarios para el ticket
+        const data = {
+        _csrf: document.querySelector('[name="_csrf"]').value,
+        ticketId: {{ticket.id}},
+        technician: technicianInput.getAttribute('data-id'),
+        state: state.value
+        }
+        //Peticion ajax
+        fetch("{{route('TicketsController.update', [ticket.id])}}", {
+        method: 'PUT',
+        headers: {
+            'Content-Type': 'application/json', // Especificar el tipo de contenido si estás enviando datos en formato JSON
+        },
+        body: JSON.stringify(data)
+        })
+        .then(response => {
+            return response.json(); // Devuelve la promesa resultante de parsear el cuerpo JSON
+        })
+        .then(data => {
+            // Realizar más operaciones aquí con los datos actualizados
+            result.textContent = data.message;
+            if(data.status == 'error') {
+                result.classList.add("errors");
+            }
+            else {
+                result.classList.remove("errors");
+            }
+        })
+    }
 </script>

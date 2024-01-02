@@ -107,15 +107,18 @@ export default class TicketsController {
         })
       })      
       .first();//Aunque solo hay 1 ticket por id, hay que indicar que solo obtenga el primero
-    //TODO: Comprobar en caso de que sea un solicitante, que sea el mismo que el del ticket
+    //Comprobar en caso de que sea un solicitante, que sea el mismo que el del ticket
+    if (user.roles == Roles.REQUESTER) {
+      ticket!.User.forEach(userSearch => {
+        if (userSearch.$extras.pivot_role == Roles.REQUESTER && userSearch.$extras.pivot_user_id != user.id) {
+          response.redirect().toRoute("TicketsController.index");
+          return;
+        }
+      });
+    }
     
     //Obtener perfil del usuario actual
     await user.load('profile')
-    const technicians = await User
-      .query()
-      .where('roles', Roles.TECHNICIAN)
-      .preload('profile')
-
     view.share({
       ticket: ticket,
       user: user,
@@ -129,7 +132,57 @@ export default class TicketsController {
 
   public async edit({}: HttpContextContract) {}
 
-  public async update({}: HttpContextContract) {}
+  public async update({request, auth, response}: HttpContextContract) {
+    //Obtener usuario y comprobar su rol
+    const user = await auth.use("web").authenticate();
+    if (user.roles == Roles.REQUESTER) {
+      return response.status(403).json({ message: "Error editar ticket" });
+    }
+    const trx = await Database.transaction()
+    try {
+      //Obtener ticket
+      const ticket = await Ticket.findOrFail(request.input('ticketId'))
 
-  public async destroy({}: HttpContextContract) {}
+      //Cambiar estado del ticket
+      ticket.state = request.input('state');
+      ticket.save();
+      //Obtener nuevo tecnico y solicitante, de lo contrario se perdera el solicitante.
+      const technician = await User.findOrFail(request.input('technician'));
+      const requester = await ticket.related('User').query().wherePivot('role', Roles.REQUESTER).firstOrFail()
+      //Se quita la relacion antigua
+      await ticket.related('User').detach();
+      //Se añade la nueva relacion
+      await ticket.related('User').sync({
+        [technician.id]:{
+          role: Roles.TECHNICIAN
+        },
+        [requester.id]:{
+          role: Roles.REQUESTER,          
+        },
+      })      
+      //TODO AÑADIR POSIBILIDAD DE SER REQUESTER Y TECHINICIAN EL MISMO(Poner despues de terminar proyecto).
+      await trx.commit;
+      return response.status(200).json({ message: "Ticket editado correctamente", status: "ok" });
+    } catch (error) {
+      await trx.rollback();
+      return response.status(400).json({ message: "Error editando el ticket", status: "error" });
+    }
+  }
+
+  public async destroy({request, response, auth}: HttpContextContract) {
+    const user = await auth.use("web").authenticate();
+    if (user.roles == Roles.REQUESTER) {
+      return response.status(400);
+    }
+    const trx = await Database.transaction()
+    try {
+      const ticket = await Ticket.findOrFail(request.input('ticketId'));
+      await ticket.delete();
+      await trx.commit;
+      return response.status(200);
+    } catch (error) {
+      await trx.rollback();
+      return response.status(400);
+    }    
+  }
 }

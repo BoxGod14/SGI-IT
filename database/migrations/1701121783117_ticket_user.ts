@@ -7,7 +7,7 @@ export default class extends BaseSchema {
   public async up () {
     this.schema.createTable(this.tableName, (table) => {
       table.integer('user_id').unsigned().references('users.id')
-      table.integer('ticket_id').unsigned().references('tickets.id')
+      table.integer('ticket_id').unsigned().references('tickets.id').onDelete("CASCADE")
       table
         .enum("role", Object.values(Roles))
         .defaultTo(Roles.REQUESTER)
