@@ -10,7 +10,7 @@ export default class extends BaseSchema {
         .primary();
       table.string("subject", 255)
         .notNullable(); //Asunto del ticket, limitado a 255 caracteres
-      table.string("description", 1000)
+      table.text("message",'longtext')
         .notNullable(); //Descripcion del ticket
       table
         .enum("state", Object.values(State))

@@ -1,4 +1,4 @@
 <div>
-    <h3>Ticket: {{ticket.id}}</h3>
+    <h3><a href="{{route('TicketsController.index')}}">Tickets</a> > Ticket-{{ticket.id}}</h3>
     <a href="{{route('TicketsController.create')}}" title="Crear ticket"><i class="material-icons">add</i></a>
 </div>

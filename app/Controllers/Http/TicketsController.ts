@@ -98,10 +98,14 @@ export default class TicketsController {
     //Obtener el ticket
     const ticket = await Ticket.query()
       .where("tickets.id", params.id)
-      .preload("User", (query) => {
-        query.pivotColumns(["role"]).preload("profile");
+      .preload("User", (userQuery) => {
+        userQuery.pivotColumns(["role"]).preload("profile");
       })
-      .preload('message')      
+      .preload('message', (messageQuery) => {
+        messageQuery.preload('user', (userQuery) => {
+          userQuery.preload('profile');
+        })
+      })      
       .first();//Aunque solo hay 1 ticket por id, hay que indicar que solo obtenga el primero
     //TODO: Comprobar en caso de que sea un solicitante, que sea el mismo que el del ticket
     
@@ -114,9 +118,8 @@ export default class TicketsController {
 
     view.share({
       ticket: ticket,
-      technicians: technicians,
       user: user,
-      states: State,
+      State: State,
       Roles: Roles,
       currentPath: request.url()
     });

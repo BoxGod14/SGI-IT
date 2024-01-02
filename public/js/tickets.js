@@ -1,6 +1,6 @@
-let writer = document.querySelector("#message");
+let writer = document.querySelector("#writter");
 let showWriterButton = document.querySelector("#showWriter");
-let messager = document.querySelector('[name="message"]');
+let messager = document.querySelector('[name="messager"]');
 writer.style.display = "none";
 
 showWriterButton.addEventListener("click", showWriter);
@@ -10,7 +10,7 @@ document.getElementById("sendMessage").addEventListener("click", sendMessage);
  * Función para mostrar el sistema de escritura de mensajes
  */
 function showWriter() {
-  writer.style.display = "inline";
+  writer.style.display = "flex";
   showWriterButton.style.display = "none";
 }
 /**

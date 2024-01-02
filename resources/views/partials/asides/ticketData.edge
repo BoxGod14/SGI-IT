@@ -1,0 +1,27 @@
+<h3>Filtro</h3>
+{{--Formulario de filtros--}}
+<form>
+    {{ csrfField() }}
+    {{--Tecnico--}}
+    <section>
+        <label for="technicianName">Tecnico asignado</label><br>
+        <input name="technicianName" type="text" id="technicianName">
+        <ul class="suggestionList" id="suggestionListTechnician"></ul>
+    </section>
+    
+    {{--Estado--}}
+    <section>
+        <label for="state">Estado</label><br>
+        <select name="state" id="state">
+            @each(state in State)
+            <option value="{{state}}">{{state}}</option>
+            @endeach
+        </select>
+    </section>    
+</form>
+
+<button id="applyFilters" class="btn_primary">Aplicar filtros</button>
+
+<script>
+
+</script>

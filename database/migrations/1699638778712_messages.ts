@@ -22,7 +22,7 @@ export default class extends BaseSchema {
         .onDelete("CASCADE")
         .notNullable();
 
-      table.string("message").notNullable(); //El mensaje
+      table.text("message",'longtext').notNullable(); //El mensaje
 
       table.timestamp("created_at", { useTz: true });
       table.timestamp("updated_at", { useTz: true });

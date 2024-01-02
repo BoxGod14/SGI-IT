@@ -10,7 +10,7 @@ export default class UsersController {
     return user;
   }
 
-  public async show({ params, view, response, auth }: HttpContextContract) {
+  public async show({ params, view, response, auth, request }: HttpContextContract) {
     let userShow: User;
     //Intentar obtener usuario y comprobar si podemos visualizarlo
     const user = await auth.use("web").authenticate();
@@ -29,8 +29,10 @@ export default class UsersController {
     }
     view.share({
       user: userShow!,
+      Roles: Roles,
+      currentPath: request.url()
     });
-    const html = view.render("user/show.edge", userShow!);
+    const html = view.render("user/show.edge");
     return html;
   }
 

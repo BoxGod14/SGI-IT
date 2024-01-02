@@ -1,5 +1,5 @@
 import { DateTime } from 'luxon'
-import { BaseModel, HasMany, ManyToMany, column, hasMany, manyToMany } from '@ioc:Adonis/Lucid/Orm'
+import { BaseModel, HasMany, ManyToMany, column, hasMany, manyToMany, computed } from '@ioc:Adonis/Lucid/Orm'
 import Message from './Message'
 import User from './User'
 
@@ -27,7 +27,18 @@ export default class Ticket extends BaseModel {
 
   @column.dateTime({ autoCreate: true, autoUpdate: true })
   public updatedAt: DateTime
-
+  
+  @computed()
+  public get timeCreated(){
+    let duration = DateTime.now().diff(this.createdAt, ['years', 'months', 'days'])
+    if (duration.years >= 1) {
+      return Math.round(duration.years) + ' año' + (Math.round(duration.years) === 1 ? '' : 's')
+    }
+    else if (duration.months >= 1) {
+      return Math.round(duration.months) + ' mes' + (Math.round(duration.months) === 1 ? '' : 'es')
+    }
+    return Math.round(duration.days) + ' día' + (Math.round(duration.days) === 1 ? '' : 's')
+  }
   //Relaciones
 
   //Relacion con mensajes
