@@ -106,12 +106,16 @@ export default class UsersController {
     }
     //Si ha superado ambos filtros significa que se puede realizar la busqueda.
     const name = '%'+request.input('name')+'%';
-    const usersFind = await Profile
-      .query()
-      .whereRaw("name like ?",[name])//Se emplea whereRaw en vez de whereLike para evitar el fallo de COLLATE incorrecto.
-      .preload('user', (userquery) => {
-        userquery.where('roles',searchRole)
-      })
-    return response.status(200).json(usersFind);    
+   
+    //El generador de consultas por defecto fuerza el uso de outer join, por lo que si solo se quiere mostrar un dato que todo el where coincida con varias tablas, se necesita hacerla raw.
+    const usersFind = await Database.rawQuery(
+      'SELECT users.id, profiles.name FROM users INNER JOIN profiles on users.id = profiles.user_id where roles = :role AND profiles.name like :name',
+      {
+        role: searchRole,
+        name: name
+      }
+    )
+    //Se le devuelve la primera posicion ya que ahi es donde estan los datos
+    return response.status(200).json(usersFind[0]);    
   }
 }

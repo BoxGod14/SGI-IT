@@ -4,18 +4,18 @@
     {{ csrfField() }}
 
     {{--Solicitante--}}
-    <section> 
+    <section class="autocomplete">
         <label for="requesterName">Solicitante</label><br>
         <input name="requesterName" type="text" id="requesterName" placeholder="">
-        <ul class="suggestionList" id="suggestionListRequester"></ul>
+        <div class="suggestionList" id="suggestionListRequester"></div>
     </section>
     
 
     {{--Tecnico--}}
-    <section>
+    <section class="autocomplete">
         <label for="technicianName">Tecnico asignado</label><br>
         <input name="technicianName" type="text" id="technicianName">
-        <ul class="suggestionList" id="suggestionListTechnician"></ul>
+        <div class="suggestionList" id="suggestionListTechnician"></div>
     </section>
     
     {{--Estado--}}
@@ -105,7 +105,7 @@
     function fillSuggestionList(users, role) {  
         clearSuggestionList();          
         users.forEach(function (user) {
-            var listItem = document.createElement('li');
+            var listItem = document.createElement('div');
             listItem.textContent = user.name;
             listItem.addEventListener('click', function () {
             if (role == '{{Roles.REQUESTER}}') {

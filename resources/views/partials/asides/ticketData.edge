@@ -3,7 +3,7 @@
 <form>
     {{ csrfField() }}
     {{--Tecnico--}}
-    <section>
+    <section class="autocomplete">
         <label for="technicianName">Tecnico asignado</label><br>
         <input name="technicianName" type="text" id="technicianName"
         {{--Prepargar los datos del usuario tecnico en caso de existir uno--}}
@@ -13,7 +13,7 @@
             @endif
         @endeach
         >
-        <ul class="suggestionList" id="suggestionListTechnician"></ul>
+        <div class="suggestionList" id="suggestionListTechnician"></div>
     </section>
     
     {{--Estado--}}
@@ -91,9 +91,9 @@
      * @param role Rol del usuario a buscar, sirve para saber donde se tienen que rellanar los datos
      */
     function fillSuggestionList(users, role) {  
-        clearSuggestionList();          
+        clearSuggestionList();
         users.forEach(function (user) {
-            var listItem = document.createElement('li');
+            var listItem = document.createElement('div');
             listItem.textContent = user.name;
             listItem.addEventListener('click', function () {
                 technicianInput.value = user.name;

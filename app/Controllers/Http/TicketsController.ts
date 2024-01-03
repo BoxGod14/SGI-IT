@@ -165,7 +165,6 @@ export default class TicketsController {
       await trx.commit;
       return response.status(200).json({ message: "Ticket editado correctamente", status: "ok" });
     } catch (error) {
-      console.log(error);
       await trx.rollback();
       return response.status(400).json({ message: "Error editando el ticket", status: "error" });
     }
