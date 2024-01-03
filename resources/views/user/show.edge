@@ -5,93 +5,115 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Usuario</title>    
-    <link rel="stylesheet" href="../css/main.css">
-    <link rel="stylesheet" href="../css/transitions.css">
-    <link rel="stylesheet" href="../css/users.css">
+    @entryPointStyles('scss')
 </head>
 <body>
-    @include('partials/scripts/transitionsSwup_js.edge')    
-    @include('partials/header.edge')
-    @include('partials/nav.edge')
-    <section class="mainInfo">
-        <h4>Detalles del usuario</h4>
-        <img src="" alt="Foto de usuario">
-        <p>{{user.profile.fullName}}</p>
-
-        <div>
-            <p>Correo electronico</p>
-            <p>{{user.email}}</p>
-        </div>
-
-        <div>
-            <p>Puesto</p>
-            <p>
-                @if(user.profile.jobPosition)
-                    {{user.profile.jobPosition}}
-                @else
-                  -
-                @end
-            </p>
-        </div>
-        
-        <div>
-            <p>Número de teléfono</p>
-            <p>
-                @if(user.profile.phoneNumber)
-                    {{user.profile.phoneNumber}}
-                @else
-                    -
-                @end
-            </p>
-        </div>
-    </section>
-    <section class="extraInfo">
-        <div id="userInfo">
+  <script defer src="../js/users.js"></script>
+    <main>
+      @include('partials/nav.edge')
+    <div>
+      @include('partials/header.edge')
+      <div>
+        <section class="userData">
+          <section class="user-mainInfo">
             <div>
-                <p>Nombre</p>
-                <p>{{user.profile.name}}</p>
-            </div>
+              <h4>Detalles del usuario</h4>
+              <img src="" alt="Foto de usuario">
+            </div>       
             <div>
-                <p>Apellidos</p>
-                <p>{{user.profile.surname}}</p>
+              <h4>{{user.profile.fullName}}</h4>
+              <div>
+                <div>
+                  <p>Correo electronico</p>
+                  <p>{{user.email}}</p>
+                </div>
+                <div>
+                  <p>Puesto</p>
+                  <p>
+                    @if(user.profile.jobPosition)
+                      {{user.profile.jobPosition}}
+                    @else
+                      -
+                    @end
+                  </p>
+                </div>                
+                <div>
+                  <p>Número de teléfono</p>
+                  <p>
+                    @if(user.profile.phoneNumber)
+                      {{user.profile.phoneNumber}}
+                    @else
+                      -
+                    @end
+                  </p>
+                </div>
+              </div>              
+            </div> 
+            <div id="selectors">
+              <ul>
+                <li class="selected" data-selector="userInfo">Información del usuario</li>
+                <li data-selector="tickets" >Tickets creados</li>
+              </ul>
             </div>
-            <div>
-                <p>Fecha de nacimiento</p>
-                <p>{{user.profile.birthday.toFormat('dd-MM-yyyy')}}</p>
-            </div>
-            <div>
-                <p>Fecha de creacion</p>
-                <p>{{user.profile.createdAt.toFormat('dd-MM-yyyy')}}</p>
-            </div>
-        </div>
-        <div id="tickets">
-            @each(ticket in user.tickets)
-              <div class="ticket" data-url="{{route('TicketsController.show', [ticket.id])}}">
-                <p class="subject">{{ticket.subject}}</p>
-
-                <p class="requester">
-                  @each(user in ticket.User)
-                    @if(user.$extras.pivot_role == Roles.REQUESTER)
-                      <a href="{{route('UsersController.show', [user.id])}}">{{user.profile.fullName}}</a>
-                    @endif
-                  @endeach
-                </p>                
-
-                <p class="state">{{ticket.state}}</p>
-
-                <p class="technician">
-                  @each(user in ticket.User)
-                    @if(user.$extras.pivot_role == Roles.TECHNICIAN)
-                      {{user.profile.fullName}}
-                    @endif
-                  @endeach
-                </p>
-
-                <p class="createdAt">{{ticket.createdAt.toFormat('dd-MM-yyyy')}}  </p>
+          </section>
+          <section class="extraInfo">
+              
+              <div id="userInfo">
+                  <div>
+                      <p>Nombre</p>
+                      <p>{{user.profile.name}}</p>
+                  </div>
+                  <div>
+                      <p>Apellidos</p>
+                      <p>{{user.profile.surname}}</p>
+                  </div>
+                  <div>
+                      <p>Fecha de nacimiento</p>
+                      <p>{{user.profile.birthday.toFormat('dd-MM-yyyy')}}</p>
+                  </div>
+                  <div>
+                      <p>Fecha de creacion</p>
+                      <p>{{user.profile.createdAt.toFormat('dd-MM-yyyy')}}</p>
+                  </div>
               </div>
-              <hr>
-            @endeach
-        </div>
-    </section>
+              <div id="tickets">
+                asdsad
+                  @each(ticket in user.tickets)
+                    <div class="ticket" data-url="{{route('TicketsController.show', [ticket.id])}}">
+                      <p class="subject">{{ticket.subject}}</p>
+      
+                      <p class="requester">
+                        @each(user in ticket.User)
+                          @if(user.$extras.pivot_role == Roles.REQUESTER)
+                            <a href="{{route('UsersController.show', [user.id])}}">{{user.profile.fullName}}</a>
+                          @endif
+                        @endeach
+                      </p>                
+      
+                      <p class="state">{{ticket.state}}</p>
+      
+                      <p class="technician">
+                        @each(user in ticket.User)
+                          @if(user.$extras.pivot_role == Roles.TECHNICIAN)
+                            {{user.profile.fullName}}
+                          @endif
+                        @endeach
+                      </p>
+      
+                      <p class="createdAt">{{ticket.createdAt.toFormat('dd-MM-yyyy')}}  </p>
+                    </div>
+                    <hr>
+                  @endeach
+              </div>
+          </section>
+        </section>
+        
+      </div>
+    </div>
+  </main>
+    @include('partials/scripts/transitionsSwup_js.edge')    
+    
+    
+    
 </body>
 </html>

@@ -1,7 +1,6 @@
 import type { HttpContextContract } from "@ioc:Adonis/Core/HttpContext";
 import Database from "@ioc:Adonis/Lucid/Database";
 import Roles from "App/Enums/Roles";
-import Profile from "App/Models/Profile";
 import User from "App/Models/User";
 
 export default class UsersController {
@@ -15,7 +14,7 @@ export default class UsersController {
     //Intentar obtener usuario y comprobar si podemos visualizarlo
     const user = await auth.use("web").authenticate();
     try {
-      userShow = await User.findByOrFail("id", params.id);
+      userShow = await User.findOrFail(params.id);
       await userShow.load('profile');
       await userShow.load('tickets' ,(tickets) => {
         tickets.where('role', Roles.REQUESTER)
@@ -25,7 +24,8 @@ export default class UsersController {
       }
     } catch (error) {
       //Si da error, sin importar cual sea, se redirigira a mostrar su propio usuario
-      response.status(403).redirect().toRoute("UsersController.show", [user.id]);
+      response.redirect().toRoute("UsersController.show", [user.id]);
+      return;
     }
     view.share({
       user: userShow!,
