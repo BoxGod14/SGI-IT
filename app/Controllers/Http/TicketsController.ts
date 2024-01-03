@@ -105,6 +105,7 @@ export default class TicketsController {
         messageQuery.preload('user', (userQuery) => {
           userQuery.preload('profile');
         })
+        .orderBy('created_at', 'desc')//Tiene sentido ver primero los ultimos mensajes creados
       })      
       .first();//Aunque solo hay 1 ticket por id, hay que indicar que solo obtenga el primero
     //Comprobar en caso de que sea un solicitante, que sea el mismo que el del ticket
@@ -164,6 +165,7 @@ export default class TicketsController {
       await trx.commit;
       return response.status(200).json({ message: "Ticket editado correctamente", status: "ok" });
     } catch (error) {
+      console.log(error);
       await trx.rollback();
       return response.status(400).json({ message: "Error editando el ticket", status: "error" });
     }

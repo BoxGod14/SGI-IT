@@ -10,6 +10,10 @@ export default class MessagesController {
   public async create({}: HttpContextContract) {}
 
   public async store({ auth, request, response }: HttpContextContract) {
+    //Comprobar que el mensaje no esta vacio
+    if (!request.input('message').trim()) {
+      return response.status(400).json({ message: "Mensaje vacio" });
+    }
     //Obtener usuario
     const user = await auth.use("web").authenticate();
     let requester: User;    

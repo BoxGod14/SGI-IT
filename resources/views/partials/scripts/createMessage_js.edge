@@ -1,4 +1,9 @@
 <script defer>
+  let messages = document.getElementsByClassName('messages');
+  let newMessage = document.createElement("div");
+  let p1 = document.createElement("p");
+  let p2 = document.createElement("p");
+  let from = "{{user.profile.fullName}}"; // Variable con el profile
   /**
    * Función para crear los mensajes
    */
@@ -18,12 +23,28 @@
       body: JSON.stringify(data)
       })
       .then(response => {
+        if (response.ok) {
+          //Añadir mensaje mediante dom
+          newMessage.className = "message";
+          p1.textContent = "De: " + from;
+          p2.textContent = messager.value; 
+
+          newMessage.appendChild(p1);
+          newMessage.appendChild(p2);
+          document.getElementById('messages').insertAdjacentHTML('afterbegin',newMessage.outerHTML);//insertAdjacentHTML permite añadir elementos sin sobreescribir otros y seleccionar en que parte se añade. 'beforeend' al final
+          
+          //Asegurar que no se lee como error el resultado
+          document.querySelector('#response').classList.remove("errors"); 
+          console.log('a')        
+        }
+        else {          
+          //Marcar como error
+          document.querySelector('#response').classList.add("errors");
+        }
           return response.json(); // Devuelve la promesa resultante de parsear el cuerpo JSON
       })
       .then(data => {
-          console.log(data.message);
-          // Realizar más operaciones aquí con los datos actualizados
-          document.querySelector('#response').textContent = data.message;
+          document.querySelector('#response').textContent = data.message;          
       })
   }
 </script>

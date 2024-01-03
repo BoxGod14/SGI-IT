@@ -1,4 +1,4 @@
-<h3>Datos</h3>
+<h3>Detalles</h3>
 {{--Formulario de filtros--}}
 <form>
     {{ csrfField() }}
@@ -6,9 +6,10 @@
     <section>
         <label for="technicianName">Tecnico asignado</label><br>
         <input name="technicianName" type="text" id="technicianName"
+        {{--Prepargar los datos del usuario tecnico en caso de existir uno--}}
         @each(user in ticket.User)
             @if(user.$extras.pivot_role == Roles.TECHNICIAN)
-            value="{{user.profile.name}}"
+            value="{{user.profile.name}}" data-id="{{user.id}}"
             @endif
         @endeach
         >
@@ -19,6 +20,7 @@
     <section>
         <label for="state">Estado</label><br>
         <select name="state" id="state">
+            {{--Rellenar los posibles estados y preseleccionar el actual--}}
             @each(states in State)
                 <option value="{{states}}"
                 @if(states == ticket.state)
@@ -30,7 +32,7 @@
     </section>    
 </form>
 
-<button id="applyChanges" class="btn_primary">Aplicar filtros</button>
+<button id="applyChanges" class="btn_primary">Aplicar Cambios</button>
 <p id="result"></p>
 <script>
     //variables
@@ -79,6 +81,7 @@
         })
         .catch(error => {
             // La peticion fallo
+            console.log(error);
             console.error('Error en la solicitud:', error.message);
         });
     }

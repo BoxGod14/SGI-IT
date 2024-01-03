@@ -38,7 +38,7 @@
             </div>
             <section class="messages-writter">
               <h4>Mensajes</h4>
-              <div class="messages">
+              <div class="messages" id="messages">
                   @each(message in ticket.message)
                     <div class="message">
                       <p>De: {{message.user.profile.fullName}}</p>
