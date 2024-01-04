@@ -52,13 +52,16 @@
             <div id="selectors">
               <ul>
                 <li class="selected" data-selector="userInfo">Información del usuario</li>
-                <li data-selector="tickets" >Tickets creados</li>
+                <li data-selector="tickets-requester" >Tickets creados</li>
+                @if(user.roles != Roles.REQUESTER)
+                  <li data-selector="tickets-technician" >Tickets asignados</li>
+                @end
               </ul>
             </div>
           </section>
-          <section class="extraInfo">
-              
+          <section class="extraInfo">              
               <div id="userInfo">
+                <h4>Información adicional</h4>
                   <div>
                       <p>Nombre</p>
                       <p>{{user.profile.name}}</p>
@@ -69,51 +72,77 @@
                   </div>
                   <div>
                       <p>Fecha de nacimiento</p>
-                      <p>{{user.profile.birthday.toFormat('dd-MM-yyyy')}}</p>
+                      <p>{{user.profile.birthday.toFormat('dd/MM/yyyy')}}</p>
                   </div>
                   <div>
                       <p>Fecha de creacion</p>
-                      <p>{{user.profile.createdAt.toFormat('dd-MM-yyyy')}}</p>
+                      <p>{{user.profile.createdAt.toFormat('dd/MM/yyyy')}}</p>
                   </div>
               </div>
-              <div id="tickets">
-                asdsad
-                  @each(ticket in user.tickets)
-                    <div class="ticket" data-url="{{route('TicketsController.show', [ticket.id])}}">
-                      <p class="subject">{{ticket.subject}}</p>
-      
-                      <p class="requester">
-                        @each(user in ticket.User)
-                          @if(user.$extras.pivot_role == Roles.REQUESTER)
-                            <a href="{{route('UsersController.show', [user.id])}}">{{user.profile.fullName}}</a>
-                          @endif
-                        @endeach
-                      </p>                
-      
-                      <p class="state">{{ticket.state}}</p>
-      
-                      <p class="technician">
+              <div id="tickets-requester" class="tickets-user">
+                @each(ticket in user.tickets)
+                  @if(ticket.$extras.pivot_role == Roles.REQUESTER)
+                  <div class="ticket" data-url="{{route('TicketsController.show', [ticket.id])}}">
+                    <div><p><i class="material-icons">confirmation_number</i></p></div>                    
+                    <div>
+                      <section>
+                        <p class="subject"
+                        @if(ticket.state == State.SOLVED)
+                          style="color:gray"
+                        @end
+                        >{{ticket.subject}}</p>
+                        <p class="id">#{{ticket.id}}</p>
+                      </section>
+                      <section>                                        
+                        <p class="createdAt">Creado hace: {{ticket.timeCreated}}</p>
+                        <p class="state">Estado: {{ticket.state}}</p>
                         @each(user in ticket.User)
                           @if(user.$extras.pivot_role == Roles.TECHNICIAN)
-                            {{user.profile.fullName}}
+                          <p>Tecnico: <a class="technician" href="{{route('UsersController.show', [user.id])}}">{{user.profile.fullName}}</a></p>
                           @endif
-                        @endeach
-                      </p>
-      
-                      <p class="createdAt">{{ticket.createdAt.toFormat('dd-MM-yyyy')}}  </p>
+                        @endeach                      
+                      </section>
                     </div>
-                    <hr>
-                  @endeach
+                  </div>
+                  @endif                  
+                @endeach
               </div>
+              {{--Mostrar solo si el usuario que se muestra es tecnico--}}
+              @if(user.roles == Roles.TECHNICIAN)
+                <div id="tickets-technician" class="tickets-user">
+                  @each(ticket in user.tickets)
+                    @if(ticket.$extras.pivot_role == Roles.TECHNICIAN)
+                      <div class="ticket" data-url="{{route('TicketsController.show', [ticket.id])}}">
+                        <div><p><i class="material-icons">confirmation_number</i></p></div>                    
+                        <div>
+                          <section>
+                            <p class="subject"
+                            @if(ticket.state == State.SOLVED)
+                              style="color:gray"
+                            @end
+                            >{{ticket.subject}}</p>
+                            <p class="id">#{{ticket.id}}</p>
+                          </section>
+                          <section>                                        
+                            <p class="createdAt">Creado hace: {{ticket.timeCreated}}</p>
+                            <p class="state">Estado: {{ticket.state}}</p>
+                            @each(user in ticket.User)
+                              @if(user.$extras.pivot_role == Roles.REQUESTER)
+                              <p>Solicitante: <a class="technician" href="{{route('UsersController.show', [user.id])}}">{{user.profile.fullName}}</a></p>
+                              @endif
+                            @endeach                      
+                          </section>
+                        </div>
+                      </div>
+                    @endif                  
+                  @endeach
+                </div>                
+              @endif
           </section>
         </section>
-        
       </div>
     </div>
   </main>
-    @include('partials/scripts/transitionsSwup_js.edge')    
-    
-    
-    
+  @include('partials/scripts/transitionsSwup_js.edge')    
 </body>
 </html>

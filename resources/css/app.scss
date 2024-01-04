@@ -166,24 +166,25 @@ label {
 .ticket {
   text-align: center;
   border: 1px solid $color-border;
+  .subject {
+    text-align: left;
+    margin-left: 0.5rem;
+    width: 45%;
+  }
+  .requester {
+    width: 15%;
+  }
+  .state {
+    width: 10%;
+  }
+  .technician {
+    width: 20%;
+  }
+  .createdAt {
+    width: 10%;
+  }
 }
-.subject {
-  text-align: left;
-  margin-left: 0.5rem;
-  width: 45%;
-}
-.requester {
-  width: 15%;
-}
-.state {
-  width: 10%;
-}
-.technician {
-  width: 20%;
-}
-.createdAt {
-  width: 10%;
-}
+
 
 //Paginacion
 .pagination {
@@ -256,8 +257,8 @@ label {
 .userData{
   display: flex;
   flex-direction: column;
-  width: 100%;
-  background-color: white;  
+  width: 100%; 
+  background-color: white;   
   .user-mainInfo {
     display: flex;
     padding: 0 1rem;
@@ -311,14 +312,64 @@ label {
       &:first-child {
         display: flex
       }
-      &#tickets {
-        background-color: red;
+      &.tickets-user {
+        flex-direction: column;
+        align-items: flex-start;
+        margin-top: 1rem;
+        gap: 1rem;
+          .ticket {
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+            gap: 1rem;
+            width: 100%;
+            border: none;
+            >div:first-child{
+              display: flex;
+              justify-content: center;
+              align-items: center;              
+              padding: 0.2rem;
+              border-radius: $border-radius-lg;
+              border: 1px solid $color-border;
+              p{
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                margin: 0;
+                padding: 0;
+              }              
+            } 
+            section {
+              display: flex;
+              gap: 1rem;
+              > * {
+                text-align: left;
+                margin: 0;
+                padding: 0;
+                width: max-content;
+              }
+              >.state {
+                width: 6rem;
+              }
+              >.subject {
+                color: blue;
+              }
+            }    
+          }
       }
       &#userInfo {
-        background-color: blue;
+        display: flex;
+        flex-wrap: wrap;
+        h4 {
+          width: 100%;
+        }
+        div {
+          width: 50%;
+          p:first-child {
+            font-weight: 600;
+          }
+        }
       }
     }
-    
-    
   }
 }

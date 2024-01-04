@@ -2,5 +2,6 @@
     {{--Sistema para limitar si se muestra un header u otro--}}
     @includeIf(currentPath == '/tickets', 'partials/headers/tickets.edge')
     @includeIf(currentPath.match(/\/tickets\/.*$/), 'partials/headers/ticket.edge')
+    @includeIf(currentPath.match(/\/users\/.*$/), 'partials/headers/user.edge')
     <p>{{auth.user.roles}}: {{auth.user.username}}</p>
 </header>

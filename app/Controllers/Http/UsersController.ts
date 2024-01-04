@@ -1,6 +1,7 @@
 import type { HttpContextContract } from "@ioc:Adonis/Core/HttpContext";
 import Database from "@ioc:Adonis/Lucid/Database";
 import Roles from "App/Enums/Roles";
+import State from "App/Enums/State";
 import User from "App/Models/User";
 
 export default class UsersController {
@@ -14,11 +15,15 @@ export default class UsersController {
     //Intentar obtener usuario y comprobar si podemos visualizarlo
     const user = await auth.use("web").authenticate();
     try {
+      //Comprobar que existe el usuario
       userShow = await User.findOrFail(params.id);
       await userShow.load('profile');
       await userShow.load('tickets' ,(tickets) => {
-        tickets.where('role', Roles.REQUESTER)
-      })
+        tickets.preload('User', (userQuery) => {
+          userQuery.pivotColumns(["role"]).preload("profile");
+        })
+      })    
+
       if (user != userShow && user.roles == Roles.REQUESTER) {
         throw new Error();        
       }
@@ -30,6 +35,7 @@ export default class UsersController {
     view.share({
       user: userShow!,
       Roles: Roles,
+      State: State,
       currentPath: request.url()
     });
     const html = view.render("user/show.edge");
