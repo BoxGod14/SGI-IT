@@ -1,6 +1,6 @@
 <div>
     <h3><a href="{{route('TicketsController.index')}}">Tickets</a> > Ticket-{{ticket.id}}</h3>
-    <button class="btn_delete" id="delete_button" title="Eliminar ticket"><i class="material-icons">remove</i></button>
+    <a href="#delete_confirmation" class="btn_delete" title="Eliminar ticket"><i class="material-icons">remove</i></a>
 </div>
 <script>
     const buttonDelete = document.getElementById('delete_button');
@@ -10,24 +10,22 @@
         const data = {
             _csrf: document.querySelector('[name="_csrf"]').value,
             ticketId: {{ticket.id}}
-        }
-        if (confirm('¿Estás seguro de que quieres eliminar este ticket?')) {
-            fetch("{{route('TicketsController.destroy', [ticket.id])}}", {
-            method: 'DELETE',
-            headers: {
-                'Content-Type': 'application/json', // Especificar el tipo de contenido si estás enviando datos en formato JSON
-            },
-            body: JSON.stringify(data)
-            })
-            .then(response => {
-                if (response.ok) {
-                    window.location.href = "{{route('TicketsController.index')}}";
-                } else {
-                    alert('Error al eliminar el Ticket');
-                }
-            })
-            .catch(console.log('Se intenta eliminar ticket'));
-        }
+        }        
+        fetch("{{route('TicketsController.destroy', [ticket.id])}}", {
+        method: 'DELETE',
+        headers: {
+            'Content-Type': 'application/json', // Especificar el tipo de contenido si estás enviando datos en formato JSON
+        },
+        body: JSON.stringify(data)
+        })
+        .then(response => {
+            if (response.ok) {
+                window.location.href = "{{route('TicketsController.index')}}";
+            } else {
+                alert('Error al eliminar el Ticket');
+            }
+        })
+        .catch(console.log('Se intenta eliminar ticket'));     
         
     }
     

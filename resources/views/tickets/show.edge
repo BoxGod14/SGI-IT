@@ -9,14 +9,14 @@
 </head>
 <body>
   <script defer src="../js/tickets.js"></script>
-    @include('partials/scripts/transitionsSwup_js.edge')
-    @include('partials/scripts/createMessage_js.edge')    
-    
-    <main>
+  
+    @include('partials/scripts/createMessage_js.edge')
+    <main>  
       @include('partials/nav.edge')
       <div>
         @include('partials/header.edge')
         <div>
+          
           <section class="ticket-details">
             <div id="subject">
               <p>{{ticket.subject}}</p>
@@ -66,6 +66,17 @@
           @include('partials/aside.edge')
         </div>
       </div>
+      
     </main>
+    <div id="delete_confirmation" class="popup-overlay">
+      <div class="modal">
+          <h2>Confirmación borrado</h2>
+          <div class="content">
+              <p>¿Estas seguro que quieres borrar el ticket? No se podra recuperar</p>
+              <a href="#" class="btn_primary">No borrar</a>
+              <button class="btn_delete" id="delete_button">Borrar</button>
+          </div>
+      </div>
+    </div>
 </body>
 </html>
