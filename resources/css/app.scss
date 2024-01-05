@@ -54,6 +54,28 @@ main {
       text-align: center;
       border: 1px solid $color-border;
     }
+    //Los tamaños de cada sección de los tickets
+    &.ticket {
+      text-align: center;
+      border: 1px solid $color-border;
+    }
+    .subject {
+      text-align: left;
+      margin-left: 0.5rem;
+      width: 45%;
+    }
+    .requester {
+      width: 15%;
+    }
+    .state {
+      width: 10%;
+    }
+    .technician {
+      width: 20%;
+    }
+    .createdAt {
+      width: 10%;
+    }
   }
 }
 a {
@@ -122,7 +144,7 @@ label {
 }
 
 .btn_delete {
-  display: flex; 
+  display: flex;
   justify-content: center;
   border: none;
   background-color: red;
@@ -130,7 +152,7 @@ label {
   align-items: center;
   width: 2rem;
   height: 2rem;
-  border-radius: $border-radius-lg; 
+  border-radius: $border-radius-lg;
   &:hover {
     background-color: darkred;
   }
@@ -161,30 +183,6 @@ label {
   justify-content: center;
   width: 100%;
 }
-
-//Los tamaños de cada sección de los tickets
-.ticket {
-  text-align: center;
-  border: 1px solid $color-border;
-  .subject {
-    text-align: left;
-    margin-left: 0.5rem;
-    width: 45%;
-  }
-  .requester {
-    width: 15%;
-  }
-  .state {
-    width: 10%;
-  }
-  .technician {
-    width: 20%;
-  }
-  .createdAt {
-    width: 10%;
-  }
-}
-
 
 //Paginacion
 .pagination {
@@ -254,11 +252,11 @@ label {
   }
 }
 
-.userData{
+.userData {
   display: flex;
   flex-direction: column;
-  width: 100%; 
-  background-color: white;   
+  width: 100%;
+  background-color: white;
   .user-mainInfo {
     display: flex;
     padding: 0 1rem;
@@ -282,11 +280,10 @@ label {
       &:first-child {
         width: 20%;
       }
-      
     }
     #selectors {
       width: 100%;
-      ul {        
+      ul {
         display: flex;
         flex-direction: row;
         list-style: none;
@@ -294,7 +291,7 @@ label {
         padding: 0;
         width: 100%;
         gap: 1rem;
-        li{      
+        li {
           padding: 0.5rem 1rem;
           margin-bottom: 0.5rem;
           &.selected {
@@ -310,52 +307,52 @@ label {
     > div {
       display: none;
       &:first-child {
-        display: flex
+        display: flex;
       }
       &.tickets-user {
         flex-direction: column;
         align-items: flex-start;
         margin-top: 1rem;
         gap: 1rem;
-          .ticket {
+        .ticket {
+          display: flex;
+          flex-direction: row;
+          align-items: center;
+          gap: 1rem;
+          width: 100%;
+          border: none;
+          > div:first-child {
             display: flex;
-            flex-direction: row;
+            justify-content: center;
             align-items: center;
-            gap: 1rem;
-            width: 100%;
-            border: none;
-            >div:first-child{
+            padding: 0.2rem;
+            border-radius: $border-radius-lg;
+            border: 1px solid $color-border;
+            p {
               display: flex;
               justify-content: center;
-              align-items: center;              
-              padding: 0.2rem;
-              border-radius: $border-radius-lg;
-              border: 1px solid $color-border;
-              p{
-                display: flex;
-                justify-content: center;
-                align-items: center;
-                margin: 0;
-                padding: 0;
-              }              
-            } 
-            section {
-              display: flex;
-              gap: 1rem;
-              > * {
-                text-align: left;
-                margin: 0;
-                padding: 0;
-                width: max-content;
-              }
-              >.state {
-                width: 6rem;
-              }
-              >.subject {
-                color: blue;
-              }
-            }    
+              align-items: center;
+              margin: 0;
+              padding: 0;
+            }
           }
+          section {
+            display: flex;
+            gap: 1rem;
+            > * {
+              text-align: left;
+              margin: 0;
+              padding: 0;
+              width: max-content;
+            }
+            > .state {
+              width: 6rem;
+            }
+            > .subject {
+              color: blue;
+            }
+          }
+        }
       }
       &#userInfo {
         display: flex;
@@ -405,15 +402,15 @@ label {
   .content {
     display: flex;
     flex-direction: row;
-    flex-wrap: wrap;    
+    flex-wrap: wrap;
     justify-content: space-between;
     max-height: 30%;
-    overflow: auto; 
+    overflow: auto;
     .btn_delete {
       margin-right: 1rem;
       width: 3rem;
       border-radius: $border-radius-sm;
-    }   
+    }
     p {
       width: 100%;
     }
