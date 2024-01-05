@@ -1,0 +1,83 @@
+<div id="edit_user" class="popup-overlay">
+    <div class="modal modal-edit-user">
+        <h2>Editar usuario {{user.username}}</h2>
+        <div class="content">
+            <form>       
+                {{ csrfField() }}
+                <section class="inputWithLabel">
+                    <label for="username">Usuario</label>
+                    <input type="text" value="{{user.username}}" name="username" id="username">    
+                </section> 
+                
+                <section class="inputWithLabel">
+                    <label for="email">Correo electronico</label>
+                    <input type="email" value="{{user.email}}" name="email" id="email">
+                </section>
+                
+                <section class="inputWithLabel">
+                    <label for="name">Nombre</label>
+                    <input type="text" value="{{user.profile.name}}" name="name" id="name">
+                </section>
+                
+                
+                <section class="inputWithLabel">
+                    <label for="surname">Apellido</label>
+                    <input type="text" value="{{user.profile.surname}}" name="surname" id="surname">     
+                </section>
+                
+                <section class="inputWithLabel">
+                    <label for="birthday">Cumpleaños</label>
+                    <input type="date" value="{{user.profile.birthday.toFormat('yyyy-MM-dd')}}" name="birthday" id="birthday">
+                </section>
+
+                <section class="inputWithLabel">
+                    <label for="phoneNumber">Número de teléfono</label>
+                    <input type="text" 
+                    @if(user.profile.phoneNumber)
+                        value="{{user.profile.phoneNumber}}"
+                    @endif
+                    name="phoneNumber" id="phoneNumber">
+                </section>
+
+                <section class="inputWithLabel">
+                    <label for="jobPosition">Puesto</label>
+                    <input type="text"
+                    @if(user.profile.jobPosition)
+                        value="{{user.profile.jobPosition}}"
+                    @end
+                    name="jobPosition" id="jobPosition">
+                </section>
+                
+                
+                @if( auth.user.roles == Roles.ADMIN )
+                <section class="inputWithLabel">
+                    <label for="roles">Rol</label>
+                    <select name="roles" id="roles">
+                        <option value="{{ Roles.ADMIN }}"
+                        @if(user.roles == Roles.ADMIN)
+                        selected
+                        @end
+                        >Administrador</option>
+                        <option value="{{ Roles.REQUESTER }}"
+                        @if(user.roles == Roles.REQUESTER)
+                        selected
+                        @end
+                        >Solicitante</option>
+                        <option value="{{ Roles.TECHNICIAN }}"
+                        @if(user.roles == Roles.TECHNICIAN)
+                        selected
+                        @end
+                        >Tecnico</option>
+                    </select>
+                </section>
+                
+                @endif
+            </form>
+            <section>
+                <a href="#" class="btn_primary" id="close_button">Cerrar</a>
+                <button class="btn_primary" id="updateButton">Actualizar</button>
+            </section>            
+        </div>
+    </div>
+</div>
+@include('partials/scripts/updateUser_js.edge')

@@ -24,7 +24,7 @@ export default class UsersController {
         })
       })    
 
-      if (user != userShow && user.roles == Roles.REQUESTER) {
+      if (user.id != userShow.id && user.roles == Roles.REQUESTER) {
         throw new Error();        
       }
     } catch (error) {
@@ -74,13 +74,15 @@ export default class UsersController {
       userEdit.username = request.input("username");
       userEdit.email = request.input("email");
       //Solo puede cambiar roles un admin
-      if (user.roles == Roles.ADMIN) {
+      if (user.roles == Roles.ADMIN && request.input("roles") in Roles) {
         userEdit.roles = request.input("roles");
       }
       //*Aunque profile figure con error en rojo, es solo un aviso de que puede estar nulo, salvo casos muy raros jamas estara vacio
       profile!.name = request.input("name");
       profile!.surname = request.input("surname");
       profile!.birthday = request.input("birthday");
+      profile!.phoneNumber = request.input("phoneNumber");
+      profile!.jobPosition = request.input("jobPosition");
       profile!.save();
       userEdit.save();
       trx.commit();

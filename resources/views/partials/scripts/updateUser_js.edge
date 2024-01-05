@@ -1,4 +1,7 @@
 <script>
+    let updateButton = document.getElementById('updateButton');
+    updateButton.addEventListener('click', updateUser);
+    
     function updateUser() {
         const data = {
             userId: {{ user.id }},
@@ -7,7 +10,11 @@
             name: document.querySelector('#name').value,
             surname: document.querySelector('#surname').value,
             birthday: document.querySelector('#birthday').value,
-            roles: document.querySelector('#roles').value,
+            jobPosition: document.querySelector('#jobPosition').value,
+            phoneNumber: document.querySelector('#phoneNumber').value,
+            @if (auth.user.roles == Roles.ADMIN) 
+                roles: document.querySelector('#roles').value, 
+            @end            
             _csrf: document.querySelector('[name="_csrf"]').value,
         }
     //Peticion ajax
@@ -19,12 +26,9 @@
         body: JSON.stringify(data)
     })
         .then(response => {
-            return response.json(); // Devuelve la promesa resultante de parsear el cuerpo JSON
-        })
-        .then(data => {
-            console.log(data.message);
-            // Realizar más operaciones aquí con los datos actualizados
-            document.querySelector('#response').textContent = data.message;
+            if (response.ok) {
+                window.location.href = '{{route('UsersController.show', [user.id])}}'
+            }
         })
     }
 </script>
