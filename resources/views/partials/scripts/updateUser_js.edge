@@ -4,30 +4,40 @@
     
     function updateUser() {
         const data = {
-            userId: {{ user.id }},
-            username: document.querySelector('#username').value,
-            email: document.querySelector('#email').value,
-            name: document.querySelector('#name').value,
-            surname: document.querySelector('#surname').value,
-            birthday: document.querySelector('#birthday').value,
-            jobPosition: document.querySelector('#jobPosition').value,
             phoneNumber: document.querySelector('#phoneNumber').value,
+            picture: document.querySelector('#picture').files[0],
             @if (auth.user.roles == Roles.ADMIN) 
                 roles: document.querySelector('#roles').value, 
-            @end            
-            _csrf: document.querySelector('[name="_csrf"]').value,
+            @end   
         }
+        //
+        let formData = new FormData()
+        formData.append('username', document.querySelector('#username').value)
+        formData.append('userId', {{ user.id }})
+        formData.append('email', document.querySelector('#email').value)
+        formData.append('name', document.querySelector('#name').value)
+        formData.append('surname', document.querySelector('#surname').value)
+        formData.append('birthday', document.querySelector('#birthday').value)
+        formData.append('jobPosition', document.querySelector('#jobPosition').value)
+        formData.append('phoneNumber', document.querySelector('#phoneNumber').value)
+        @if (auth.user.roles == Roles.ADMIN) 
+            formData.append('roles', document.querySelector('#roles').value)
+        @end 
+        formData.append('picture', document.querySelector('#picture').files[0])
+
+
+
     //Peticion ajax
     fetch("{{ route('UsersController.update', [user.id]) }}", {
         method: 'PUT',
-        headers: {
-            'Content-Type': 'application/json', // Especificar el tipo de contenido si estás enviando datos en formato JSON
+        headers: {            
+            "X-CSRF-Token": document.querySelector('[name="_csrf"]').value,
         },
-        body: JSON.stringify(data)
+        body: formData
     })
         .then(response => {
             if (response.ok) {
-                window.location.href = '{{route('UsersController.show', [user.id])}}'
+                //window.location.href = '{{route('UsersController.show', [user.id])}}'
             }
         })
     }

@@ -1,8 +1,10 @@
+import Application from '@ioc:Adonis/Core/Application'
 import type { HttpContextContract } from "@ioc:Adonis/Core/HttpContext";
 import Database from "@ioc:Adonis/Lucid/Database";
 import Roles from "App/Enums/Roles";
 import State from "App/Enums/State";
 import User from "App/Models/User";
+import { DateTime } from 'luxon';
 
 export default class UsersController {
   public async index({}: HttpContextContract) {
@@ -42,25 +44,25 @@ export default class UsersController {
     return html;
   }
 
-  public async edit({ view, params, auth, response }: HttpContextContract) {
-    const user = await auth.use("web").authenticate();
-    //Si no eres admin o el usuario en cuestion, seras redirigido a tu edit.
-    if (user.roles != Roles.ADMIN && user.id != params.id) {
-      response.redirect().toRoute("UsersController.edit", [user.id]);
-    }
-    //Obtener datos del usuario que se va a editar y obtencion/generacion del token necesario para la API
-    const userEdit = await User.findByOrFail("id", params.id);
-    const profile = await userEdit.related("profile").query().first();
-    view.share({
-      user: userEdit,
-      profile: profile,
-      roles: Roles,
-    });
-    const html = view.render("user/edit.edge");
-    return html;
-  }
+  // public async edit({ view, params, auth, response }: HttpContextContract) {
+  //   const user = await auth.use("web").authenticate();
+  //   //Si no eres admin o el usuario en cuestion, seras redirigido a tu edit.
+  //   if (user.roles != Roles.ADMIN && user.id != params.id) {
+  //     response.redirect().toRoute("UsersController.edit", [user.id]);
+  //   }
+  //   //Obtener datos del usuario que se va a editar y obtencion/generacion del token necesario para la API
+  //   const userEdit = await User.findByOrFail("id", params.id);
+  //   const profile = await userEdit.related("profile").query().first();
+  //   view.share({
+  //     user: userEdit,
+  //     profile: profile,
+  //     roles: Roles,
+  //   });
+  //   const html = view.render("user/edit.edge");
+  //   return html;
+  // }
 
-  public async update({ auth, request, response }: HttpContextContract) {
+  public async update({ auth, request, response }: HttpContextContract) {    
     //Obtener usuario mediante token
     const user = await auth.use("web").authenticate();
     //Comprobar si eres admin o el mismo usuario a editar
@@ -82,9 +84,19 @@ export default class UsersController {
       profile!.surname = request.input("surname");
       profile!.birthday = request.input("birthday");
       profile!.phoneNumber = request.input("phoneNumber");
-      profile!.jobPosition = request.input("jobPosition");
-      profile!.save();
+      profile!.jobPosition = request.input("jobPosition");      
       userEdit.save();
+      const picture = request.file('picture');
+      if (picture) {
+        console.log('fotosubida')
+        const currentDate = DateTime.local().toFormat('dd-MM-yyyy');
+        const fileName = `${user.id}-${currentDate}.${picture.extname}`;
+        await picture.move(Application.publicPath('profilePictures'), {
+          name: fileName,
+        })
+        profile!.picture = `profilePictures/${fileName}`;  
+      }
+      profile!.save();
       trx.commit();
     } catch (error) {
       trx.rollback();

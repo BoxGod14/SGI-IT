@@ -2,7 +2,7 @@
     <div class="modal modal-edit-user">
         <h2>Editar usuario {{user.username}}</h2>
         <div class="content">
-            <form>       
+            <form enctype="multipart/form-data">       
                 {{ csrfField() }}
                 <section class="inputWithLabel">
                     <label for="username">Usuario</label>
@@ -48,6 +48,10 @@
                     name="jobPosition" id="jobPosition">
                 </section>
                 
+                <section>
+                    <label for="picture">Foto de perfil</label>
+                    <input type="file" name="picture" id="picture">
+                </section>
                 
                 @if( auth.user.roles == Roles.ADMIN )
                 <section class="inputWithLabel">

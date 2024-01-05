@@ -439,3 +439,8 @@ label {
     justify-content: space-between;
   }
 }
+.profilePicture {  
+  max-height: 12rem;
+  max-width: 12rem;
+  object-fit: scale-down;  
+}
