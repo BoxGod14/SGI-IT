@@ -109,7 +109,7 @@
                 @endeach
               </div>
               {{--Mostrar solo si el usuario que se muestra es tecnico--}}
-              @if(user.roles == Roles.TECHNICIAN)
+              @if(user.roles != Roles.REQUESTER)
                 <div id="tickets-technician" class="tickets-user">
                   @each(ticket in user.tickets)
                     @if(ticket.$extras.pivot_role == Roles.TECHNICIAN)

@@ -65,18 +65,8 @@
           </section>
           @include('partials/aside.edge')
         </div>
-      </div>
-      
+      </div>      
     </main>
-    <div id="delete_confirmation" class="popup-overlay">
-      <div class="modal">
-          <h2>Confirmación borrado</h2>
-          <div class="content">
-              <p>¿Estas seguro que quieres borrar el ticket? No se podra recuperar</p>
-              <a href="#" class="btn_primary">No borrar</a>
-              <button class="btn_delete" id="delete_button">Borrar</button>
-          </div>
-      </div>
-    </div>
+    @include('partials/deleteTicketModal.edge')    
 </body>
 </html>
