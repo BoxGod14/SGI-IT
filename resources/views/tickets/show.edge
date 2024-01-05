@@ -8,15 +8,13 @@
     @entryPointStyles('scss')
 </head>
 <body>
-  <script defer src="../js/tickets.js"></script>
-  
+  <script defer src="../js/tickets.js"></script>    
     @include('partials/scripts/createMessage_js.edge')
     <main>  
       @include('partials/nav.edge')
       <div>
         @include('partials/header.edge')
-        <div>
-          
+        <div>          
           <section class="ticket-details">
             <div id="subject">
               <p>{{ticket.subject}}</p>
@@ -63,10 +61,10 @@
               
             </section>
           </section>
-          @include('partials/aside.edge')
+          @include('partials/aside.edge')            
         </div>
       </div>      
     </main>
-    @include('partials/deleteTicketModal.edge')    
+    @include('partials/deleteTicketModal.edge')      
 </body>
 </html>

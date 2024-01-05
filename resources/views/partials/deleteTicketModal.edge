@@ -3,8 +3,79 @@
         <h2>Confirmación borrado</h2>
         <div class="content">
             <p>¿Estas seguro que quieres borrar el ticket? No se podra recuperar</p>
-            <a href="#" class="btn_primary">No borrar</a>
-            <button class="btn_delete" id="delete_button">Borrar</button>
+            <a href="#" class="btn_primary" id="close_button">No borrar</a>
+            <button class="btn_delete" id="delete_button" disabled>Espere 5</button>
         </div>
     </div>
 </div>
+<script>
+    class TicketDeleter {
+        constructor() {
+            this.openModal = document.getElementById('delete_ticket');
+            this.buttonDelete = document.getElementById('delete_button');
+            this.buttonClose = document.getElementById('close_button');
+            this.buttonDelete.addEventListener('click', this.destroy.bind(this));
+            this.openModal.addEventListener('click', this.countdownTrigger.bind(this));
+            this.buttonClose.addEventListener('click', this.resetInterval.bind(this));
+            this.interval = null;
+            this.time = 5;
+        }
+
+        countdownTrigger() {
+            this.resetInterval();
+            this.time = 5;
+            const countdown = () => {
+                if (this.time > 0) {
+                    this.buttonDelete.textContent = `Espere ${this.time}`;
+                    this.time--;
+                } else {
+                    clearInterval(this.interval);
+                    this.interval = null;
+                    this.buttonDelete.textContent = 'Borrar';
+                    this.buttonDelete.disabled = false;
+                }
+            };
+            this.interval = setInterval(countdown, 1000);
+        }
+        /**
+         * Funcion para resetear el intervalo y resetear el boton a su estado por defecto
+        */
+        resetInterval() {
+            if (this.interval !== undefined) {
+                clearInterval(this.interval);
+            }
+            this.buttonDelete.textContent = 'Espere 5';
+            this.buttonDelete.disabled = true;
+        }
+        /**
+         * Funcion para borrar el ticket
+        */
+        async destroy() {
+            const data = {
+                _csrf: document.querySelector('[name="_csrf"]').value,
+                ticketId: {{ ticket.id }},
+            };
+            try {
+                const response = await fetch(
+                    "{{route('TicketsController.destroy', [ticket.id])}}",
+                    {
+                        method: 'DELETE',
+                        headers: {
+                            'Content-Type': 'application/json', // Especificar el tipo de contenido si estás enviando datos en formato JSON
+                        },
+                        body: JSON.stringify(data),
+                    }
+                );
+                if (response.ok) {
+                    window.location.href = "{{route('TicketsController.index')}}";
+                } else {
+                    alert('Error al eliminar el Ticket');
+                }
+            } catch (error) {
+                alert('Se ha producido un error al intentar eliminar el ticket: ' + error.message);
+            }
+        }
+    }
+    
+    const ticketDeleter = new TicketDeleter();   
+</script>
