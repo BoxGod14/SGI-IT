@@ -5,10 +5,6 @@ import Ticket from "App/Models/Ticket";
 import User from "App/Models/User";
 
 export default class MessagesController {
-  public async index({}: HttpContextContract) {}
-
-  public async create({}: HttpContextContract) {}
-
   public async store({ auth, request, response }: HttpContextContract) {
     //Comprobar que el mensaje no esta vacio
     if (!request.input('message').trim()) {
@@ -60,13 +56,5 @@ export default class MessagesController {
       .json({ message: "Mensaje enviado",
               newMessage: request.input('message')
             });
-  }
-  
-  public async show({}: HttpContextContract) {}
-
-  public async edit({}: HttpContextContract) {}
-
-  public async update({}: HttpContextContract) {}
-
-  public async destroy({}: HttpContextContract) {}
+  }  
 }

@@ -44,24 +44,6 @@ export default class UsersController {
     return html;
   }
 
-  // public async edit({ view, params, auth, response }: HttpContextContract) {
-  //   const user = await auth.use("web").authenticate();
-  //   //Si no eres admin o el usuario en cuestion, seras redirigido a tu edit.
-  //   if (user.roles != Roles.ADMIN && user.id != params.id) {
-  //     response.redirect().toRoute("UsersController.edit", [user.id]);
-  //   }
-  //   //Obtener datos del usuario que se va a editar y obtencion/generacion del token necesario para la API
-  //   const userEdit = await User.findByOrFail("id", params.id);
-  //   const profile = await userEdit.related("profile").query().first();
-  //   view.share({
-  //     user: userEdit,
-  //     profile: profile,
-  //     roles: Roles,
-  //   });
-  //   const html = view.render("user/edit.edge");
-  //   return html;
-  // }
-
   public async update({ auth, request, response }: HttpContextContract) {    
     //Obtener usuario mediante token
     const user = await auth.use("web").authenticate();

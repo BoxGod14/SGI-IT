@@ -23,10 +23,10 @@ Route.group(() => {
 }).middleware('noAuth')
 //Rutas y recursos que requieren estar logueados, en caso de no estarlos te llevan a login
 Route.group(() => {
-  Route.resource('tickets', 'TicketsController')
-  Route.resource('users', 'UsersController')
+  Route.resource('tickets', 'TicketsController').except(['edit'])
+  Route.resource('users', 'UsersController').except(['create', 'store', 'edit'])
   Route.get('/logout', 'AuthController.logout').as('auth.logout')
-  Route.resource('messages', 'MessagesController')
+  Route.resource('messages', 'MessagesController').only(['store'])
   Route.post('/users/getUsers', 'UsersController.getUsers').as('users.getUsers')
   Route.put('/auth/changepassword', 'AuthController.changepassword').as('auth.changepassword')
 }).middleware('auth')
