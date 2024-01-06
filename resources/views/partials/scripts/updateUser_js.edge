@@ -3,14 +3,6 @@
     updateButton.addEventListener('click', updateUser);
     
     function updateUser() {
-        const data = {
-            phoneNumber: document.querySelector('#phoneNumber').value,
-            picture: document.querySelector('#picture').files[0],
-            @if (auth.user.roles == Roles.ADMIN) 
-                roles: document.querySelector('#roles').value, 
-            @end   
-        }
-        //
         let formData = new FormData()
         formData.append('username', document.querySelector('#username').value)
         formData.append('userId', {{ user.id }})
@@ -25,8 +17,6 @@
         @end 
         formData.append('picture', document.querySelector('#picture').files[0])
 
-
-
     //Peticion ajax
     fetch("{{ route('UsersController.update', [user.id]) }}", {
         method: 'PUT',
@@ -37,7 +27,7 @@
     })
         .then(response => {
             if (response.ok) {
-                //window.location.href = '{{route('UsersController.show', [user.id])}}'
+                window.location.href = '{{route('UsersController.show', [user.id])}}'
             }
         })
     }

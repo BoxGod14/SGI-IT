@@ -1,6 +1,7 @@
 import type { HttpContextContract } from "@ioc:Adonis/Core/HttpContext";
 import Database from "@ioc:Adonis/Lucid/Database";
 import User from "App/Models/User";
+import ChangePasswordValidator from "App/Validators/ChangePasswordValidator";
 import CreateUserValidator from "App/Validators/CreateUserValidator";
 
 export default class AuthController {
@@ -88,7 +89,7 @@ export default class AuthController {
 
   public async logout({ auth, response }: HttpContextContract) {
     //Comprobar inicio de sesion
-    const user = await auth.use("web").authenticate();
+    await auth.use("web").authenticate();
     if (auth.use("web").isGuest) {
       //Si no tenias sesión te vas a la pagina de login
       response.redirect().toRoute("AuthController.loginForm");
@@ -105,5 +106,24 @@ export default class AuthController {
       //Si ya tenias sesión te vas a la pagina de inicio
       response.redirect("/");
     }
+  }
+
+  public async changepassword({ auth, response, request }: HttpContextContract) {
+    //Por seguridad solo podras editar tu propio usuario
+    const user = await auth.use("web").authenticate();
+    const trx = await Database.transaction();    
+    try {
+      await request.validate(ChangePasswordValidator);
+      user.password = request.input('password');
+      await user.save();
+      await trx.commit();
+      response.status(200)
+      return
+    } catch (error) {
+      await trx.rollback();
+      //Se devuelve el primer valor de los errores en formato string
+      response.status(400).json({ message: error.messages[Object.keys(error.messages)[0]][0] })
+    }
+    return;
   }
 }

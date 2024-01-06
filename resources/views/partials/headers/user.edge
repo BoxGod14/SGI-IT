@@ -1,6 +1,13 @@
 <div>
     <h3><a href="{{route('UsersController.index')}}">Usuarios</a> > Usuario: {{user.username}}</h3>
+    
     @if(auth.user.id == user.id || auth.user.roles == Roles.ADMIN)
+    <section>
         <a href="#edit_user" title="Editar usuario"><i class="material-icons">edit</i></a>
+        @if(auth.user.id == user.id)
+        <a href="#edit_password" title="Cambiar contraseña"><i class="material-icons">key</i></a>
+        @endif
+    </section>
     @endif
+    
 </div>

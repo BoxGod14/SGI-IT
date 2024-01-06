@@ -1,3 +1,4 @@
+{{--Modificar usuario--}}
 <div id="edit_user" class="popup-overlay">
     <div class="modal modal-edit-user">
         <h2>Editar usuario {{user.username}}</h2>
@@ -17,8 +18,7 @@
                 <section class="inputWithLabel">
                     <label for="name">Nombre</label>
                     <input type="text" value="{{user.profile.name}}" name="name" id="name">
-                </section>
-                
+                </section>                
                 
                 <section class="inputWithLabel">
                     <label for="surname">Apellido</label>
@@ -48,7 +48,7 @@
                     name="jobPosition" id="jobPosition">
                 </section>
                 
-                <section>
+                <section class="inputWithLabel">
                     <label for="picture">Foto de perfil</label>
                     <input type="file" name="picture" id="picture">
                 </section>
@@ -85,3 +85,30 @@
     </div>
 </div>
 @include('partials/scripts/updateUser_js.edge')
+{{--Cambiar contraseña--}}
+@if(auth.user.id == user.id)
+    <div id="edit_password" class="popup-overlay">
+        <div class="modal modal-edit-user">
+            <h2>Cambiar contraseña</h2>
+            <div class="content">
+                <form enctype="multipart/form-data">
+                    <section class="inputWithLabel">
+                        <label for="password">Contraseña nueva</label>
+                        <input type="password" name="password" id="password">    
+                    </section> 
+                    <section class="inputWithLabel">
+                        <label for="password_confirmation">Confirma la contraseña</label>
+                        <input type="password" name="password_confirmation" id="password_confirmation">  
+                        <p id="response" class="errors"></p>  
+                    </section>     
+                    @endif
+                </form>
+                <section>
+                    <a href="#" class="btn_primary">Cerrar</a>
+                    <button class="btn_primary" id="updatePasswordButton">Actualizar</button>                    
+                </section>            
+            </div>
+        </div>
+    </div>
+    @include('partials/scripts/updateUserPassword_js.edge')
+@endif

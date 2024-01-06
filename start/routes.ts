@@ -28,4 +28,5 @@ Route.group(() => {
   Route.get('/logout', 'AuthController.logout').as('auth.logout')
   Route.resource('messages', 'MessagesController')
   Route.post('/users/getUsers', 'UsersController.getUsers').as('users.getUsers')
+  Route.put('/auth/changepassword', 'AuthController.changepassword').as('auth.changepassword')
 }).middleware('auth')
