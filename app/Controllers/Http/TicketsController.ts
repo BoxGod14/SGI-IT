@@ -56,7 +56,6 @@ export default class TicketsController {
     request,
     response,
     auth,
-    session,
   }: HttpContextContract) {
     const ticketData = request.only(["subject", "description"]);
     const trx = await Database.transaction();
@@ -73,13 +72,11 @@ export default class TicketsController {
         }
       );
       trx.commit;
-      response.redirect().toRoute("TicketsController.show", [ticket.id]);
+      response.status(200).json({ticketId: ticket.id});
       return;
     } catch (error) {
       await trx.rollback();
-      session.flash(error);
-      session.flash(ticketData);
-      response.redirect().back();
+      response.status(400).json({ message: error.messages[Object.keys(error.messages)[0]][0] })
       return; //Si no se hace el return puede continuar el codigo
     }
   }

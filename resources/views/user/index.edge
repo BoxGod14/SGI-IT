@@ -9,6 +9,7 @@
 </head>
 
 <body>
+  <script defer src="../js/redirection-url.js"></script>
   @include('partials/scripts/transitionsSwup_js.edge')
   <main>
     @include('partials/nav.edge')   
@@ -26,7 +27,7 @@
 
           {{--Bucle para mostrar tickets creados--}}
           @each(user in users)
-            <div class="user" data-url="{{route('UsersController.show', [user.id])}}">
+            <div class="user data-url" data-url="{{route('UsersController.show', [user.id])}}">
                 <p class="user_id">{{user.id}}</p>
                 <p class="user_username">{{user.username}}</p>
                 <p class="user_name-surname">{{user.profile.name}}</p>

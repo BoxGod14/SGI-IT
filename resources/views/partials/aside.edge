@@ -2,4 +2,5 @@
     {{--Sistema para limitar si se muestra un un aside u otro--}}
     @includeIf(currentPath == '/tickets', 'partials/asides/ticketFilter.edge')
     @includeIf(currentPath.match(/\/tickets\/.*$/), 'partials/asides/ticketData.edge')
+    @includeIf(currentPath == '/users', 'partials/asides/userFilter.edge')
 </aside>

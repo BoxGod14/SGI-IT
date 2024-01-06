@@ -8,7 +8,7 @@
     @entryPointStyles('scss')
 </head>
 <body>
-  <script defer src="../js/ticket-url.js"></script>
+  <script defer src="../js/redirection-url.js"></script>
   <script defer src="../js/users.js"></script>
     <main>
       @include('partials/nav.edge')
@@ -83,7 +83,7 @@
               <div id="tickets-requester" class="tickets-user">
                 @each(ticket in user.tickets)
                   @if(ticket.$extras.pivot_role == Roles.REQUESTER)
-                  <div class="ticket" data-url="{{route('TicketsController.show', [ticket.id])}}">
+                  <div class="ticket data-url" data-url="{{route('TicketsController.show', [ticket.id])}}">
                     <div><p><i class="material-icons">confirmation_number</i></p></div>                    
                     <div>
                       <section>

@@ -9,8 +9,8 @@
 </head>
 
 <body>
-  <script defer src="../js/ticket-url.js"></script>
-  @include('partials/scripts/transitionsSwup_js.edge')
+  <script defer src="../js/redirection-url.js"></script>
+  {{--  @include('partials/scripts/transitionsSwup_js.edge')  --}}
   <main>
     @include('partials/nav.edge')   
     <div>      
@@ -27,7 +27,7 @@
 
           {{--Bucle para mostrar tickets creados--}}
           @each(ticket in tickets)
-          <div class="ticket" data-url="{{route('TicketsController.show', [ticket.id])}}">
+          <div class="ticket data-url" data-url="{{route('TicketsController.show', [ticket.id])}}">
             <p class="subject">{{ticket.subject}}</p>    
             <p class="requester">
               @each(user in ticket.User)
@@ -77,6 +77,7 @@
       </div>
     </div>
   </main> 
+  @include('partials/createTicketModal.edge')
 </body>
 
 </html>

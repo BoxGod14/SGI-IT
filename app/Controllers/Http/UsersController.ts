@@ -14,10 +14,15 @@ export default class UsersController {
       response.redirect().toRoute("UsersController.show", [user.id]);
       return;
     }
-    const page = request.input('page', 1)//Paginas de la paginacion
-    const limit = 10; //Limite de tickets por pagina
+    const userQuery = User.query();
+    const role = request.input('role', '*')
+    const page = request.input('page', 1)//Pagina de la paginacion
+    const limit = 10; //Limite de usuarios por pagina
 
-    const users = await User.query()
+    if (Object.values(Roles).includes(role)) {
+      userQuery.where('roles', role);
+    }
+    const users = await userQuery
         .preload('profile')
         .paginate(page, limit);
     users.baseUrl('/users')

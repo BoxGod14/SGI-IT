@@ -18,5 +18,7 @@ export default class CreateTicketValidator {
     'subject.maxLength': 'El asunto no puede tener más de 255 caracteres.',
     'subject.minLength': 'El asunto debe tener al menos 4 caracteres.',
     'description.minLength': 'La descripción debe tener al menos 4 caracteres.',
+    'subject.required': 'Necesitas rellenar el asunto.',
+    'description.required': 'Necesitas rellenar la descripcion.',
   }
 }

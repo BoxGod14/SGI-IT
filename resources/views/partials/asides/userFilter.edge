@@ -1,0 +1,33 @@
+<h3>Filtro</h3>
+{{--Formulario de filtros--}}
+<form>
+    {{ csrfField() }}
+    
+    {{--Rol--}}
+    <section>
+        <label for="role">Rol</label><br>
+        <select name="role" id="role">
+            @each(role in Roles)
+            <option value="{{role}}">{{role}}</option>
+            @endeach
+        </select>
+    </section>
+    
+    
+</form>
+<button id="applyFilters" class="btn_primary">Aplicar filtros</button>
+
+<script>           
+    const role = document.getElementById("role");  
+    
+    const applyFiltersButton = document.getElementById("applyFilters");
+    applyFiltersButton.addEventListener("click", applyFilters)
+    
+    /**
+     * Función para cargar los filtros de los tickets
+     */
+    function applyFilters() {
+        const url = "{{route('UsersController.index')}}?page=1&role="+encodeURIComponent(role.value);
+        window.location.href = url;
+    }
+</script>

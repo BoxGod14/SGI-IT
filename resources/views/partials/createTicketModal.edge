@@ -1,0 +1,65 @@
+<div id="create_ticket" class="popup-overlay">
+    <div class="modal modal-edit-user">
+        <h2>Crear ticket</h2>
+        <div class="content">
+            <form>
+                <section class="inputWithLabel">
+                    <label for="subject">Asunto</label>
+                    <input type="text" name="subject" id="subject" class="createTicketSubject">
+                </section>                
+                
+                <section class="inputWithLabel">
+                    <label for="description">Descripcion</label>
+                    <textarea type="text" name="description" id="description" class="createTicketDescription"></textarea> 
+                    <p id="responseText" class="errors"></p>    
+                </section>
+            </form>
+            <a href="#" class="btn_primary" id="close_button">Cancelar</a>
+            <button class="btn_primary" id="create_button">Crear ticket</button>
+        </div>
+    </div>
+</div>
+<script>
+    class TicketDeleter {
+        constructor() {
+            this.buttonCreate = document.getElementById('create_button');
+            this.buttonClose = document.getElementById('close_button');
+            this.buttonCreate.addEventListener('click', this.create.bind(this));
+            this.responseText = document.getElementById('responseText');
+        }
+
+        
+        /**
+         * Funcion para crear el ticket
+        */
+        async create() {
+            let formData = new FormData()
+            formData.append('subject', document.querySelector('#subject').value)
+            formData.append('description', document.querySelector('#description').value)
+            
+            await fetch(
+                "{{route('TicketsController.store')}}",
+                {
+                    method: 'POST',
+                    headers: {
+                        "X-CSRF-Token": document.querySelector('[name="_csrf"]').value,
+                    },
+                    body: formData
+                })
+                .then(response => {
+                    return response.json()                    
+                })
+                .then(data => {
+                    let ticketId = data.ticketId;
+                    if (ticketId) {
+                        window.location.href = `/tickets/${ticketId}`
+                        console.log('a')
+                        return
+                    }
+                    this.responseText.textContent = data.message;
+                }
+            )
+        }
+    }
+    const ticketDeleter = new TicketDeleter();   
+</script>
