@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>SGI-IT usuarios</title>
+  @entryPointStyles('scss')
+</head>
+
+<body>
+  @include('partials/scripts/transitionsSwup_js.edge')
+  <main>
+    @include('partials/nav.edge')   
+    <div>      
+      @include('partials/header.edge')
+      <div>        
+        <section class="users">
+          <div>
+            <p class="user_id">Id</p>
+            <p class="user_username">Nombre de usuario</p>
+            <p class="user_name-surname">Nombre</p>
+            <p class="user_name-surname">Apellidos</p>
+            <p class="user_role">Rol</p>
+          </div>  
+
+          {{--Bucle para mostrar tickets creados--}}
+          @each(user in users)
+            <div class="user" data-url="{{route('UsersController.show', [user.id])}}">
+                <p class="user_id">{{user.id}}</p>
+                <p class="user_username">{{user.username}}</p>
+                <p class="user_name-surname">{{user.profile.name}}</p>
+                <p class="user_name-surname">{{user.profile.surname}}</p>
+                <p class="user_role">{{user.roles}}</p>
+            </div>
+          @endeach
+          {{--En caso de que haya paginas, se mostrara la paginación--}}
+          @if(users.hasPages)
+          <div class="pagination">
+            @if(users.currentPage > 3)
+              <a href="{{ users.getUrl(users.firstPage) }}"><<</a>
+            @end
+            @each(anchor in users.getUrlsForRange(users.currentPage - 2, users.currentPage + 3))
+              @if(anchor.page >= users.firstPage && anchor.page <= users.lastPage) 
+                <a class= 
+                  @if(anchor.page == users.currentPage)
+                  "page page-active"
+                  @else
+                  "page" 
+                  @end
+                href="{{ anchor.url }}">{{ anchor.page }}</a>
+              @endif
+            @endeach
+            @if(users.currentPage + 3 < users.lastPage)
+              <a href="{{users.getUrl(users.lastPage)}}">>></a>
+            @end
+          </div>
+        @end
+        </section>
+        @include('partials/aside.edge')
+      </div>
+    </div>
+  </main> 
+</body>
+
+</html>

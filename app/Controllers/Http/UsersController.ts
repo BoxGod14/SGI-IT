@@ -7,9 +7,23 @@ import User from "App/Models/User";
 import { DateTime } from 'luxon';
 
 export default class UsersController {
-  public async index({}: HttpContextContract) {
-    const user = await User.all();
-    return user;
+  public async index({ view, request, response, auth }: HttpContextContract) {
+    const user = await auth.use("web").authenticate();
+    //En caso de ser solicitante se redirige automaticamente a la pagina de su usuario.
+    if (user.roles == Roles.REQUESTER) {
+      response.redirect().toRoute("UsersController.show", [user.id]);
+      return;
+    }
+    const page = request.input('page', 1)//Paginas de la paginacion
+    const limit = 10; //Limite de tickets por pagina
+
+    const users = await User.query()
+        .preload('profile')
+        .paginate(page, limit);
+    users.baseUrl('/users')
+    
+    const html = await view.render("user/index", { users, Roles, currentPath: request.url() });
+    return html;
   }
 
   public async show({ params, view, response, auth, request }: HttpContextContract) {
@@ -25,7 +39,7 @@ export default class UsersController {
           userQuery.pivotColumns(["role"]).preload("profile");
         })
       })    
-
+      //En caso ser un solicitante y no el mismo usuario se lanza error.
       if (user.id != userShow.id && user.roles == Roles.REQUESTER) {
         throw new Error();        
       }
