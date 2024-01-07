@@ -1,5 +1,7 @@
 import Route from '@ioc:Adonis/Core/Route'
+import Database from '@ioc:Adonis/Lucid/Database'
 import Roles from 'App/Enums/Roles'
+import State from 'App/Enums/State'
 import UserFactory from 'Database/factories/UserFactory'
 
 Route.get('/', async ({ view }) => {
@@ -31,7 +33,12 @@ Route.group(() => {
   Route.put('/auth/changepassword', 'AuthController.changepassword').as('auth.changepassword')
   
   Route.get('/dashboard', async ({ view, request }) => {
-    const html = await view.render("dashboard", {Roles, currentPath: request.url() });
+    const OpenTickets = await Database.from('tickets').where('state', State.OPEN).count('* as total')
+    const InProgressTickets = await Database.from('tickets').where('state', State.INPROGRESS).count('* as total')
+    const SolvedTickets = await Database.from('tickets').where('state', State.SOLVED).count('* as total')
+
+    
+    const html = await view.render("dashboard", {Roles, State,currentPath: request.url(), OpenTickets, InProgressTickets, SolvedTickets });
     return html;
   }).as('dashboard')
 }).middleware('auth')

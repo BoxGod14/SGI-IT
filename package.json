@@ -37,6 +37,7 @@
     "@adonisjs/view": "^6.2.0",
     "@swup/forms-plugin": "^3.4.1",
     "@swup/head-plugin": "^2.1.2",
+    "chart.js": "^4.4.1",
     "luxon": "^3.4.3",
     "mysql2": "^3.6.3",
     "proxy-addr": "^2.0.7",
