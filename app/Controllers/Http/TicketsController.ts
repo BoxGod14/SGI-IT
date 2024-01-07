@@ -43,7 +43,14 @@ export default class TicketsController {
         .orderBy('created_at', 'desc')
         .paginate(page, limit)
         ;
+    //Esto permite que se conserve el valor de los filtros tras cada paginacion
     tickets.baseUrl('/tickets')
+    tickets.queryString({
+      page: page, 
+      technician: technician,
+      requester: requester,
+      state: state
+    })
     const html = await view.render("tickets/index", { tickets, Roles, State, currentPath: request.url() });
     return html;
   }
