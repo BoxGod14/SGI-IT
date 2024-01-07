@@ -10,7 +10,7 @@ export default class UsersController {
   public async index({ view, request, response, auth }: HttpContextContract) {
     const user = await auth.use("web").authenticate();
     //En caso de ser solicitante se redirige automaticamente a la pagina de su usuario.
-    if (user.roles == Roles.REQUESTER) {
+    if (user.roles != Roles.ADMIN) {
       response.redirect().toRoute("UsersController.show", [user.id]);
       return;
     }
@@ -45,7 +45,7 @@ export default class UsersController {
         }).orderBy('created_at', 'desc')
       })    
       //En caso ser un solicitante y no el mismo usuario se lanza error.
-      if (user.id != userShow.id && user.roles == Roles.REQUESTER) {
+      if (user.id != userShow.id && user.roles != Roles.ADMIN) {
         throw new Error();        
       }
     } catch (error) {

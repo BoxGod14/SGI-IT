@@ -7,12 +7,18 @@ import User from "App/Models/User";
 import CreateTicketValidator from "App/Validators/CreateTicketValidator";
 
 export default class TicketsController {
-  public async index({ view, request }: HttpContextContract) {
+  public async index({ view, request, auth }: HttpContextContract) {
+    const user = await auth.use("web").authenticate();
     const page = request.input('page', 1)//Paginas de la paginacion
     const limit = 10; //Limite de tickets por pagina
     //Sección de filtros
-    const technician = request.input('technician', '')
-    const requester = request.input('requester', '')
+    let technician = request.input('technician', '')
+    let requester = request.input('requester', '')
+    if (user.roles == Roles.REQUESTER) {
+      technician = '';
+      requester = user.id;
+    }
+    
     let state = request.input('state', '*')
     const ticketsQuery = Ticket.query();
 
@@ -52,12 +58,6 @@ export default class TicketsController {
       state: state
     })
     const html = await view.render("tickets/index", { tickets, Roles, State, currentPath: request.url() });
-    return html;
-  }
-
-  public async create({ view }: HttpContextContract) {
-    //Devolver vista de crear tickets
-    const html = await view.render("tickets/create");
     return html;
   }
 
@@ -123,7 +123,6 @@ export default class TicketsController {
         }
       });
     }
-    
     //Obtener perfil del usuario actual
     await user.load('profile')
     view.share({
