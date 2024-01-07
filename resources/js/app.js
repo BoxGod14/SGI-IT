@@ -5,14 +5,30 @@ import Chart from 'chart.js/auto';
      document.getElementById('statusTickets'),
      {
        type: 'doughnut',
-       data: statusTickets
+       data: statusTickets,
+       options: {
+        plugins: {
+            title: {
+                display: true,
+                text: 'Tickets/Estado'
+            },
+        }
+      }
      }
    );
    new Chart(
     document.getElementById('asignedTickets'),
     {
       type: 'doughnut',
-      data: asignedTickets
+      data: asignedTickets,
+      options: {
+        plugins: {
+            title: {
+                display: true,
+                text: 'Tickets sin resolver'
+            }
+        }
+      }
     }
   );
 })();

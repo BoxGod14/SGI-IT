@@ -51,20 +51,31 @@
     <div>
       @include('partials/header.edge')
       <div>
-        {{--
-            Implementear boton acceder a mis tickets
-            Implementar boton acceder a mis tickets asignados
-            Implementa boton crear ticket            
-        --}}
         <section class="dashboard">
             <section>
-                <a href="{{route('TicketsController.index')}}?requester={{auth.user.id}}">Tickets creados por mi</a>
-                <a href="{{route('TicketsController.index')}}?technician={{auth.user.id}}">Tickets asignados a mi</a>
-                <a href="#create_ticket" title="Crear ticket" id="create_ticketButton"><i class="material-icons">add</i></a>
+                <a href="{{route('TicketsController.index')}}?requester={{auth.user.id}}">
+                    <h3>Tickets de creados por: {{auth.user.username}}</h3>
+                    <i class="material-icons">confirmation_number</i>
+                </a>
+                <a href="{{route('TicketsController.index')}}?technician={{auth.user.id}}">
+                    <h3>Tickets asignados</h3>
+                    <i class="material-icons">business_center</i>
+                </a>
+                <a href="#create_ticket" title="Crear ticket" id="create_ticketButton">
+                    <h3>Crear ticket</h3>
+                    <i class="material-icons">add</i>
+                </a>
             </section>
             <section>
-                <div class="kpi"><canvas id="statusTickets"></canvas></div>
-                <div class="kpi"><canvas id="asignedTickets"></canvas></div>
+                <h3>Grafos de desempeño</h3>
+                <div class="kpi">
+                    <canvas id="statusTickets"></canvas>
+                    <p>Todos los tickets segun su estado</p>
+                </div>
+                <div class="kpi">
+                    <canvas id="asignedTickets"></canvas>
+                    <p>Todos los tickets sin cerrar segun su asignacion</p>
+                </div>
             </section>
             
         </section>

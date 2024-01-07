@@ -7,6 +7,9 @@ header {
     padding-left: 1rem;
     border-bottom: 1px solid $color-border;
     gap: 1rem;
+    h3 {
+        color: $color-btn-dark;
+    }
     > div {
         margin-right: 1rem;
         width: 85%;
