@@ -73,7 +73,7 @@ export default class AuthController {
       //Intentar login
       const user = await auth.use("web").attempt(uuid, password);
 
-      response.redirect().toRoute("UsersController.show", { id: user.id });
+      response.redirect().toRoute("dashboard");
     } catch (error) {
       session.flash("errors", "Tu usuario o contraseñas son incorrectos");
       return response.redirect().back();

@@ -267,8 +267,9 @@ label {
   background-color: $color-description;
   border-radius: $border-radius-sm;
   border: 1px solid $color-border-description;
-  max-height: 30%;
-  overflow: visible;
+  height: auto;
+  max-height: 10rem;
+  overflow: auto;
 }
 //Mensajes de ticket
 .messages-writter {

@@ -54,7 +54,7 @@
         <section class="dashboard">
             <section>
                 <a href="{{route('TicketsController.index')}}?requester={{auth.user.id}}">
-                    <h3>Tickets de creados por: {{auth.user.username}}</h3>
+                    <h3>Tickets creados por: {{auth.user.username}}</h3>
                     <i class="material-icons">confirmation_number</i>
                 </a>
                 <a href="{{route('TicketsController.index')}}?technician={{auth.user.id}}">
