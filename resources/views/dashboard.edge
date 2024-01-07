@@ -26,7 +26,6 @@
                 hoverOffset: 4
             }]
         };
-        console.log({{AssignedTickets}});
         //Tickets asignados al usuario
         const asignedTickets = {
             labels: [
@@ -47,7 +46,7 @@
     <script defer src="{{ asset('assets/app.js') }}"></script>
 </head>
 <body>
-    <main>
+    <main id="swup">
       @include('partials/nav.edge')
     <div>
       @include('partials/header.edge')
