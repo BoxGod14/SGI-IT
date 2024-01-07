@@ -1,10 +1,26 @@
 <h3>Detalles</h3>
 {{--Formulario de filtros--}}
 <form>
+    @if(auth.user.roles != Roles.REQUESTER)
     {{ csrfField() }}
+    @endif
+    @if(auth.user.roles == Roles.REQUESTER)
+      
+    @else
+    
+    @end
     {{--Tecnico--}}
     <section class="autocomplete">
         <label for="technicianName">Tecnico asignado</label><br>
+        @if(auth.user.roles == Roles.REQUESTER)
+        <p>
+            @each(user in ticket.User)
+                @if(user.$extras.pivot_role == Roles.TECHNICIAN)
+                {{user.profile.fullName}}
+                @endif
+            @endeach
+        </p>
+        @else
         <input name="technicianName" type="text" id="technicianName"
         {{--Prepargar los datos del usuario tecnico en caso de existir uno--}}
         @each(user in ticket.User)
@@ -14,24 +30,30 @@
         @endeach
         >
         <div class="suggestionList" id="suggestionListTechnician"></div>
+        @end
+        
     </section>
     
     {{--Estado--}}
     <section>
-        <label for="state">Estado</label><br>
-        <select name="state" id="state">
-            {{--Rellenar los posibles estados y preseleccionar el actual--}}
-            @each(states in State)
-                <option value="{{states}}"
-                @if(states == ticket.state)
-                    selected
-                @end
-                >{{states}}</option>
-            @endeach
+        <label for="state">Estado</label><br>        
+            @if(auth.user.roles == Roles.REQUESTER)
+                <p>{{ticket.state}}</p>
+            @else
+            <select name="state" id="state"></select>
+                {{--Rellenar los posibles estados y preseleccionar el actual--}}
+                @each(states in State)
+                    <option value="{{states}}"
+                    @if(states == ticket.state)
+                        selected
+                    @end
+                    >{{states}}</option>
+                @endeach
+            @end            
         </select>
     </section>    
 </form>
-
+@if(auth.user.roles != Roles.REQUESTER)
 <button id="applyChanges" class="btn_primary">Aplicar Cambios</button>
 <p id="result"></p>
 <script>
@@ -143,3 +165,4 @@
         })
     }
 </script>
+@endif
