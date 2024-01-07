@@ -29,4 +29,9 @@ Route.group(() => {
   Route.resource('messages', 'MessagesController').only(['store'])
   Route.post('/users/getUsers', 'UsersController.getUsers').as('users.getUsers')
   Route.put('/auth/changepassword', 'AuthController.changepassword').as('auth.changepassword')
+  
+  Route.get('/dashboard', async ({ view, request }) => {
+    const html = await view.render("dashboard", {Roles, currentPath: request.url() });
+    return html;
+  }).as('dashboard')
 }).middleware('auth')

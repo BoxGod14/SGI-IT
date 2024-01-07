@@ -42,7 +42,7 @@ export default class UsersController {
       await userShow.load('tickets' ,(tickets) => {
         tickets.preload('User', (userQuery) => {
           userQuery.pivotColumns(["role"]).preload("profile");
-        })
+        }).orderBy('created_at', 'desc')
       })    
       //En caso ser un solicitante y no el mismo usuario se lanza error.
       if (user.id != userShow.id && user.roles == Roles.REQUESTER) {

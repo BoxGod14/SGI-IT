@@ -40,7 +40,9 @@ export default class TicketsController {
         .preload("User", (query) => {
             query.pivotColumns(["role"]).preload("profile");
         })
-        .paginate(page, limit);
+        .orderBy('created_at', 'desc')
+        .paginate(page, limit)
+        ;
     tickets.baseUrl('/tickets')
     const html = await view.render("tickets/index", { tickets, Roles, State, currentPath: request.url() });
     return html;
