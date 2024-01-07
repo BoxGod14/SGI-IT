@@ -354,6 +354,7 @@ label {
   }
   .extraInfo {
     padding: 0 1rem;
+    overflow: auto;
     > div {
       display: none;
       &:first-child {
