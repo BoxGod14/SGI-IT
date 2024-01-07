@@ -495,3 +495,16 @@ label {
   max-width: 12rem;
   object-fit: scale-down;  
 }
+
+.dashboard {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  background-color: white;
+  .kpi {
+    width: 20rem;    
+  }
+  > section {
+    display: flex;
+  }
+}

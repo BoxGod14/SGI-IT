@@ -11,8 +11,6 @@ const swup = new Swup({
 });
 
 (async function() {
-
-
    new Chart(
      document.getElementById('statusTickets'),
      {
@@ -20,4 +18,11 @@ const swup = new Swup({
        data: statusTickets
      }
    );
+   new Chart(
+    document.getElementById('asignedTickets'),
+    {
+      type: 'doughnut',
+      data: asignedTickets
+    }
+  );
 })();

@@ -7,7 +7,7 @@ export default class NoAuth {
     // comprueba si el usuario está logueado usando el guardia por defecto
     if (await auth.check()) {
       // si está logueado, redirige a otra página (por ejemplo, el dashboard)
-      return response.redirect('/')
+      return response.redirect('dashboard')
     }
     await next()
   }

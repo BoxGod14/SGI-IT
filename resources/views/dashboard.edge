@@ -26,21 +26,19 @@
                 hoverOffset: 4
             }]
         };
-        
+        console.log({{AssignedTickets}});
         //Tickets asignados al usuario
         const asignedTickets = {
             labels: [
-                '{{State.OPEN}}',
-                '{{State.INPROGRESS}}',
-                '{{State.SOLVED}}',
+                'Tickets asignados',
+                'Tickets sin asignar',
             ],
             datasets: [{
-                label: 'Tickets/Estado',
-                data: [{{OpenTickets[0]['total']}}, {{InProgressTickets[0]['total']}}, {{SolvedTickets[0]['total']}}],
+                label: 'Tickets',
+                data: [{{AssignedTickets}}, {{NoAssignedTickets}}],
                 backgroundColor: [
                 'rgb(255, 99, 132)',
-                'rgb(54, 162, 235)',
-                'rgb(255, 205, 86)'
+                'rgb(54, 162, 235)'
                 ],
                 hoverOffset: 4
             }]
@@ -54,9 +52,27 @@
     <div>
       @include('partials/header.edge')
       <div>
-        <div style="width: 400px;"><canvas style="width: 400px;" id="statusTickets"></canvas></div>
-      </div>
+        {{--
+            Implementear boton acceder a mis tickets
+            Implementar boton acceder a mis tickets asignados
+            Implementa boton crear ticket            
+        --}}
+        <section class="dashboard">
+            <section>
+                <a href="{{route('TicketsController.index')}}?requester={{auth.user.id}}">Tickets creados por mi</a>
+                <a href="{{route('TicketsController.index')}}?technician={{auth.user.id}}">Tickets asignados a mi</a>
+                <a href="#create_ticket" title="Crear ticket" id="create_ticketButton"><i class="material-icons">add</i></a>
+            </section>
+            <section>
+                <div class="kpi"><canvas id="statusTickets"></canvas></div>
+                <div class="kpi"><canvas id="asignedTickets"></canvas></div>
+            </section>
+            
+        </section>
+        </div>
     </div>
   </main>
+  {{ csrfField() }}
+  @include('partials/createTicketModal.edge')
 </body>
 </html>

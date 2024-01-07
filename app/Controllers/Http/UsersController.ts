@@ -130,7 +130,7 @@ export default class UsersController {
    
     //El generador de consultas por defecto fuerza el uso de outer join, por lo que si solo se quiere mostrar un dato que todo el where coincida con varias tablas, se necesita hacerla raw.
     const usersFind = await Database.rawQuery(
-      'SELECT users.id, profiles.name FROM users INNER JOIN profiles on users.id = profiles.user_id where roles = :role AND profiles.name like :name',
+      'SELECT users.id, profiles.name, profiles.surname FROM users INNER JOIN profiles on users.id = profiles.user_id where roles = :role AND profiles.name like :name',
       {
         role: searchRole,
         name: name

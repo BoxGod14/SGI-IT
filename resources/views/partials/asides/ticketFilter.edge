@@ -106,14 +106,14 @@
         clearSuggestionList();          
         users.forEach(function (user) {
             var listItem = document.createElement('div');
-            listItem.textContent = user.name;
+            listItem.textContent = user.name + ' ' + user.surname;;
             listItem.addEventListener('click', function () {
             if (role == '{{Roles.REQUESTER}}') {
-                requesterInput.value = user.name;
+                requesterInput.value = user.name + ' ' + user.surname;
                 requesterInput.setAttribute('data-id',user.id);
             }
             else {
-                technicianInput.value = user.name;
+                technicianInput.value = user.name + ' ' + user.surname;;
                 technicianInput.setAttribute('data-id',user.id);
             }                    
             clearSuggestionList()
