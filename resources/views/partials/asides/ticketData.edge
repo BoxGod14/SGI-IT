@@ -40,7 +40,7 @@
             @if(auth.user.roles == Roles.REQUESTER)
                 <p>{{ticket.state}}</p>
             @else
-            <select name="state" id="state"></select>
+            <select name="state" id="state">
                 {{--Rellenar los posibles estados y preseleccionar el actual--}}
                 @each(states in State)
                     <option value="{{states}}"
