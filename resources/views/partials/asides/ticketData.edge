@@ -9,7 +9,7 @@
         {{--Prepargar los datos del usuario tecnico en caso de existir uno--}}
         @each(user in ticket.User)
             @if(user.$extras.pivot_role == Roles.TECHNICIAN)
-            value="{{user.profile.name}}" data-id="{{user.id}}"
+            value="{{user.profile.fullName}}" data-id="{{user.id}}"
             @endif
         @endeach
         >
@@ -65,6 +65,7 @@
         fetch("{{ route('UsersController.getUsers') }}", {
             method: 'POST', // Puedes ajustar el método según tus necesidades
             headers: {
+                "X-CSRF-Token": document.querySelector('[name="_csrf"]').value,
                 'Content-Type': 'application/json',
             },
             body: JSON.stringify(data),
@@ -94,9 +95,9 @@
         clearSuggestionList();
         users.forEach(function (user) {
             var listItem = document.createElement('div');
-            listItem.textContent = user.name;
+            listItem.textContent = user.name + ' ' + user.surname;
             listItem.addEventListener('click', function () {
-                technicianInput.value = user.name;
+                technicianInput.value = user.name + ' ' + user.surname;;
                 technicianInput.setAttribute('data-id',user.id);                                
                 clearSuggestionList()
             });
@@ -113,7 +114,6 @@
     function applyChanges() { 
     //Obtener datos necesarios para el ticket
         const data = {
-        _csrf: document.querySelector('[name="_csrf"]').value,
         ticketId: {{ticket.id}},
         technician: technicianInput.getAttribute('data-id'),
         state: state.value
@@ -122,6 +122,7 @@
         fetch("{{route('TicketsController.update', [ticket.id])}}", {
         method: 'PUT',
         headers: {
+            "X-CSRF-Token": document.querySelector('[name="_csrf"]').value,
             'Content-Type': 'application/json', // Especificar el tipo de contenido si estás enviando datos en formato JSON
         },
         body: JSON.stringify(data)
@@ -132,6 +133,7 @@
         .then(data => {
             // Realizar más operaciones aquí con los datos actualizados
             result.textContent = data.message;
+            console.log(data.status);
             if(data.status == 'error') {
                 result.classList.add("errors");
             }

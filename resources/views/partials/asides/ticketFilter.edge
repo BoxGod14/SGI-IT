@@ -3,21 +3,20 @@
 <form>
     {{ csrfField() }}
 
-    {{--Solicitante--}}
-    <section class="autocomplete">
-        <label for="requesterName">Solicitante</label><br>
-        <input name="requesterName" type="text" id="requesterName" placeholder="">
-        <div class="suggestionList" id="suggestionListRequester"></div>
-    </section>
-    
-
-    {{--Tecnico--}}
-    <section class="autocomplete">
-        <label for="technicianName">Tecnico asignado</label><br>
-        <input name="technicianName" type="text" id="technicianName">
-        <div class="suggestionList" id="suggestionListTechnician"></div>
-    </section>
-    
+    @if(auth.user.roles != Roles.REQUESTER)
+      {{--Solicitante--}}
+        <section class="autocomplete">
+            <label for="requesterName">Solicitante</label><br>
+            <input name="requesterName" type="text" id="requesterName" placeholder="">
+            <div class="suggestionList" id="suggestionListRequester"></div>
+        </section>
+        {{--Tecnico--}}
+        <section class="autocomplete">
+            <label for="technicianName">Tecnico asignado</label><br>
+            <input name="technicianName" type="text" id="technicianName">
+            <div class="suggestionList" id="suggestionListTechnician"></div>
+        </section>
+    @endif
     {{--Estado--}}
     <section>
         <label for="state">Estado</label><br>
@@ -33,109 +32,118 @@
 <button id="applyFilters" class="btn_primary">Aplicar filtros</button>
 
 <script>
-    const requesterInput = document.getElementById("requesterName");
-    const suggestionListRequester = document.getElementById('suggestionListRequester');
-
-    const technicianInput = document.getElementById("technicianName");
-    const suggestionListTechnician = document.getElementById('suggestionListTechnician');
-            
     const state = document.getElementById("state");
-    //En ambos eventos, cuando el usuario modifique el input se borrara el id del usuario seleccionado para evitar filtros erroneos
-    requesterInput.addEventListener("input", function () {  
-        requesterInput.removeAttribute('data-id');
-        if (requesterInput.value.length > 2) {
-            getUsers('{{Roles.REQUESTER}}',requesterInput.value);
-        }
-        else {
-            clearSuggestionList();  
-        }
-    });
-    technicianInput.addEventListener("input", function () {
-        technicianInput.removeAttribute('data-id');
-        if (technicianInput.value.length > 2) {
-            getUsers('{{Roles.TECHNICIAN}}',technicianInput.value);
-        }
-        else {
-            clearSuggestionList();  
-        }            
-    });
-    
     const applyFiltersButton = document.getElementById("applyFilters");
     applyFiltersButton.addEventListener("click", applyFilters)
-    /**
-     * 
-     * @param role Rol del usuario que se busca
-     * @param input Value de input donde se esta rellenando el nombre
-    */
-    function getUsers(role, input) {
-        // Construye el cuerpo de la solicitud
-        const data = {
-            role: role,  // Asegúrate de tener el valor adecuado para 'role'
-            name: input,
-            _csrf: document.querySelector('[name="_csrf"]').value,
-        };
+    @if(auth.user.roles != Roles.REQUESTER)
+        const requesterInput = document.getElementById("requesterName");
+        const suggestionListRequester = document.getElementById('suggestionListRequester');
 
-        fetch("{{ route('UsersController.getUsers') }}", {
-            method: 'POST', // Puedes ajustar el método según tus necesidades
-            headers: {
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify(data),
-        })
-        .then(response => {
-            if (!response.ok) {
-                throw new Error(`Error al realizar la solicitud: ${response.status}`);
-            }
-            return response.json();
-        })
-        .then(users => {
-            // La peticion fue OK
-            fillSuggestionList(users, role)
-        })
-        .catch(error => {
-            // La peticion fallo
-            console.error('Error en la solicitud:', error.message);
-        });
-    }
-    /**
-     * 
-     * @param users JSON con los datos obtenidos tras la peticion ajax
-     * @param role Rol del usuario a buscar, sirve para saber donde se tienen que rellanar los datos
-     */
-    function fillSuggestionList(users, role) {  
-        clearSuggestionList();          
-        users.forEach(function (user) {
-            var listItem = document.createElement('div');
-            listItem.textContent = user.name + ' ' + user.surname;;
-            listItem.addEventListener('click', function () {
-            if (role == '{{Roles.REQUESTER}}') {
-                requesterInput.value = user.name + ' ' + user.surname;
-                requesterInput.setAttribute('data-id',user.id);
+        const technicianInput = document.getElementById("technicianName");
+        const suggestionListTechnician = document.getElementById('suggestionListTechnician');
+                
+        
+        //En ambos eventos, cuando el usuario modifique el input se borrara el id del usuario seleccionado para evitar filtros erroneos
+        requesterInput.addEventListener("input", function () {  
+            requesterInput.removeAttribute('data-id');
+            if (requesterInput.value.length > 2) {
+                getUsers('{{Roles.REQUESTER}}',requesterInput.value);
             }
             else {
-                technicianInput.value = user.name + ' ' + user.surname;;
-                technicianInput.setAttribute('data-id',user.id);
-            }                    
-            clearSuggestionList()
+                clearSuggestionList();  
+            }
+        });
+        technicianInput.addEventListener("input", function () {
+            technicianInput.removeAttribute('data-id');
+            if (technicianInput.value.length > 2) {
+                getUsers('{{Roles.TECHNICIAN}}',technicianInput.value);
+            }
+            else {
+                clearSuggestionList();  
+            }            
+        });
+        
+        
+        /**
+         * 
+         * @param role Rol del usuario que se busca
+         * @param input Value de input donde se esta rellenando el nombre
+        */
+        function getUsers(role, input) {
+            // Construye el cuerpo de la solicitud
+            const data = {
+                role: role,  // Asegúrate de tener el valor adecuado para 'role'
+                name: input,
+            };
+
+            fetch("{{ route('UsersController.getUsers') }}", {
+                method: 'POST', // Puedes ajustar el método según tus necesidades
+                headers: {
+                    "X-CSRF-Token": document.querySelector('[name="_csrf"]').value,
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(data),
+            })
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error(`Error al realizar la solicitud: ${response.status}`);
+                }
+                return response.json();
+            })
+            .then(users => {
+                // La peticion fue OK
+                fillSuggestionList(users, role)
+            })
+            .catch(error => {
+                // La peticion fallo
+                console.error('Error en la solicitud:', error.message);
             });
-            if (role == '{{Roles.REQUESTER}}') {
-                suggestionListRequester.appendChild(listItem);
-            }
-            else {
-                suggestionListTechnician.appendChild(listItem);
-            }
-        });
-    }
-    function clearSuggestionList() {
-        suggestionListRequester.innerHTML = "";
-        suggestionListTechnician.innerHTML = "";
-    }
+        }
+        /**
+         * 
+         * @param users JSON con los datos obtenidos tras la peticion ajax
+         * @param role Rol del usuario a buscar, sirve para saber donde se tienen que rellanar los datos
+         */
+        function fillSuggestionList(users, role) {  
+            clearSuggestionList();          
+            users.forEach(function (user) {
+                var listItem = document.createElement('div');
+                listItem.textContent = user.name + ' ' + user.surname;;
+                listItem.addEventListener('click', function () {
+                if (role == '{{Roles.REQUESTER}}') {
+                    requesterInput.value = user.name + ' ' + user.surname;
+                    requesterInput.setAttribute('data-id',user.id);
+                }
+                else {
+                    technicianInput.value = user.name + ' ' + user.surname;;
+                    technicianInput.setAttribute('data-id',user.id);
+                }                    
+                clearSuggestionList()
+                });
+                if (role == '{{Roles.REQUESTER}}') {
+                    suggestionListRequester.appendChild(listItem);
+                }
+                else {
+                    suggestionListTechnician.appendChild(listItem);
+                }
+            });
+        }
+        function clearSuggestionList() {
+            suggestionListRequester.innerHTML = "";
+            suggestionListTechnician.innerHTML = "";
+        }
 
-    /**
-     * Función para cargar los filtros de los tickets
-     */
-    function applyFilters() {
-        const url = "{{route('TicketsController.index')}}?page=1&technician="+encodeURIComponent(technicianInput.getAttribute('data-id'))+"&requester="+encodeURIComponent(requesterInput.getAttribute('data-id'))+"&state="+encodeURIComponent(state.value);
-        window.location.href = url;
-    }
+        /**
+         * Función para cargar los filtros de los tickets
+         */
+        function applyFilters() {
+            const url = "{{route('TicketsController.index')}}?page=1&technician="+encodeURIComponent(technicianInput.getAttribute('data-id'))+"&requester="+encodeURIComponent(requesterInput.getAttribute('data-id'))+"&state="+encodeURIComponent(state.value);
+            window.location.href = url;
+        }
+    @else
+        function applyFilters() {
+                const url = "{{route('TicketsController.index')}}?page=1&state="+encodeURIComponent(state.value);
+                window.location.href = url;
+            }
+    @end    
 </script>

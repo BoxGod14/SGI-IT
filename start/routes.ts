@@ -33,8 +33,7 @@ Route.group(() => {
   Route.post('/users/getUsers', 'UsersController.getUsers').as('users.getUsers')
   Route.put('/auth/changepassword', 'AuthController.changepassword').as('auth.changepassword')
   
-  Route.get('/dashboard', async ({ view, request, auth }) => {
-    const user = await auth.use("web").authenticate();
+  Route.get('/dashboard', async ({ view, request }) => {
     const OpenTickets = await Database.from('tickets').where('state', State.OPEN).count('* as total')
     const InProgressTickets = await Database.from('tickets').where('state', State.INPROGRESS).count('* as total')
     const SolvedTickets = await Database.from('tickets').where('state', State.SOLVED).count('* as total')

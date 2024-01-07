@@ -52,7 +52,6 @@
         */
         async destroy() {
             const data = {
-                _csrf: document.querySelector('[name="_csrf"]').value,
                 ticketId: {{ ticket.id }},
             };
             try {
@@ -61,6 +60,7 @@
                     {
                         method: 'DELETE',
                         headers: {
+                            "X-CSRF-Token": document.querySelector('[name="_csrf"]').value,
                             'Content-Type': 'application/json', // Especificar el tipo de contenido si estás enviando datos en formato JSON
                         },
                         body: JSON.stringify(data),

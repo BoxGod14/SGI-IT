@@ -53,10 +53,13 @@
       <div>
         <section class="dashboard">
             <section>
-                <a href="{{route('TicketsController.index')}}?requester={{auth.user.id}}">
-                    <h3>Tickets creados por: {{auth.user.username}}</h3>
-                    <i class="material-icons">confirmation_number</i>
-                </a>
+                @if(auth.user.roles != Roles.REQUESTER)
+                    <a href="{{route('TicketsController.index')}}?requester={{auth.user.id}}">
+                        <h3>Tickets creados por: {{auth.user.username}}</h3>
+                        <i class="material-icons">confirmation_number</i>
+                    </a>
+                @endif
+                
                 <a href="{{route('TicketsController.index')}}?technician={{auth.user.id}}">
                     <h3>Tickets asignados</h3>
                     <i class="material-icons">business_center</i>
