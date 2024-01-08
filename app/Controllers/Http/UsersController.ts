@@ -7,7 +7,7 @@ import User from "App/Models/User";
 import { DateTime } from 'luxon';
 
 export default class UsersController {
-  public async index({ view, request, response, auth }: HttpContextContract) {
+  public async index({ view, request, response, auth, session }: HttpContextContract) {
     const user = await auth.use("web").authenticate();
     //En caso de ser solicitante se redirige automaticamente a la pagina de su usuario.
     if (user.roles != Roles.ADMIN) {
@@ -15,19 +15,18 @@ export default class UsersController {
       return;
     }
     const userQuery = User.query();
-    const role = request.input('role', '*')
+    const searchRole = request.input('role', '*')
     const page = request.input('page', 1)//Pagina de la paginacion
     const limit = 10; //Limite de usuarios por pagina
 
-    if (Object.values(Roles).includes(role)) {
-      userQuery.where('roles', role);
+    if (Object.values(Roles).includes(searchRole)) {
+      userQuery.where('roles', searchRole);
     }
     const users = await userQuery
         .preload('profile')
         .paginate(page, limit);
-    users.baseUrl('/users')
-    
-    const html = await view.render("user/index", { users, Roles, currentPath: request.url() });
+    users.baseUrl('/users');
+    const html = await view.render("user/index", { users, Roles, currentPath: request.url(), searchRole });
     return html;
   }
 

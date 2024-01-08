@@ -71,7 +71,7 @@ export default class AuthController {
     const password = request.input("password");
     try {
       //Intentar login
-      const user = await auth.use("web").attempt(uuid, password);
+      await auth.use("web").attempt(uuid, password);
 
       response.redirect().toRoute("dashboard");
     } catch (error) {
