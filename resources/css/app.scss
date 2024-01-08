@@ -534,3 +534,19 @@ label {
     }
   }
 }
+.error-pages {  
+  > div {
+    background-color: $color-background-card;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 33%;
+    height: 33%;
+    border: 1px solid $color-border;
+    border-radius: $border-radius-sm;
+    h2 {
+      margin-bottom: 3rem;
+    }
+  }
+}
