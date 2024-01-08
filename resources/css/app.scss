@@ -101,6 +101,7 @@ main {
       text-align: left;
       margin-left: 0.5rem;
       width: 45%;
+      overflow: hidden;
     }
     .requester {
       width: 15%;
@@ -495,6 +496,7 @@ label {
 .profilePicture {  
   max-height: 12rem;
   max-width: 12rem;
+  width: 100%;
   object-fit: scale-down;  
 }
 

@@ -10,6 +10,9 @@ export default Factory.define(Profile, ({ faker }) => {
       year: 1889,
       month: 4,
       day: 20
-    }).toISODate() // Formatea la fecha como cadena en formato ISO
+    }).toISODate(), // Formatea la fecha como cadena en formato ISO
+    picture: 'profilePictures/default.jpg',
+    jobPosition: faker.person.jobTitle(),
+    phoneNumber: faker.phone.number()
   }
 }).build()

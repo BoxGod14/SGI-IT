@@ -6,4 +6,5 @@ coverage
 .env
 tmp
 git
-public/profilePictures
+public/profilePictures/*
+!public/profilePictures/default.jpg

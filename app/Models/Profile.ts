@@ -1,5 +1,5 @@
 import { DateTime } from 'luxon'
-import { BaseModel, BelongsTo, belongsTo, column, computed } from '@ioc:Adonis/Lucid/Orm'
+import { BaseModel, BelongsTo, beforeCreate, belongsTo, column, computed } from '@ioc:Adonis/Lucid/Orm'
 import User from './User'
 
 export default class Profile extends BaseModel {
@@ -36,6 +36,10 @@ export default class Profile extends BaseModel {
   @computed()
   public get fullName(){
     return this.name + " " + this.surname;
+  }
+  @beforeCreate()
+  public static assignPicture(profile: Profile) {
+    profile.picture = 'profilePictures/default.jpg'
   }
   
   //Relaciones

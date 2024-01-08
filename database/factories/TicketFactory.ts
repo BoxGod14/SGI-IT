@@ -5,7 +5,13 @@ import State from 'App/Enums/State'
 export default Factory.define(Ticket, ({ faker }) => {
   return {
     subject: faker.lorem.sentence(),
-    description: faker.lorem.paragraphs(2),
-    state: State.OPEN,
+    description: faker.lorem.paragraphs(2),     
+    state: randomStateValue(State),
   }
 }).build()
+
+const randomStateValue = (states) => {
+  const values = Object.keys(states);
+  const key = values[Math.floor(Math.random() * values.length)];
+  return states[key];
+}

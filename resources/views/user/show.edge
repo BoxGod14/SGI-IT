@@ -113,7 +113,7 @@
                 <div id="tickets-technician" class="tickets-user">
                   @each(ticket in user.tickets)
                     @if(ticket.$extras.pivot_role == Roles.TECHNICIAN)
-                      <div class="ticket" data-url="{{route('TicketsController.show', [ticket.id])}}">
+                      <div class="ticket data-url" data-url="{{route('TicketsController.show', [ticket.id])}}">
                         <div><p><i class="material-icons">confirmation_number</i></p></div>                    
                         <div>
                           <section>
