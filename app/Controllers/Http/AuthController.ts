@@ -69,9 +69,10 @@ export default class AuthController {
     this.comprobarYRedirigirSiAutenticado(auth, response);
     const uuid = request.input("uuid");
     const password = request.input("password");
+    const rememberMe = request.input("remember");
     try {
       //Intentar login
-      await auth.use("web").attempt(uuid, password);
+      await auth.use("web").attempt(uuid, password, rememberMe);
 
       response.redirect().toRoute("dashboard");
     } catch (error) {
