@@ -2,6 +2,7 @@ import type { HttpContextContract } from "@ioc:Adonis/Core/HttpContext";
 import Database from "@ioc:Adonis/Lucid/Database";
 import Roles from "App/Enums/Roles";
 import State from "App/Enums/State";
+import Profile from "App/Models/Profile";
 import Ticket from "App/Models/Ticket";
 import User from "App/Models/User";
 import CreateTicketValidator from "App/Validators/CreateTicketValidator";
@@ -12,35 +13,36 @@ export default class TicketsController {
     const page = request.input('page', 1)//Paginas de la paginacion
     const limit = 10; //Limite de tickets por pagina
     //Sección de filtros
-    let technician = request.input('technician', '')
-    let requester = request.input('requester', '')
+    let technicianId = request.input('technician', '')
+    let requesterId = request.input('requester', '')
+    //Lo usuarios solicitantes solo pueden ver sus propios tickets
     if (user.roles == Roles.REQUESTER) {
-      technician = '';
-      requester = user.id;
+      technicianId = '';
+      requesterId = user.id;
     }
     
-    let state = request.input('state', '*')
+    let searchState = request.input('state', '')
     const ticketsQuery = Ticket.query();
 
-    if (technician != '*' && technician != "" && technician != "null") {
+    if (technicianId != '*' && technicianId != "" && technicianId != "null") {
         ticketsQuery.whereHas('User', (query) => {
-            query.where('id', technician);
+            query.where('id', technicianId);
             query.wherePivot('role', Roles.TECHNICIAN);
         });
     }
     
-    if (requester != '*' && requester != "" && requester != "null") {
+    if (requesterId != '*' && requesterId != "" && requesterId != "null") {
       ticketsQuery.whereHas('User', (query) => {
-          query.where('id', requester);
+          query.where('id', requesterId);
           query.wherePivot('role', Roles.REQUESTER);
       });
     }
 
-    if (Object.values(State).includes(state)) {
-      ticketsQuery.where('state', state);
+    if (Object.values(State).includes(searchState)) {
+      ticketsQuery.where('state', searchState);
     }
     else {
-      state = '*';
+      searchState = '';
     }
     const tickets = await ticketsQuery
         .preload("User", (query) => {
@@ -53,11 +55,14 @@ export default class TicketsController {
     tickets.baseUrl('/tickets')
     tickets.queryString({
       page: page, 
-      technician: technician,
-      requester: requester,
-      state: state
+      technician: technicianId,
+      requester: requesterId,
+      state: searchState
     })
-    const html = await view.render("tickets/index", { tickets, Roles, State, currentPath: request.url() });
+    //Obtener solicitante y tecnico, no es necesario que falle si no los encuentra.
+    const requester = await Profile.findBy('userId',requesterId);
+    const technician = await Profile.findBy('userId',technicianId);
+    const html = await view.render("tickets/index", { tickets, Roles, State, currentPath: request.url(), searchState, requester, technician});
     return html;
   }
 

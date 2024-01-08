@@ -7,13 +7,21 @@
       {{--Solicitante--}}
         <section class="autocomplete">
             <label for="requesterName">Solicitante</label><br>
-            <input name="requesterName" type="text" id="requesterName" placeholder="">
+            <input name="requesterName" type="text" id="requesterName" 
+            @if(requester)
+              value="{{requester.fullName}}" data-id="{{requester.userId}}"
+            @endif
+            >
             <div class="suggestionList" id="suggestionListRequester"></div>
         </section>
         {{--Tecnico--}}
         <section class="autocomplete">
             <label for="technicianName">Tecnico asignado</label><br>
-            <input name="technicianName" type="text" id="technicianName">
+            <input name="technicianName" type="text" id="technicianName"
+            @if(technician)
+              value="{{technician.fullName}}" data-id="{{technician.userId}}"
+            @endif            
+            >
             <div class="suggestionList" id="suggestionListTechnician"></div>
         </section>
     @endif
@@ -21,13 +29,17 @@
     <section>
         <label for="state">Estado</label><br>
         <select name="state" id="state">
-            @each(state in State)
-            <option value="{{state}}">{{state}}</option>
+            <option value="">Sin filtrar</option>
+            @each(actualState in State)
+            <option value="{{actualState}}"
+            @if(searchState == actualState)
+                selected
+            @endif
+            >{{actualState}}</option>            
             @endeach
         </select>
     </section>
-    
-    
+
 </form>
 <button id="applyFilters" class="btn_primary">Aplicar filtros</button>
 
