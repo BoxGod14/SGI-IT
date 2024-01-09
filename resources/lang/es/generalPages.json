@@ -55,5 +55,6 @@
     "myUser": "Mi usuario",
     "userDetails": "Detalles del usuario",
     "userInfo": "Información del usuario",
-    "addtionalInfo": "Información adicional"
+    "addtionalInfo": "Información adicional",
+    "unsolvedTickets": "Tickets sin resolver"
 }

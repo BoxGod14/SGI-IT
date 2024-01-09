@@ -1,0 +1,8 @@
+{
+    "messages": "Messages",
+    "from": "From: {name}",
+    "placeholder": "Write a message",
+    "buttonCancel": "Cancel",
+    "buttonSend": "Send",
+    "buttonShow": "Write message"
+}

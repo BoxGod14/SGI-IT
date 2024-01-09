@@ -10,7 +10,7 @@ import Chart from 'chart.js/auto';
         plugins: {
             title: {
                 display: true,
-                text: 'Tickets/Estado'
+                text: statusTicketsTitle
             },
         }
       }
@@ -25,7 +25,7 @@ import Chart from 'chart.js/auto';
         plugins: {
             title: {
                 display: true,
-                text: 'Tickets sin resolver'
+                text: asignedTicketsTitle
             }
         }
       }
