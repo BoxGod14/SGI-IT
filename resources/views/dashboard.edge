@@ -11,9 +11,9 @@
         //Tickets por estado
         const statusTickets = {
             labels: [
-                '{{State.OPEN}}',
-                '{{State.INPROGRESS}}',
-                '{{State.SOLVED}}',
+                '{{ t('enums.states', { state: State.OPEN }) }}',
+                '{{ t('enums.states', { state: State.INPROGRESS }) }}',
+                '{{ t('enums.states', { state: State.SOLVED }) }}',
             ],
             datasets: [{
                 label: 'Tickets/Estado',
