@@ -36,7 +36,7 @@
               @endeach
             </p>
     
-            <p class="state">{{ticket.state}}</p>
+            <p class="state">{{ t('enums.states', { state: ticket.state }) }}</p>
     
             <p class="technician">
               @each(user in ticket.User)

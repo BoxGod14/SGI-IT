@@ -4,11 +4,7 @@
     @if(auth.user.roles != Roles.REQUESTER)
     {{ csrfField() }}
     @endif
-    @if(auth.user.roles == Roles.REQUESTER)
-      
-    @else
     
-    @end
     {{--Tecnico--}}
     <section class="autocomplete">
         <label for="technicianName">Tecnico asignado</label><br>
@@ -38,7 +34,7 @@
     <section>
         <label for="state">Estado</label><br>        
             @if(auth.user.roles == Roles.REQUESTER)
-                <p>{{ticket.state}}</p>
+                <p>{{ t('enums.states', { state: ticket.states }) }}</p>
             @else
             <select name="state" id="state">
                 {{--Rellenar los posibles estados y preseleccionar el actual--}}
@@ -47,7 +43,7 @@
                     @if(states == ticket.state)
                         selected
                     @end
-                    >{{states}}</option>
+                    >{{ t('enums.states', { state: states }) }}</option>
                 @endeach
             @end            
         </select>

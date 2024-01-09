@@ -1,6 +1,6 @@
 enum State {
-  OPEN = 'open',
-  INPROGRESS = 'inprogress',
-  SOLVED = 'solved',
+  OPEN = '1',
+  INPROGRESS = '2',
+  SOLVED = '3',
 }
 export default State

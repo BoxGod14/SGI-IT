@@ -1,0 +1,4 @@
+    {
+        "role": "{role, select, =1 {Administrator} 2 {Requester} 3 {Technician}}",
+        "state": "{state, select, =1 {Open} 2 {In progress} 3 {Solved}}"
+    }

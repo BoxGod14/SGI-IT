@@ -5,5 +5,6 @@
     @includeIf(currentPath.match(/\/users\/.*$/), 'partials/headers/user.edge')
     @includeIf(currentPath == '/users', 'partials/headers/users.edge')
     @includeIf(currentPath == '/dashboard', 'partials/headers/dashboard.edge')
-    <p>{{auth.user.roles}}: {{auth.user.username}}</p>
+    <p>{{ t('enums.roles', { rol: auth.user.roles }) }}: {{auth.user.username}}</p>
+    
 </header>

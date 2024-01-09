@@ -10,7 +10,6 @@
 
 <body>
   <script defer src="../js/redirection-url.js"></script>
-  @include('partials/scripts/transitionsSwup_js.edge')
   <main>
     @include('partials/nav.edge')   
     <div>      
@@ -32,7 +31,7 @@
                 <p class="user_username">{{user.username}}</p>
                 <p class="user_name-surname">{{user.profile.name}}</p>
                 <p class="user_name-surname">{{user.profile.surname}}</p>
-                <p class="user_role">{{user.roles}}</p>
+                <p class="user_role">{{ t('enums.roles', { rol: user.roles }) }}</p>
             </div>
           @endeach
           {{--En caso de que haya paginas, se mostrara la paginación--}}

@@ -53,26 +53,19 @@
                     <input type="file" name="picture" id="picture">
                 </section>
                 
+                
                 @if( auth.user.roles == Roles.ADMIN )
                 <section class="inputWithLabel">
                     <label for="roles">Rol</label>
                     <select name="roles" id="roles">
-                        <option value="{{ Roles.ADMIN }}"
-                        @if(user.roles == Roles.ADMIN)
-                        selected
-                        @end
-                        >Administrador</option>
-                        <option value="{{ Roles.REQUESTER }}"
-                        @if(user.roles == Roles.REQUESTER)
-                        selected
-                        @end
-                        >Solicitante</option>
-                        <option value="{{ Roles.TECHNICIAN }}"
-                        @if(user.roles == Roles.TECHNICIAN)
-                        selected
-                        @end
-                        >Tecnico</option>
-                    </select>
+                        @each(role in Roles)
+                        <option value="{{role}}"
+                        @if(user.roles == role)
+                          selected
+                        @endif
+                        >{{ t('enums.roles', { rol: role }) }}</option>
+                        @endeach
+                    </select>                        
                 </section>
                 
                 @endif

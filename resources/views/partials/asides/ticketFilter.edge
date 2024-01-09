@@ -35,7 +35,7 @@
             @if(searchState == actualState)
                 selected
             @endif
-            >{{actualState}}</option>            
+            >{{ t('enums.states', { state: actualState }) }}</option>            
             @endeach
         </select>
     </section>

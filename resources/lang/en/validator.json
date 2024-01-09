@@ -8,7 +8,7 @@
         "email": "Enter a valid email"
     },
     "createTicket": {
-        "subject.maxLength": "The subject cannot have more than 255 characters.",
+        "subject.maxLength": "The subject cannot have more than { maxLength } characters.",
         "subject.minLength": "The subject must have at least { minLength } characters.",
         "description.minLength": "The description must have at least { minLength } characters.",
         "subject.required": "You need to fill in the subject.",
