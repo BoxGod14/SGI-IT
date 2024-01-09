@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Usuario</title>    
+    <title>{{ t('generalPages.user') }} {{user.username}}</title>    
     @entryPointStyles('scss')
 </head>
 <body>
@@ -18,18 +18,18 @@
         <section class="userData">
           <section class="user-mainInfo">
             <div>
-              <h4>Detalles del usuario</h4>
-              <img src="/{{user.profile.picture}}" alt="Foto de usuario" class="profilePicture">
+              <h4>{{ t('generalPages.userDetails') }}</h4>
+              <img src="/{{user.profile.picture}}" alt="{{ t('generalPages.profilePicture') }}" class="profilePicture">
             </div>       
             <div>
               <h4>{{user.profile.fullName}}</h4>
               <div>
                 <div>
-                  <p>Correo electronico</p>
+                  <p>{{ t('generalPages.mail') }}</p>
                   <p>{{user.email}}</p>
                 </div>
                 <div>
-                  <p>Puesto</p>
+                  <p>{{ t('generalPages.jobPosition') }}</p>
                   <p>
                     @if(user.profile.jobPosition)
                       {{user.profile.jobPosition}}
@@ -39,7 +39,7 @@
                   </p>
                 </div>                
                 <div>
-                  <p>Número de teléfono</p>
+                  <p>{{ t('generalPages.phoneNumber') }}</p>
                   <p>
                     @if(user.profile.phoneNumber)
                       {{user.profile.phoneNumber}}
@@ -48,36 +48,40 @@
                     @end
                   </p>
                 </div>
+                <div>
+                  <p>{{ t('generalPages.role') }}</p>
+                  <p>{{ t('enums.roles',{rol: user.roles}) }}</p>
+                </div>
               </div>              
             </div> 
             <div id="selectors">
               <ul>
-                <li class="selected" data-selector="userInfo">Información del usuario</li>
-                <li data-selector="tickets-requester" >Tickets creados</li>
+                <li class="selected" data-selector="userInfo">{{ t('generalPages.userInfo') }}</li>
+                <li data-selector="tickets-requester" >{{ t('generalPages.ticketCreatedBy',{username: user.username}) }}</li>
                 @if(user.roles != Roles.REQUESTER)
-                  <li data-selector="tickets-technician" >Tickets asignados</li>
+                  <li data-selector="tickets-technician" >{{ t('generalPages.AssignedTickets') }}</li>
                 @end
               </ul>
             </div>
           </section>
           <section class="extraInfo">              
               <div id="userInfo">
-                <h4>Información adicional</h4>
+                <h4>{{ t('generalPages.addtionalInfo') }}</h4>
                   <div>
-                      <p>Nombre</p>
+                      <p>{{ t('generalPages.name') }}</p>
                       <p>{{user.profile.name}}</p>
                   </div>
                   <div>
-                      <p>Apellidos</p>
+                      <p>{{ t('generalPages.surname') }}</p>
                       <p>{{user.profile.surname}}</p>
                   </div>
                   <div>
-                      <p>Fecha de nacimiento</p>
-                      <p>{{user.profile.birthday.toFormat('dd/MM/yyyy')}}</p>
+                      <p>{{ t('generalPages.birthday') }}</p>
+                      <p>{{ t('tickets.date', {date: user.profile.birthday}) }}</p>
                   </div>
                   <div>
-                      <p>Fecha de creacion</p>
-                      <p>{{user.profile.createdAt.toFormat('dd/MM/yyyy')}}</p>
+                      <p>{{ t('tickets.createAt') }}</p>
+                      <p>{{ t('tickets.date', {date: user.profile.createdAt}) }}</p>
                   </div>
               </div>
               <div id="tickets-requester" class="tickets-user">
@@ -95,11 +99,11 @@
                         <p class="id">#{{ticket.id}}</p>
                       </section>
                       <section>                                        
-                        <p class="createdAt">Creado hace: {{ticket.timeCreated}}</p>
-                        <p class="state">Estado: {{ticket.state}}</p>
+                        <p class="createdAt">{{ t('tickets.whenCreatedAt', { time: ticket.timeCreated.time, format: ticket.timeCreated.format }) }} {{ t('tickets.date', {date: ticket.createdAt}) }}</p>
+                        <p class="state">{{ t('tickets.state')}}: {{ t('enums.states',{state: ticket.state}) }}</p>
                         @each(user in ticket.User)
                           @if(user.$extras.pivot_role == Roles.TECHNICIAN)
-                          <p>Tecnico: <a class="technician" href="{{route('UsersController.show', [user.id])}}">{{user.profile.fullName}}</a></p>
+                          <p>{{ t('tickets.assignedTechnician')}}: <a class="technician" href="{{route('UsersController.show', [user.id])}}">{{user.profile.fullName}}</a></p>
                           @endif
                         @endeach                      
                       </section>
@@ -125,11 +129,11 @@
                             <p class="id">#{{ticket.id}}</p>
                           </section>
                           <section>                                        
-                            <p class="createdAt">Creado hace: {{ticket.timeCreated}}</p>
-                            <p class="state">Estado: {{ticket.state}}</p>
+                            <p class="createdAt">{{ t('tickets.whenCreatedAt', { time: ticket.timeCreated.time, format: ticket.timeCreated.format }) }} {{ t('tickets.date', {date: ticket.createdAt}) }}</p>
+                            <p class="state">{{ t('tickets.state')}}: {{ t('enums.states',{state: ticket.state}) }}</p>
                             @each(user in ticket.User)
                               @if(user.$extras.pivot_role == Roles.REQUESTER)
-                              <p>Solicitante: <a class="technician" href="{{route('UsersController.show', [user.id])}}">{{user.profile.fullName}}</a></p>
+                              <p>{{ t('tickets.requester')}}: <a class="technician" href="{{route('UsersController.show', [user.id])}}">{{user.profile.fullName}}</a></p>
                               @endif
                             @endeach                      
                           </section>

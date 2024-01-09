@@ -2,7 +2,6 @@ import { DateTime } from 'luxon'
 import { BaseModel, HasMany, ManyToMany, column, hasMany, manyToMany, computed } from '@ioc:Adonis/Lucid/Orm'
 import Message from './Message'
 import User from './User'
-import I18n from '@ioc:Adonis/Addons/I18n'
 
 export default class Ticket extends BaseModel {
   @column({ isPrimary: true })

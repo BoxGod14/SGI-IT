@@ -1,4 +1,4 @@
-<h3>Detalles</h3>
+<h3>{{ t('generalPages.details') }}</h3>
 {{--Formulario de filtros--}}
 <form>
     @if(auth.user.roles != Roles.REQUESTER)
@@ -7,7 +7,7 @@
     
     {{--Tecnico--}}
     <section class="autocomplete">
-        <label for="technicianName">Tecnico asignado</label><br>
+        <label for="technicianName">{{ t('tickets.assignedTechnician') }}</label><br>
         @if(auth.user.roles == Roles.REQUESTER)
         <p>
             @each(user in ticket.User)
@@ -32,7 +32,7 @@
     
     {{--Estado--}}
     <section>
-        <label for="state">Estado</label><br>        
+        <label for="state">{{ t('tickets.state') }}</label><br>        
             @if(auth.user.roles == Roles.REQUESTER)
                 <p>{{ t('enums.states', { state: ticket.states }) }}</p>
             @else
@@ -50,7 +50,7 @@
     </section>    
 </form>
 @if(auth.user.roles != Roles.REQUESTER)
-<button id="applyChanges" class="btn_primary">Aplicar Cambios</button>
+<button id="applyChanges" class="btn_primary">{{ t('generalPages.applyChanges') }}</button>
 <p id="result"></p>
 <script>
     //variables
@@ -90,7 +90,7 @@
         })
         .then(response => {
             if (!response.ok) {
-                throw new Error(`Error al realizar la solicitud: ${response.status}`);
+                throw new Error("{{ t('generalPages.responseError') }}");
             }
             return response.json();
         })
@@ -100,8 +100,7 @@
         })
         .catch(error => {
             // La peticion fallo
-            console.log(error);
-            console.error('Error en la solicitud:', error.message);
+            console.error("{{ t('generalPages.responseError') }}");
         });
     }
     /**

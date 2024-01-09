@@ -1,6 +1,6 @@
 <div>
-    <h3><a href="{{route('TicketsController.index')}}">Tickets</a> > Ticket-{{ticket.id}}</h3>
+    <h3><a href="{{route('TicketsController.index')}}">'{{ t('generalPages.tickets') }}'</a> > {{ t('ticket.ticket') }}-{{ticket.id}}</h3>
     <section>
-        <a href="#delete_confirmation" class="btn_delete" id="delete_ticket" title="Eliminar ticket"><i class="material-icons">remove</i></a>
+        <a href="#delete_confirmation" class="btn_delete" id="delete_ticket" title="{{ t('generalPages.deleteTicket') }}"><i class="material-icons">remove</i></a>
     </section>    
 </div>

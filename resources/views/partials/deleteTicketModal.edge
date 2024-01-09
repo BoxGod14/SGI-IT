@@ -1,10 +1,10 @@
 <div id="delete_confirmation" class="popup-overlay">
     <div class="modal modal-delete-ticket">
-        <h2>Confirmación borrado</h2>
+        <h2>{{ t('generalPages.deleteTicket') }}</h2>
         <div class="content">
-            <p>¿Estas seguro que quieres borrar el ticket? No se podra recuperar</p>
-            <a href="#" class="btn_primary" id="close_button">No borrar</a>
-            <button class="btn_delete" id="delete_button" disabled>Espere 5</button>
+            <p>{{ t('generalPages.deleteTicketMessage') }}</p>
+            <a href="#" class="btn_primary" id="close_button">{{ t('generalPages.cancel') }}</a>
+            <button class="btn_delete" id="delete_button" disabled>{{ t('generalPages.wait') }} 5</button>
         </div>
     </div>
 </div>
@@ -23,15 +23,15 @@
 
         countdownTrigger() {
             this.resetInterval();
-            this.time = 5;
+            this.time = 4;
             const countdown = () => {
                 if (this.time > 0) {
-                    this.buttonDelete.textContent = `Espere ${this.time}`;
+                    this.buttonDelete.textContent = `{{ t('generalPages.wait') }} ${this.time}`;
                     this.time--;
                 } else {
                     clearInterval(this.interval);
                     this.interval = null;
-                    this.buttonDelete.textContent = 'Borrar';
+                    this.buttonDelete.textContent = '{{ t('generalPages.deleteTicket') }}';
                     this.buttonDelete.disabled = false;
                 }
             };
@@ -44,7 +44,7 @@
             if (this.interval !== undefined) {
                 clearInterval(this.interval);
             }
-            this.buttonDelete.textContent = 'Espere 5';
+            this.buttonDelete.textContent = '{{ t('generalPages.wait') }} 5';
             this.buttonDelete.disabled = true;
         }
         /**
@@ -69,10 +69,10 @@
                 if (response.ok) {
                     window.location.href = "{{route('TicketsController.index')}}";
                 } else {
-                    alert('Error al eliminar el Ticket');
+                    alert('{{ t('generalPages.responseError') }}');
                 }
             } catch (error) {
-                alert('Se ha producido un error al intentar eliminar el ticket: ' + error.message);
+                alert('{{ t('generalPages.responseError') }}': + error.message);
             }
         }
     }

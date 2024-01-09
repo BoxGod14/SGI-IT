@@ -1,37 +1,37 @@
 {{--Modificar usuario--}}
 <div id="edit_user" class="popup-overlay">
     <div class="modal modal-edit-user">
-        <h2>Editar usuario {{user.username}}</h2>
+        <h2>{{ t('generalPages.editUser') }} {{user.username}}</h2>
         <div class="content">
             <form enctype="multipart/form-data">       
                 {{ csrfField() }}
                 <section class="inputWithLabel">
-                    <label for="username">Usuario</label>
+                    <label for="username">{{ t('generalPages.user') }}</label>
                     <input type="text" value="{{user.username}}" name="username" id="username">    
                 </section> 
                 
                 <section class="inputWithLabel">
-                    <label for="email">Correo electronico</label>
+                    <label for="email">{{ t('generalPages.mail') }}</label>
                     <input type="email" value="{{user.email}}" name="email" id="email">
                 </section>
                 
                 <section class="inputWithLabel">
-                    <label for="name">Nombre</label>
+                    <label for="name">{{ t('generalPages.name') }}</label>
                     <input type="text" value="{{user.profile.name}}" name="name" id="name">
                 </section>                
                 
                 <section class="inputWithLabel">
-                    <label for="surname">Apellido</label>
+                    <label for="surname">{{ t('generalPages.surname') }}</label>
                     <input type="text" value="{{user.profile.surname}}" name="surname" id="surname">     
                 </section>
                 
                 <section class="inputWithLabel">
-                    <label for="birthday">Cumpleaños</label>
+                    <label for="birthday">{{ t('generalPages.birthday') }}</label>
                     <input type="date" value="{{user.profile.birthday.toFormat('yyyy-MM-dd')}}" name="birthday" id="birthday">
                 </section>
 
                 <section class="inputWithLabel">
-                    <label for="phoneNumber">Número de teléfono</label>
+                    <label for="phoneNumber">{{ t('generalPages.phoneNumber') }}</label>
                     <input type="text" 
                     @if(user.profile.phoneNumber)
                         value="{{user.profile.phoneNumber}}"
@@ -40,7 +40,7 @@
                 </section>
 
                 <section class="inputWithLabel">
-                    <label for="jobPosition">Puesto</label>
+                    <label for="jobPosition">{{ t('generalPages.jobPosition') }}</label>
                     <input type="text"
                     @if(user.profile.jobPosition)
                         value="{{user.profile.jobPosition}}"
@@ -49,7 +49,7 @@
                 </section>
                 
                 <section class="inputWithLabel">
-                    <label for="picture">Foto de perfil</label>
+                    <label for="picture">{{ t('generalPages.profilePicture') }}</label>
                     <input type="file" name="picture" id="picture">
                 </section>
                 
@@ -71,8 +71,8 @@
                 @endif
             </form>
             <section>
-                <a href="#" class="btn_primary" id="close_button">Cerrar</a>
-                <button class="btn_primary" id="updateButton">Actualizar</button>
+                <a href="#" class="btn_primary" id="close_button">{{ t('generalPages.cancel') }}</a>
+                <button class="btn_primary" id="updateButton">{{ t('generalPages.applyChanges') }}</button>
             </section>            
         </div>
     </div>
@@ -82,22 +82,22 @@
 @if(auth.user.id == user.id)
     <div id="edit_password" class="popup-overlay">
         <div class="modal modal-edit-user">
-            <h2>Cambiar contraseña</h2>
+            <h2>{{ t('generalPages.changePassword') }}</h2>
             <div class="content">
                 <form enctype="multipart/form-data">
                     <section class="inputWithLabel">
-                        <label for="password">Contraseña nueva</label>
+                        <label for="password">{{ t('generalPages.newPassword') }}</label>
                         <input type="password" name="password" id="password">    
                     </section> 
                     <section class="inputWithLabel">
-                        <label for="password_confirmation">Confirma la contraseña</label>
+                        <label for="password_confirmation">{{ t('generalPages.confirmedPassword') }}</label>
                         <input type="password" name="password_confirmation" id="password_confirmation">  
                         <p id="response" class="errors"></p>  
                     </section>     
                 </form>
                 <section>
-                    <a href="#" class="btn_primary">Cerrar</a>
-                    <button class="btn_primary" id="updatePasswordButton">Actualizar</button>                    
+                    <a href="#" class="btn_primary">{{ t('generalPages.cancel') }}</a>
+                    <button class="btn_primary" id="updatePasswordButton">{{ t('generalPages.applyChanges') }}</button>                    
                 </section>            
             </div>
         </div>

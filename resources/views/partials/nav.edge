@@ -1,13 +1,13 @@
 <nav>
     <div class="home">
-        <a href="{{route('dashboard')}}" title="Inicio"><i class="material-icons">home</i></a>
+        <a href="{{route('dashboard')}}" title="{{ t('generalPages.titleDashboard') }}"><i class="material-icons">home</i></a>
     </div>
     <div class="other-url">
-        <a href="{{route('TicketsController.index')}}" title="Lista de tickets"><i class="material-icons">confirmation_number</i></a>
-        <a href="{{route('UsersController.show', [auth.user.id])}}" title="Mi usuario"><i class="material-icons">person</i></a>
+        <a href="{{route('TicketsController.index')}}" title="{{ t('generalPages.ticketsList') }}"><i class="material-icons">confirmation_number</i></a>
+        <a href="{{route('UsersController.show', [auth.user.id])}}" title="{{ t('generalPages.myUser') }}"><i class="material-icons">person</i></a>
         @if(auth.user.roles == Roles.ADMIN)
-        <a href="{{route('UsersController.index')}}" title="Mostrar usuarios"><i class="material-icons">group</i></a>
+        <a href="{{route('UsersController.index')}}" title="{{ t('generalPages.userList') }}"><i class="material-icons">group</i></a>
         @endif        
-        <a href="{{route('/logout')}}" title="Cerrar sesión"><i class="material-icons">logout</i></a>
+        <a href="{{route('/logout')}}" title="{{ t('generalPages.logout') }}"><i class="material-icons">logout</i></a>
     </div>    
 </nav>

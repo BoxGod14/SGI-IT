@@ -1,21 +1,21 @@
 <div id="create_ticket" class="popup-overlay">
     <div class="modal modal-edit-user">
-        <h2>Crear ticket</h2>
+        <h2>{{ t('generalPages.CreateTicket') }}</h2>
         <div class="content">
             <form>
                 <section class="inputWithLabel">
-                    <label for="subject">Asunto</label>
+                    <label for="subject">{{ t('tickets.subject') }}</label>
                     <input type="text" name="subject" id="subject" class="createTicketSubject">
                 </section>                
                 
                 <section class="inputWithLabel">
-                    <label for="description">Descripcion</label>
+                    <label for="description">{{ t('tickets.description') }}</label>
                     <textarea type="text" name="description" id="description" class="createTicketDescription"></textarea> 
                     <p id="responseText" class="errors"></p>    
                 </section>
             </form>
-            <a href="#" class="btn_primary" id="close_button">Cancelar</a>
-            <button class="btn_primary" id="create_button">Crear ticket</button>
+            <a href="#" class="btn_primary" id="close_button">{{ t('generalPages.cancel') }}</a>
+            <button class="btn_primary" id="create_button">{{ t('generalPages.CreateTicket') }}</button>
         </div>
     </div>
 </div>

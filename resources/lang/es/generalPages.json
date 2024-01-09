@@ -12,6 +12,7 @@
     "CreateTicket": "Crear ticket",
 
     "login": "Iniciar sesión",
+    "logout": "Cerrar sesión",
     "createAccount": "Crear cuenta",
     "uuid": "Usuario o correo",
     "password": "Contraseña",
@@ -20,11 +21,39 @@
     "withAccount": "Ya tengo cuenta:",
 
     "user": "Usuario",
+    "users": "Usuarios",
     "mail": "Correo electronico",
     "confirmedMail": "Confirmación correo electronico",
     "confirmedPassword": "Confirmar contraseña",
     "name": "Nombre",
     "surname": "Apellidos",
-    "birthday": "Cumpleaños"
+    "birthday": "Cumpleaños",
+    "phoneNumber": "Número de teléfono",
+    "jobPosition": "Puesto",
+    "profilePicture": "Foto de perfil",
+    "newPassword": "Contraseña nueva",
 
+    "404": "El recurso que solicitaste no se ha encontrado, clique para volver",
+    "403": "Sin permisos para el recurso, clique para volver",
+    "500": "Error en el servidor, clique para volver",
+    "responseError": "Error al realizar la solicitud:",
+
+    "details": "Detalles",
+    "cancel": "Cancelar",
+    "filter": "Filtro",
+    "wait": "Espere",
+    "withOutFilter": "Sin filtrar",
+    "applyChanges": "Aplicar cambios",
+    "role": "Rol",
+    "tickets": "Tickets",
+    "deleteTicket": "Eliminar ticket",
+    "editUser": "Editar usuario",
+    "changePassword": "Cambiar contraseña",
+    "ticketsList": "Lista de tickets",
+    "userList": "Lista de usuarios",
+    "deleteTicketMessage": "¿Estas seguro que quieres borrar el ticket? No se podra recuperar",
+    "myUser": "Mi usuario",
+    "userDetails": "Detalles del usuario",
+    "userInfo": "Información del usuario",
+    "addtionalInfo": "Información adicional"
 }
