@@ -1,0 +1,30 @@
+{
+    "titleDashboard": "Panel principal",
+    "kpiLabelStatusTickets": "Tickets/Estado",
+    "kpiLabelAsignedTicketsAssigned": "Tickets asignados",
+    "kpiLabelAsignedTicketsNotAssigned": "Tickets sin asignar",
+    "kpiDatasetLabelAsignedTickets": "Tickets",
+    "kpiTitle": "Grafos de desempeño",
+    "kpiStatusTicketsDescription": "Todos los tickets segun su estado",
+    "kpiAsignedTicketsDescription": "Todos los tickets sin cerrar segun su asignacion",
+    "ticketCreatedBy": "Tickets creados por: {username}",
+    "AssignedTickets": "Tickets asignados",
+    "CreateTicket": "Crear ticket",
+
+    "login": "Iniciar sesión",
+    "createAccount": "Crear cuenta",
+    "uuid": "Usuario o correo",
+    "password": "Contraseña",
+    "remember_user": "Recordar usuario",
+    "withOutAccount": "No tengo cuenta:",
+    "withAccount": "Ya tengo cuenta:",
+
+    "user": "Usuario",
+    "mail": "Correo electronico",
+    "confirmedMail": "Confirmación correo electronico",
+    "confirmedPassword": "Confirmar contraseña",
+    "name": "Nombre",
+    "surname": "Apellidos",
+    "birthday": "Cumpleaños"
+
+}

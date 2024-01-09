@@ -1,0 +1,8 @@
+{
+    "messages": "Mensajes",
+    "from": "De: {name}",
+    "placeholder": "Escribe un mensaje",
+    "buttonCancel": "Cancelar",
+    "buttonSend": "Enviar",
+    "buttonShow": "Escribir mensaje"
+}

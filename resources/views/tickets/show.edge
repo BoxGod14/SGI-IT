@@ -4,10 +4,10 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>SGI-IT tickets</title>
+    <title>{{ t('tickets.ticket') }} {{ticket.id}}</title>
     @entryPointStyles('scss')
 </head>
-<body>
+<body>  
   <script defer src="../js/tickets.js"></script>    
     @include('partials/scripts/createMessage_js.edge')
     <main>  
@@ -26,19 +26,19 @@
                     @endif
                   @endeach
                 </a>
-                creado hace {{ticket.timeCreated}} el {{ticket.createdAt.toFormat('dd/MM/yyyy')}}
+                {{ t('tickets.whenCreatedAt', { time: ticket.timeCreated.time, format: ticket.timeCreated.format }) }} {{ t('tickets.date', {date: ticket.createdAt}) }}
               </p>                 
             </div>
             <div class="description">
-              <p>Descripción</p>
+              <p>{{ t('tickets.description') }}</p>
               <p>{{ticket.description}}</p>
             </div>
             <section class="messages-writter">
-              <h4>Mensajes</h4>
+              <h4>{{ t('messaje.messages') }}</h4>
               <div class="messages" id="messages">
                   @each(message in ticket.message)
                     <div class="message">
-                      <p>De: {{message.user.profile.fullName}}</p>
+                      <p>{{ t('messaje.from', {name: message.user.profile.fullName}) }}
                       <p>{{message.message}}</p>
                     </div>
                   @end
@@ -48,15 +48,15 @@
                 <div id="writter">
                   <form>
                       {{ csrfField() }}
-                      <textarea name="messager" oninput="auto_grow(this)" placeholder="Escribe un mensaje"></textarea>
+                      <textarea name="messager" oninput="auto_grow(this)" placeholder="{{ t('messaje.placeholder') }}"></textarea>
                   </form>
                   <div class="buttoner">
-                    <button class="btn_primary" id="hideWriter">Cancelar</button>
-                    <button class="btn_primary" id="sendMessage">Enviar</button>
+                    <button class="btn_primary" id="hideWriter">{{ t('messaje.buttonCancel') }}</button>
+                    <button class="btn_primary" id="sendMessage">{{ t('messaje.buttonSend') }}</button>
                   </div>
                   <p id="response"></p>
                 </div> 
-                <button class="btn_primary" id="showWriter">Escribir mensaje</button> 
+                <button class="btn_primary" id="showWriter">{{ t('messaje.buttonShow') }}</button> 
               </div>
               
             </section>

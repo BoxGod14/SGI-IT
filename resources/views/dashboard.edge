@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Dashboard</title>    
+    <title>{{ t('generalPages.titleDashboard') }}</title>    
     @entryPointStyles('scss')
     <script>
         
@@ -16,7 +16,7 @@
                 '{{ t('enums.states', { state: State.SOLVED }) }}',
             ],
             datasets: [{
-                label: 'Tickets/Estado',
+                label: '{{ t('generalPages.kpiLabelStatusTickets') }}',
                 data: [{{OpenTickets[0]['total']}}, {{InProgressTickets[0]['total']}}, {{SolvedTickets[0]['total']}}],
                 backgroundColor: [
                 'rgb(255, 99, 132)',
@@ -29,11 +29,11 @@
         //Tickets asignados al usuario
         const asignedTickets = {
             labels: [
-                'Tickets asignados',
-                'Tickets sin asignar',
+                '{{ t('generalPages.kpiLabelAsignedTicketsAssigned') }}',
+                '{{ t('generalPages.kpiLabelAsignedTicketsNotAssigned') }}',
             ],
             datasets: [{
-                label: 'Tickets',
+                label: '{{ t('generalPages.kpiDatasetLabelAsignedTickets') }}',
                 data: [{{AssignedTickets}}, {{NoAssignedTickets}}],
                 backgroundColor: [
                 'rgb(255, 99, 132)',
@@ -46,7 +46,7 @@
     <script defer src="{{ asset('assets/app.js') }}"></script>
 </head>
 <body>
-    <main id="swup">
+    <main>
       @include('partials/nav.edge')
     <div>
       @include('partials/header.edge')
@@ -55,29 +55,29 @@
             <section>
                 @if(auth.user.roles != Roles.REQUESTER)
                     <a href="{{route('TicketsController.index')}}?requester={{auth.user.id}}">
-                        <h3>Tickets creados por: {{auth.user.username}}</h3>
+                        <h3>{{ t('generalPages.ticketCreatedBy', {username: auth.user.username}) }}</h3>
                         <i class="material-icons">confirmation_number</i>
                     </a>
                 @endif
                 
                 <a href="{{route('TicketsController.index')}}?technician={{auth.user.id}}">
-                    <h3>Tickets asignados</h3>
+                    <h3>{{ t('generalPages.AssignedTickets') }}</h3>
                     <i class="material-icons">business_center</i>
                 </a>
-                <a href="#create_ticket" title="Crear ticket" id="create_ticketButton">
-                    <h3>Crear ticket</h3>
+                <a href="#create_ticket" title="{{ t('generalPages.CreateTicket') }}" id="create_ticketButton">
+                    <h3>{{ t('generalPages.CreateTicket') }}</h3>
                     <i class="material-icons">add</i>
                 </a>
             </section>
             <section>
-                <h3>Grafos de desempeño</h3>
+                <h3>{{ t('generalPages.kpiTitle') }}</h3>
                 <div class="kpi">
                     <canvas id="statusTickets"></canvas>
-                    <p>Todos los tickets segun su estado</p>
+                    <p>{{ t('generalPages.kpiStatusTicketsDescription') }}</p>
                 </div>
                 <div class="kpi">
                     <canvas id="asignedTickets"></canvas>
-                    <p>Todos los tickets sin cerrar segun su asignacion</p>
+                    <p>{{ t('generalPages.kpiAsignedTicketsDescription') }}</p>
                 </div>
             </section>
             

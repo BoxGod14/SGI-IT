@@ -4,24 +4,22 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>SGI-IT Login</title>
-  <link rel="stylesheet" href="../css/transitions.css">
-  @entryPointStyles('scss')
+    <title>SGI-IT {{t('generalPages.login')}}</title>
+    @entryPointStyles('scss')
 </head>
-<body id="swup">
-  @include('partials/scripts/transitionsSwup_js.edge')
+<body >
   <main>
     <div class="container container--register">
-      <h2>Iniciar sesión</h2>
+      <h2>{{t('generalPages.login')}}</h2>
       <form action="{{ route('AuthController.login') }}" method="post">
         {{ csrfField() }}          
-        <input type="text" name="uuid" placeholder="Usuario o correo">
-        <input type="password" name="password" placeholder="Contraseña">
-        <div><input type="checkbox" name="remember">Recordar usuario</div>
-        <input type="submit" value="Iniciar sesión" class="btn_primary">          
+        <input type="text" name="uuid" placeholder="{{t('generalPages.uuid')}}">
+        <input type="password" name="password" placeholder="{{t('generalPages.password')}}">
+        <div><input type="checkbox" name="remember">{{t('generalPages.remember_user')}}</div>
+        <input type="submit" value="{{t('generalPages.login')}}" class="btn_primary">          
       </form>
       <div>
-        <p class="redirect">No tengo cuenta: <a href="{{ route('AuthController.registerForm') }}">Crear cuenta</a><br>
+        <p class="redirect">{{t('generalPages.withOutAccount')}} <a href="{{ route('AuthController.registerForm') }}">{{t('generalPages.createAccount')}}</a><br>
           @if(flashMessages.has('errors'))
           <span class="errors">{{ flashMessages.get('errors') }}</span>
         @end

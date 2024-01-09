@@ -5,23 +5,21 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>SGI-IT</title>
-  <link rel="stylesheet" href="../css/transitions.css">
   @entryPointStyles('scss') 
 </head>
 
-<body id="swup">
-  @include('partials/scripts/transitionsSwup_js.edge')
+<body>
     <main>
       <div class="container container--index">
         <h2>SGI-IT</h2>
         @!component('components/button-url.edge', {
         url: route('AuthController.loginForm'),
-        text: 'Iniciar Sesion'
+        text: t('generalPages.login') 
         })
   
         @!component('components/button-url.edge', {
         url: route('AuthController.registerForm'),
-        text: 'Crear cuenta'
+        text: t('generalPages.createAccount') 
         })
       </div>      
     </main>
