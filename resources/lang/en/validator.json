@@ -1,0 +1,22 @@
+{
+    "shared": {
+        "required": "The value of this field is required",
+        "unique": "It is already in use",
+        "minLength": "The field must have a minimum of {minLength} characters.",
+        "confirmed": "You must confirm the value",
+        "date": "Enter a valid date",
+        "email": "Enter a valid email"
+    },
+    "createTicket": {
+        "subject.maxLength": "The subject cannot have more than 255 characters.",
+        "subject.minLength": "The subject must have at least { minLength } characters.",
+        "description.minLength": "The description must have at least { minLength } characters.",
+        "subject.required": "You need to fill in the subject.",
+        "description.required": "You need to fill in the description."
+    },
+    "changePassword": {
+        "password.required": "The password field is mandatory.",
+        "password.minLength": "The password must have at least {minLength} characters.",
+        "password_confirmation.confirmed": "The password confirmation does not match."
+    }
+}

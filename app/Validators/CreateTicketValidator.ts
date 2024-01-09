@@ -1,4 +1,4 @@
-import { schema, CustomMessages, rules } from '@ioc:Adonis/Core/Validator'
+import { schema, rules } from '@ioc:Adonis/Core/Validator'
 import type { HttpContextContract } from '@ioc:Adonis/Core/HttpContext'
 
 export default class CreateTicketValidator {
@@ -14,11 +14,6 @@ export default class CreateTicketValidator {
     ]),
   })
 
-  public messages: CustomMessages = {
-    'subject.maxLength': 'El asunto no puede tener más de 255 caracteres.',
-    'subject.minLength': 'El asunto debe tener al menos 4 caracteres.',
-    'description.minLength': 'La descripción debe tener al menos 4 caracteres.',
-    'subject.required': 'Necesitas rellenar el asunto.',
-    'description.required': 'Necesitas rellenar la descripcion.',
-  }
+  public messages = this.ctx.i18n.validatorMessages('validator.createTicket')
+  
 }

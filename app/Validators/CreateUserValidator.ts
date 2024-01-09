@@ -6,6 +6,7 @@ import type { HttpContextContract } from '@ioc:Adonis/Core/HttpContext'
  */
 export default class CreateUserValidator {
   constructor(protected ctx: HttpContextContract) {}
+  
 
   public schema = schema.create({
     //El usuario tiene que ser un texto y unico en la bbdd
@@ -29,20 +30,6 @@ export default class CreateUserValidator {
       format: 'yyyy-MM-dd',
     })
   })
+  public messages = this.ctx.i18n.validatorMessages('validator.shared')
 
-  public messages: CustomMessages = {
-    'username.required': 'El campo de usuario es obligatorio.',
-    'username.unique': 'El usuario no esta disponible. Por favor, elige otro.',
-    'email.required': 'El campo de correo electrónico es obligatorio.',
-    'email.email': 'Por favor, introduce una dirección de correo electrónico válida.',
-    'email.unique': 'Este correo electrónico no esta disponible. Utiliza otro.',
-    'email_confirmation.confirmed': 'La confirmación de correo electrónico no coincide.',
-    'password.required': 'El campo de contraseña es obligatorio.',
-    'password.minLength': 'La contraseña debe tener al menos 4 caracteres.',
-    'password_confirmation.confirmed': 'La confirmación de contraseña no coincide.',
-    'name.required': 'El campo de nombre es obligatorio.',
-    'surname.required': 'El campo de apellido es obligatorio.',
-    'birthday.required': 'El campo de fecha de nacimiento es obligatorio.',
-    'birthday.date': 'Por favor, introduce una fecha de nacimiento válida.',
-  }
 }

@@ -1,0 +1,22 @@
+{
+    "shared": {
+        "required": "El valor de este campo es requerido",
+        "unique": "Ya se encuentra en uso",
+        "minLength": "El campo debe tener minimo {minLength} caracteres.",
+        "confirmed": "Debes confirmar el valor",
+        "date": "Introduzca una fecha válida",
+        "email": "Introduzca un email válido"
+    },
+    "createTicket": {
+        "subject.maxLength": "El asunto no puede tener más de 255 caracteres.",
+        "subject.minLength": "El asunto debe tener al menos { minLength } caracteres.",
+        "description.minLength": "La descripción debe tener al menos { minLength } caracteres.",
+        "subject.required": "Necesitas rellenar el asunto.",
+        "description.required": "Necesitas rellenar la descripcion."
+    },
+    "changePassword": {
+        "password.required": "El campo de contraseña es obligatorio.",
+        "password.minLength": "La contraseña debe tener al menos {minLength} caracteres.",
+        "password_confirmation.confirmed": "La confirmación de contraseña no coincide."
+    }
+}

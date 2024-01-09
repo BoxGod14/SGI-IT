@@ -26,6 +26,8 @@ Server.middleware.register([
   () => import('App/Middleware/SilentAuth'),
   //Proteccion CSRF y otros
   () => import('@ioc:Adonis/Addons/Shield'),
+  //Internacionalizacion
+  () => import('App/Middleware/DetectUserLocale')
 ])
 
 /*
