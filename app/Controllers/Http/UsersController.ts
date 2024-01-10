@@ -8,7 +8,7 @@ import EditUserValidator from 'App/Validators/EditUserValidator';
 import { DateTime } from 'luxon';
 
 export default class UsersController {
-  public async index({ view, request, response, auth, session }: HttpContextContract) {
+  public async index({ view, request, response, auth }: HttpContextContract) {
     const user = await auth.use("web").authenticate();
     //En caso de ser solicitante se redirige automaticamente a la pagina de su usuario.
     if (user.roles != Roles.ADMIN) {
