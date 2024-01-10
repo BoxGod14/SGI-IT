@@ -4,6 +4,7 @@ import Database from "@ioc:Adonis/Lucid/Database";
 import Roles from "App/Enums/Roles";
 import State from "App/Enums/State";
 import User from "App/Models/User";
+import EditUserValidator from 'App/Validators/EditUserValidator';
 import { DateTime } from 'luxon';
 
 export default class UsersController {
@@ -67,12 +68,36 @@ export default class UsersController {
     const user = await auth.use("web").authenticate();
     //Comprobar si eres admin o el mismo usuario a editar
     if (user.roles != Roles.ADMIN && user.id != request.input("userId")) {
-      return response.status(403).json({ message: "Error al editar usuario" });
+      return response.status(403);
     }
+    
     const trx = await Database.transaction();
-    try {
-      const userEdit = await User.findByOrFail("id", request.input("userId"));
+    
+    try {      
+      await request.validate(EditUserValidator)
+      const userEdit = await User.findOrFail(request.input("userId"));
+      console.log('a')
       const profile = await userEdit.related("profile").query().first();
+      //Comprobar si el nombre es el mismo que tiene ahora
+      console.log('a')
+      if (userEdit.username != request.input("username")) {
+        //No coincide, buscar si pertenece a alguien
+        console.log('a')
+        const checkUser = await User.findBy('username', request.input("username"))
+        if (checkUser) {
+          return response.status(400)
+        }
+      }
+      
+      //Comprobar si el mail es el mismo que tiene ahora
+      if (userEdit.email != request.input("email")) {
+        //No coincide, buscar si pertenece a alguien
+        const checkUser = await User.findBy('email', request.input("email"))
+        if (checkUser) {
+          return response.status(400)
+        }
+      }
+
       userEdit.username = request.input("username");
       userEdit.email = request.input("email");
       //Solo puede cambiar roles un admin
@@ -100,12 +125,10 @@ export default class UsersController {
       trx.commit();
     } catch (error) {
       trx.rollback();
-      return response.status(404).json({ message: "Usuario no encontrado" });
+      return response.status(400).json({ message: error.messages[Object.keys(error.messages)[0]][0] });
     }
 
-    return response
-      .status(200)
-      .json({ message: "Usuario editado exitosamente" });
+    return response.status(200);
   }
 
   public async destroy({}: HttpContextContract) {}

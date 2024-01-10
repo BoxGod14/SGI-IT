@@ -15,40 +15,41 @@
     <div>      
       @include('partials/header.edge')
       <div>        
-        <section class="tickets">
+        <section class="tickets common">
           <div>
-            <p class="subject">{{ t('tickets.subject') }}</p>
-            <p class="requester">{{ t('tickets.requester') }}</p>
-            <p class="state">{{ t('tickets.state') }}</p>
-            <p class="technician">{{ t('tickets.assignedTechnician') }}</p>
-            <p class="createdAt">{{ t('tickets.createAt') }}</p>
-          </div>  
-
-          {{--Bucle para mostrar tickets creados--}}
-          @each(ticket in tickets)
-          <div class="ticket data-url" data-url="{{route('TicketsController.show', [ticket.id])}}">
-            <p class="subject">{{ticket.subject}}</p>    
-            <p class="requester">
-              @each(user in ticket.User)
-              @if(user.$extras.pivot_role == Roles.REQUESTER)
-              <a href="{{route('UsersController.show', [user.id])}}">{{user.profile.fullName}}</a>
-              @endif
-              @endeach
-            </p>
-    
-            <p class="state">{{ t('enums.states', { state: ticket.state }) }}</p>
-    
-            <p class="technician">
-              @each(user in ticket.User)
-              @if(user.$extras.pivot_role == Roles.TECHNICIAN)
-              {{user.profile.fullName}}
-              @endif
-              @endeach
-            </p>
-    
-            <p class="createdAt">{{ t('tickets.date', {date: ticket.createdAt}) }} </p>
-          </div>          
-          @endeach
+            <div>
+              <p class="subject">{{ t('tickets.subject') }}</p>
+              <p class="requester">{{ t('tickets.requester') }}</p>
+              <p class="state">{{ t('tickets.state') }}</p>
+              <p class="technician">{{ t('tickets.assignedTechnician') }}</p>
+              <p class="createdAt">{{ t('tickets.createAt') }}</p>
+            </div>
+            {{--Bucle para mostrar tickets creados--}}
+            @each(ticket in tickets)
+            <div class="ticket data-url" data-url="{{route('TicketsController.show', [ticket.id])}}">
+              <p class="subject">{{ticket.subject}}</p>    
+              <p class="requester">
+                @each(user in ticket.User)
+                @if(user.$extras.pivot_role == Roles.REQUESTER)
+                <a href="{{route('UsersController.show', [user.id])}}">{{user.profile.fullName}}</a>
+                @endif
+                @endeach
+              </p>
+      
+              <p class="state">{{ t('enums.states', { state: ticket.state }) }}</p>
+      
+              <p class="technician">
+                @each(user in ticket.User)
+                @if(user.$extras.pivot_role == Roles.TECHNICIAN)
+                {{user.profile.fullName}}
+                @endif
+                @endeach
+              </p>
+      
+              <p class="createdAt">{{ t('tickets.date', {date: ticket.createdAt}) }} </p>
+            </div>          
+            @endeach
+          </div>
           {{--En caso de que haya paginas, se mostrara la paginación--}}
           @if(tickets.hasPages)
           <div class="pagination">

@@ -18,5 +18,16 @@
         "password.required": "The password field is mandatory.",
         "password.minLength": "The password must have at least {minLength} characters.",
         "password_confirmation.confirmed": "The password confirmation does not match."
+    },
+    "editUser": { 
+        "username.required": "A username is required", 
+        "username.unique": "Username not available", 
+        "email.required": "An email is required", 
+        "email.unique": "Email already in use", 
+        "email.email": "Enter a valid email", 
+        "birthday.date": "Enter a valid birthday date", 
+        "birthday.required": "A birthday is required", 
+        "name.required": "A name is required", 
+        "surname.required": "A surname is required" 
     }
 }

@@ -7,5 +7,7 @@
     "createAt": "Fecha de creación",
     "description": "Descripción",
     "date": "{date, time, ::ddMMyyyy}",
-    "whenCreatedAt": "Creado {time, plural, =0 {hoy el} one {hace 1 {format, select, y {año} M {mes} other {dia}}} other{hace # {format, select, y {años} M {meses} other {dias}}}} el"
+    "whenCreatedAt": "Creado {time, plural, =0 {hoy el} one {hace 1 {format, select, y {año} M {mes} other {dia}}} other{hace # {format, select, y {años} M {meses} other {dias}}}} el",
+    "ticketEditOk": "Ticket editado correctamente",
+    "ticketEditError": "Fallo editando el ticket"
 }

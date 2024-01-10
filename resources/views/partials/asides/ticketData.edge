@@ -145,18 +145,14 @@
         body: JSON.stringify(data)
         })
         .then(response => {
-            return response.json(); // Devuelve la promesa resultante de parsear el cuerpo JSON
-        })
-        .then(data => {
-            // Realizar más operaciones aquí con los datos actualizados
-            result.textContent = data.message;
-            console.log(data.status);
-            if(data.status == 'error') {
-                result.classList.add("errors");
-            }
-            else {
+            if (response.ok) {
                 result.classList.remove("errors");
+                result.textContent =  '{{ t('tickets.ticketEditOk') }}'
+            } else {
+                result.classList.add("errors");
+                result.textContent =  '{{ t('tickets.ticketEditError') }}'
             }
+            return response.json(); // Devuelve la promesa resultante de parsear el cuerpo JSON
         })
     }
 </script>

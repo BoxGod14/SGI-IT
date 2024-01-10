@@ -33,69 +33,80 @@ main {
     }
   }
 }
-
-.users {
+.common {
   display: flex;
   flex-direction: column;
   width: 85%;
   height: 100%;
   background-color: $color-background-card;
   padding: 0 1rem;
-  div {
+  >div {
+    height: calc(100% - 2rem);    
+    div {
+      display: flex;
+      flex-direction: row;
+      justify-content: center;
+      align-items: center;
+      cursor: pointer;
+      max-height: calc(100% / 12);
+      height: 100%;
+      &:first-child {
+        cursor: default;
+        background-color: $color-background;
+        text-align: center;
+        border: 1px solid $color-border;
+      }
+    }
+  }  
+  //Paginacion
+  .pagination {
     display: flex;
-    flex-direction: row;
+    align-self: center;
     justify-content: center;
     align-items: center;
     gap: 1rem;
-    cursor: pointer;
-    max-height: calc(100% / 12);
-    height: 100%;
-    &:first-child {
-      cursor: default;
-      background-color: $color-background;
+    width: 100%;
+    height: 2rem;
+    padding: 1rem 0;
+    .page {
       text-align: center;
-      border: 1px solid $color-border;
+      border-radius: 1rem;
+      color: black;
+      min-width: 1rem;
+    }  
+    .page-active {
+      background-color: $color-btn-light;
+      color: $color-background-card;
     }
-    
-    p {
-      padding: auto;
-      margin: auto;
-      width: calc(100% / 5);
-      border-right: 1px solid $color-border;
-    }
-    &.user {
-      text-align: center;
-      border: 1px solid $color-border;      
-    }
+  }
+}
+.users {
+  >div {
+    gap: 1rem;
+    >div {      
+      height: 100%;
+      max-height: calc(100% / 12);
+      >p {        
+        padding: auto;
+        margin: auto;
+        width: calc(100% / 5);
+      }
+      &.user {
+        text-align: center;
+        border: 1px solid $color-border;      
+      }
+    }     
   }
 }
  
 //
 .tickets {
-  display: flex;
-  flex-direction: column;
-  width: 85%;
-  height: 100%;
-  background-color: $color-background-card;
-  padding: 0 1rem;
-  div {
-    display: flex;
-    flex-direction: row;
-    justify-content: center;
-    align-items: center;
-    cursor: pointer;
-    max-height: calc(100% / 12);
-    height: 100%;
-    &:first-child {
-      cursor: default;
-      background-color: $color-background;
-      text-align: center;
-      border: 1px solid $color-border;
-    }
+  div {    
     //Los tamaños de cada sección de los tickets
     &.ticket {
       text-align: center;
       border: 1px solid $color-border;
+
     }
     .subject {
       text-align: left;
@@ -235,43 +246,23 @@ label {
   width: 100%;
 }
 
-//Paginacion
-.pagination {
-  display: flex;
-  align-self: center;
-  justify-content: center;
-  align-items: center;
-  gap: 1rem;
-  width: 100%;
-}
-.page {
-  text-align: center;
-  border-radius: 1rem;
-  color: black;
-  min-width: 1rem;
-}
-
-.page-active {
-  background-color: $color-btn-light;
-  color: $color-background-card;
-}
-
 .ticket-details {
   display: flex;
   width: 85%;
   flex-direction: column;
   background-color: $color-background-card;
   padding: 0 1rem;
+  .description {
+    padding: 0.1rem 1rem;
+    background-color: $color-description;
+    border-radius: $border-radius-sm;
+    border: 1px solid $color-border-description;
+    height: auto;
+    max-height: 10rem;
+    overflow: auto;
+  }
 }
-.description {
-  padding: 0.1rem 1rem;
-  background-color: $color-description;
-  border-radius: $border-radius-sm;
-  border: 1px solid $color-border-description;
-  height: auto;
-  max-height: 10rem;
-  overflow: auto;
-}
+
 //Mensajes de ticket
 .messages-writter {
   max-height: 60%;
@@ -287,7 +278,12 @@ label {
     }
   }
   > .writter {
+    display: flex;
+    justify-content: center;
     max-height: 40%;
+    #showWriter {
+      margin: 1rem;
+    }
     > #writter {
       display: flex;
       flex-direction: column;
@@ -576,7 +572,7 @@ label {
           gap: 0;   
           > div {
             margin-top: 0;
-            background-color: red;
+            align-items: self-start;
             height: auto;
             max-width: auto;  
             h3 {
@@ -584,7 +580,6 @@ label {
             }           
           }
           > p {
-            background-color: aqua;
             width: 100%;
             line-break: break-all;            
           }
@@ -602,21 +597,73 @@ label {
             }
             form {
               width: 100%;
-              justify-content: center;
-              
               section {
                 width: 100%;
                 justify-content: space-around;
-                * {
-                  width: calc(50% - 2rem);
+                > * {
+                  width: 70%;
+                  text-align: center;
+                  margin: 0;
+                  padding: 0;
                 }
               }
             }
+            button {
+              width: 70%;
+            }
           }
           >section {
-            width: 100%;
-            padding: 0;
-            margin: 0;
+            &.common {
+              width: max-content;
+              max-width: 100%;
+              height: 100%;
+              padding: 0;
+              margin: 0;
+              > div {
+                gap: 0;
+                height: 50rem;
+                overflow-x: auto;
+                >div{
+                  width: 50rem;
+                }
+              }
+            }
+            &.ticket-details {
+              justify-content: space-between;
+              width: 100%;
+              height: auto;
+              padding: 0;
+              > div {
+                height: 80%;                
+                .description, .subject {
+                  padding: 1rem;
+                }
+              }
+              //Mensajes de ticket
+              .messages-writter {
+                height: 20%;
+                > .messages {
+                  overflow: auto;
+                  height: 70%;
+                  > .message {
+                    background-color: $color-aside;
+                    padding: 0.1rem 1rem;
+                    margin-top: 1rem;
+                    word-break: break-all; //Esta propiedad genera saltos de lineas si el texto es demasiado grande
+                  }
+                }
+                > .writter {
+                  > #writter {
+                    > .buttoner {
+                      align-self: center;
+                    }
+                    textarea {
+                      max-width: 100%;
+                    }
+                  }
+                }
+              }
+            }
           }
         }
       }

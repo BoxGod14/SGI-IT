@@ -16,22 +16,24 @@
         @include('partials/header.edge')
         <div>          
           <section class="ticket-details">
-            <div id="subject">
-              <p>{{ticket.subject}}</p>
-              <p>
-                <a class="requester"
-                  @each(user in ticket.User)
-                    @if(user.$extras.pivot_role == Roles.REQUESTER)
-                    href="{{ route('UsersController.show', [user.id]) }}">{{user.profile.fullName}}
-                    @endif
-                  @endeach
-                </a>
-                {{ t('tickets.whenCreatedAt', { time: ticket.timeCreated.time, format: ticket.timeCreated.format }) }} {{ t('tickets.date', {date: ticket.createdAt}) }}
-              </p>                 
-            </div>
-            <div class="description">
-              <p>{{ t('tickets.description') }}</p>
-              <p>{{ticket.description}}</p>
+            <div>
+              <div class="subject">
+                <p>{{ticket.subject}}</p>
+                <p>
+                  <a class="requester"
+                    @each(user in ticket.User)
+                      @if(user.$extras.pivot_role == Roles.REQUESTER)
+                      href="{{ route('UsersController.show', [user.id]) }}">{{user.profile.fullName}}
+                      @endif
+                    @endeach
+                  </a>
+                  {{ t('tickets.whenCreatedAt', { time: ticket.timeCreated.time, format: ticket.timeCreated.format }) }} {{ t('tickets.date', {date: ticket.createdAt}) }}
+                </p>                 
+              </div>
+              <div class="description">
+                <p>{{ t('tickets.description') }}</p>
+                <p>{{ticket.description}}</p>
+              </div>
             </div>
             <section class="messages-writter">
               <h4>{{ t('messaje.messages') }}</h4>

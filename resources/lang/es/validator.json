@@ -18,5 +18,16 @@
         "password.required": "El campo de contraseña es obligatorio.",
         "password.minLength": "La contraseña debe tener al menos {minLength} caracteres.",
         "password_confirmation.confirmed": "La confirmación de contraseña no coincide."
+    },
+    "editUser": {
+        "username.required": "Es necesario un usuario",
+        "username.unique": "Usuario no disponible",
+        "email.required": "Es necesario un usuario",
+        "email.unique": "Correo ya en uso",
+        "email.email": "Introduzca un email válido",
+        "birthday.date": "Introduzca una fecha de cumpleaños válida",
+        "birthday.required": "Es necesario un usuario",
+        "name.required": "Es necesario un usuario",
+        "surname.required": "Es necesario un usuario"
     }
 }

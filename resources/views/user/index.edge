@@ -15,25 +15,26 @@
     <div>      
       @include('partials/header.edge')
       <div>        
-        <section class="users">
+        <section class="users common">
           <div>
-            <p class="user_id">Id</p>
-            <p class="user_username">{{ t('generalPages.user') }}</p>
-            <p class="user_name-surname">{{ t('generalPages.name') }}</p>
-            <p class="user_name-surname">{{ t('generalPages.surname') }}</p>
-            <p class="user_role">{{ t('generalPages.role') }}</p>
-          </div>  
-
-          {{--Bucle para mostrar tickets creados--}}
-          @each(user in users)
-            <div class="user data-url" data-url="{{route('UsersController.show', [user.id])}}">
-                <p class="user_id">{{user.id}}</p>
-                <p class="user_username">{{user.username}}</p>
-                <p class="user_name-surname">{{user.profile.name}}</p>
-                <p class="user_name-surname">{{user.profile.surname}}</p>
-                <p class="user_role">{{ t('enums.roles', { rol: user.roles }) }}</p>
-            </div>
-          @endeach
+            <div>
+              <p class="user_id">Id</p>
+              <p class="user_username">{{ t('generalPages.user') }}</p>
+              <p class="user_name-surname">{{ t('generalPages.name') }}</p>
+              <p class="user_name-surname">{{ t('generalPages.surname') }}</p>
+              <p class="user_role">{{ t('generalPages.role') }}</p>
+            </div> 
+            {{--Bucle para mostrar tickets creados--}}
+            @each(user in users)
+              <div class="user data-url" data-url="{{route('UsersController.show', [user.id])}}">
+                  <p class="user_id">{{user.id}}</p>
+                  <p class="user_username">{{user.username}}</p>
+                  <p class="user_name-surname">{{user.profile.name}}</p>
+                  <p class="user_name-surname">{{user.profile.surname}}</p>
+                  <p class="user_role">{{ t('enums.roles', { rol: user.roles }) }}</p>
+              </div>
+            @endeach
+          </div>
           {{--En caso de que haya paginas, se mostrara la paginación--}}
           @if(users.hasPages)
           <div class="pagination">

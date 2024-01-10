@@ -29,6 +29,10 @@
             if (response.ok) {
                 window.location.href = '{{route('UsersController.show', [user.id])}}'
             }
+            return response.json();
+        })
+        .then(data => {
+            console.log(data.message)
         })
     }
 </script>

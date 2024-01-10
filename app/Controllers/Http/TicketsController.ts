@@ -173,10 +173,10 @@ export default class TicketsController {
       })      
       //TODO AÑADIR POSIBILIDAD DE SER REQUESTER Y TECHINICIAN EL MISMO(Poner despues de terminar proyecto).
       await trx.commit;
-      return response.status(200).json({ message: "Ticket editado correctamente", status: "ok" });
+      return response.status(200);
     } catch (error) {
       await trx.rollback();
-      return response.status(400).json({ message: "Error editando el ticket", status: "error" });
+      return response.status(400);
     }
   }
 
