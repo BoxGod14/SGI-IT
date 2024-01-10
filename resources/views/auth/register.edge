@@ -10,8 +10,8 @@
 </head>
 
 <body>
-  <main>
-    <div class="container">
+  <main class="notLogged">
+    <section class="container container--register">
       <h2>{{ t('generalPages.createAccount') }}</h2>    
     <form action="{{ route('AuthController.register') }}" method="post" class="registerForm">
       {{ csrfField() }}
@@ -91,7 +91,7 @@
     
           <section class="inputWithLabel">
             <label for="birthday">{{ t('generalPages.birthday') }}</label>
-            <input type="date" name="birthday" 
+            <input type="date" id="birthday" name="birthday" 
             @if(flashMessages.has('birthday')) 
               value="{{flashMessages.get('birthday')}}"
             @end
@@ -108,7 +108,7 @@
       
     </form>
     <p class="redirect">{{ t('generalPages.withAccount') }} <a href="{{ route('AuthController.loginForm') }}">{{ t('generalPages.login') }}</a></p>
-    </div>    
+    </section>    
   </main>
 </body>
 

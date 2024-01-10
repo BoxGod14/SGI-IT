@@ -8,7 +8,7 @@
     @entryPointStyles('scss')
 </head>
 <body >
-  <main>
+  <main class="notLogged">
     <div class="container container--register">
       <h2>{{t('generalPages.login')}}</h2>
       <form action="{{ route('AuthController.login') }}" method="post">
