@@ -7,7 +7,7 @@
     
     {{--Tecnico--}}
     <section class="autocomplete">
-        <label for="technicianName">{{ t('tickets.assignedTechnician') }}</label><br>
+        <label for="technicianName">{{ t('tickets.assignedTechnician') }}</label>
         @if(auth.user.roles == Roles.REQUESTER)
         <p>
             @each(user in ticket.User)
@@ -32,7 +32,7 @@
     
     {{--Estado--}}
     <section>
-        <label for="state">{{ t('tickets.state') }}</label><br>        
+        <label for="state">{{ t('tickets.state') }}</label>        
             @if(auth.user.roles == Roles.REQUESTER)
                 <p>{{ t('enums.states', { state: ticket.states }) }}</p>
             @else

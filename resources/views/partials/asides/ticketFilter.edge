@@ -6,7 +6,7 @@
     @if(auth.user.roles != Roles.REQUESTER)
       {{--Solicitante--}}
         <section class="autocomplete">
-            <label for="requesterName">{{ t('tickets.requester') }}</label><br>
+            <label for="requesterName">{{ t('tickets.requester') }}</label>
             <input name="requesterName" type="text" id="requesterName" 
             @if(requester)
               value="{{requester.fullName}}" data-id="{{requester.userId}}"
@@ -16,7 +16,7 @@
         </section>
         {{--Tecnico--}}
         <section class="autocomplete">
-            <label for="technicianName">{{ t('tickets.assignedTechnician') }}</label><br>
+            <label for="technicianName">{{ t('tickets.assignedTechnician') }}</label>
             <input name="technicianName" type="text" id="technicianName"
             @if(technician)
               value="{{technician.fullName}}" data-id="{{technician.userId}}"
@@ -27,7 +27,7 @@
     @endif
     {{--Estado--}}
     <section>
-        <label for="state">{{ t('tickets.state') }}</label><br>
+        <label for="state">{{ t('tickets.state') }}</label>
         <select name="state" id="state">
             <option value="">{{ t('generalPages.withOutFilter') }}</option>
             @each(actualState in State)

@@ -5,9 +5,9 @@
     
     {{--Rol--}}
     <section>
-        <label for="role">'{{ t('generalPages.role') }}'</label><br>
+        <label for="role">{{ t('generalPages.role') }}</label>
         <select name="role" id="role">
-            <option value="">'{{ t('generalPages.withOutFilter') }}'</option>
+            <option value="">{{ t('generalPages.withOutFilter') }}</option>
             @each(role in Roles)
             <option value="{{role}}"
             @if(searchRole == role)
@@ -19,7 +19,7 @@
     </section>
     
 </form>
-<button id="applyFilters" class="btn_primary">'{{ t('generalPages.applyChanges') }}'</button>
+<button id="applyFilters" class="btn_primary">{{ t('generalPages.applyChanges') }}</button>
 
 <script>           
     const role = document.getElementById("role");  

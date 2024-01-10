@@ -16,13 +16,22 @@ aside {
     form {
         justify-content: flex-start;
         align-items: center;
+        justify-content: center;
+        >section {
+            display: flex;
+            flex-wrap: wrap;
+            flex-direction: row;            
+            label {
+                width: 100%;
+            }
+        }
     }
     button {
         margin: 1rem;
     }
     .autocomplete {
         position: relative;
-        display: inline-block;
+        display: flex;
     }
     .suggestionList {
         position: absolute;
