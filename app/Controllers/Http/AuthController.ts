@@ -76,7 +76,7 @@ export default class AuthController {
 
       response.redirect().toRoute("dashboard");
     } catch (error) {
-      session.flash("errors", "Tu usuario o contraseñas son incorrectos");
+      session.flash("errors", "Error");
       return response.redirect().back();
     }
   }

@@ -1,2 +1,10 @@
 docker build -t (image name) .  
-docker run -d --name sgi-it -e MYSQL_DB_NAME=SGI-IT -e MYSQL_USER=admin -e MYSQL_PASSWORD=n!ijV7xJ_nAQk9eWN6K3!3r7m*@hnhzHo7jrwa-PBGmZcxYXU- -e MYSQL_HOST=(MYSQL IP, only IP) -e MYSQL_PORT=3306 -p 3333:3333 sgi-it
+
+Para crear la red personalizada:
+docker network create --driver bridge --subnet 192.168.x.0/24 --gateway 192.168.x.1 mired
+
+Para la base de datos:
+docker run --name sgi-it_bbdd --network mired --ip 192.168.1.5 -p 3306:3306 -d boxgod/sgi-it_bbdd
+
+Para la app:
+docker run -d --name sgi-it -e MYSQL_DB_NAME=SGI-IT -e MYSQL_USER=admin -e MYSQL_PASSWORD=n!ijV7xJ_nAQk9eWN6K3!3r7m*@hnhzHo7jrwa-PBGmZcxYXU- -e MYSQL_HOST=192.168.1.5 -e MYSQL_PORT=3306 --network mired -p 3333:3333 sgi-it

@@ -8,7 +8,7 @@ export default class MessagesController {
   public async store({ auth, request, response }: HttpContextContract) {
     //Comprobar que el mensaje no esta vacio
     if (!request.input('message').trim()) {
-      return response.status(400).json({ message: "Mensaje vacio" });
+      return response.status(400).json({ message: "Error" });
     }
     //Obtener usuario
     const user = await auth.use("web").authenticate();
@@ -18,7 +18,7 @@ export default class MessagesController {
     try {
       await Ticket.findOrFail(request.input("ticketId"));
     } catch (error) {
-      return response.status(403).json({ message: "Error mandar mensaje" });
+      return response.status(403).json({ message: "Error" });
     }
     //Obtener ticket
     let ticket = await Ticket.query()
@@ -35,7 +35,7 @@ export default class MessagesController {
 
     //Comprobar que el usuario que escribe en caso de ser requester, sea el propietario del ticket
     if (user.roles == Roles.REQUESTER && user != requester!) {
-      return response.status(403).json({ message: "Error al mandar mensaje" });
+      return response.status(403).json({ message: "Error" });
     }
     const trx = await Database.transaction();
     try {
@@ -49,11 +49,11 @@ export default class MessagesController {
       trx.rollback()
       return response
       .status(500)
-      .json({ message: "Error al crear mensaje" });
+      .json({ message: "Error" });
     }
     return response
       .status(200)
-      .json({ message: "Mensaje enviado",
+      .json({ message: "Ok",
               newMessage: request.input('message')
             });
   }  
