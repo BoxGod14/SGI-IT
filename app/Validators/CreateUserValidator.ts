@@ -5,8 +5,7 @@ import type { HttpContextContract } from '@ioc:Adonis/Core/HttpContext'
  * Validador de creación de usuario
  */
 export default class CreateUserValidator {
-  constructor(protected ctx: HttpContextContract) {}
-  
+  constructor(protected ctx: HttpContextContract) {} 
 
   public schema = schema.create({
     //El usuario tiene que ser un texto y unico en la bbdd
@@ -31,5 +30,4 @@ export default class CreateUserValidator {
     })
   })
   public messages = this.ctx.i18n.validatorMessages('validator.shared')
-
 }

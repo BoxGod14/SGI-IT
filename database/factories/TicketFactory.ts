@@ -9,7 +9,7 @@ export default Factory.define(Ticket, ({ faker }) => {
     state: randomStateValue(State),
   }
 }).build()
-
+//Sistema de seleción aleatoria de estados
 const randomStateValue = (states) => {
   const values = Object.keys(states);
   const key = values[Math.floor(Math.random() * values.length)];
