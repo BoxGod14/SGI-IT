@@ -1,0 +1,2 @@
+docker build -t (image name) .  
+docker run -d --name sgi-it -e MYSQL_DB_NAME=SGI-IT -e MYSQL_USER=admin -e MYSQL_PASSWORD=n!ijV7xJ_nAQk9eWN6K3!3r7m*@hnhzHo7jrwa-PBGmZcxYXU- -e MYSQL_HOST=(MYSQL IP, only IP) -e MYSQL_PORT=3306 -p 3333:3333 sgi-it
