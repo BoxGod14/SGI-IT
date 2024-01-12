@@ -551,6 +551,7 @@ label {
 }
 @media only screen and (max-width: $breakpoint-sm) {
   body {
+    margin-top: 3rem;
     > main {
       flex-direction: column;
       width: 100%;
@@ -560,6 +561,10 @@ label {
         width: 100vw;
       }
       > nav {
+        position: fixed;
+        top: 0;
+        left: 0;
+        z-index: 1;
         flex-direction: row;
         width: 100%;
         height: 3rem;
