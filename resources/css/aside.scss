@@ -6,7 +6,7 @@ aside {
     border-left: 1px solid $color-border;
     width: 15%;
     height: calc(100% - 2rem);
-                
+    padding: 0 1rem;            
     justify-content: center;
     align-items: center;
     h3 {
@@ -18,14 +18,15 @@ aside {
     form {
         justify-content: flex-start;
         align-items: center;
-        justify-content: center;
         >section {
             display: flex;
             flex-wrap: wrap;
-            flex-direction: row;            
-            label {
+            width: calc(100%);
+            flex-direction: row;
+            justify-content: center;        
+            * {
                 width: 100%;
-            }
+            }            
         }
     }
     button {
