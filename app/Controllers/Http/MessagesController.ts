@@ -21,6 +21,7 @@ export default class MessagesController {
       return response.status(403).json({ message: "Error" });
     }
     //Obtener ticket
+    console.log("requester!");
     let ticket = await Ticket.query()
       .where("tickets.id", request.input("ticketId"))
       .preload("User", (query) => {
@@ -28,17 +29,19 @@ export default class MessagesController {
         .wherePivot('role', Roles.REQUESTER)
       })  
       .first();
-    //Obtener requester
+    //Obtener requester    
     ticket!.User.forEach(requesterTicket => {
       requester = requesterTicket;
     });
-
+    
     //Comprobar que el usuario que escribe en caso de ser requester, sea el propietario del ticket
-    if (user.roles == Roles.REQUESTER && user != requester!) {
+    if (user.roles == Roles.REQUESTER && user.id != requester!.id) {
       return response.status(403).json({ message: "Error" });
     }
+    //Abrir transacción
     const trx = await Database.transaction();
     try {
+      //Crear mensaje realacionado al ticket
       await ticket!.related("message").create({
         message: request.input('message'),
         ticketId: ticket!.id,
