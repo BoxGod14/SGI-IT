@@ -25,7 +25,6 @@ export default class extends BaseSeeder {
       trx.commit;
     } catch (error) {
       await trx.rollback();
-      console.log(error);
     }
   }
 }

@@ -21,7 +21,6 @@ export default class MessagesController {
       return response.status(403).json({ message: "Error" });
     }
     //Obtener ticket
-    console.log("requester!");
     let ticket = await Ticket.query()
       .where("tickets.id", request.input("ticketId"))
       .preload("User", (query) => {

@@ -63,7 +63,8 @@ export default class UsersController {
     return html;
   }
 
-  public async update({ auth, request, response }: HttpContextContract) {    
+  public async update({ auth, request, response }: HttpContextContract) {   
+    let values = Object.values(Roles); 
     //Obtener usuario mediante token
     const user = await auth.use("web").authenticate();
     //Comprobar si eres admin o el mismo usuario a editar
@@ -76,13 +77,10 @@ export default class UsersController {
     try {      
       await request.validate(EditUserValidator)
       const userEdit = await User.findOrFail(request.input("userId"));
-      console.log('a')
       const profile = await userEdit.related("profile").query().first();
       //Comprobar si el nombre es el mismo que tiene ahora
-      console.log('a')
       if (userEdit.username != request.input("username")) {
         //No coincide, buscar si pertenece a alguien
-        console.log('a')
         const checkUser = await User.findBy('username', request.input("username"))
         if (checkUser) {
           return response.status(400)
@@ -101,7 +99,7 @@ export default class UsersController {
       userEdit.username = request.input("username");
       userEdit.email = request.input("email");
       //Solo puede cambiar roles un admin
-      if (user.roles == Roles.ADMIN && request.input("roles") in Roles) {
+      if (user.roles == Roles.ADMIN && values.includes(request.input("roles"))) {        
         userEdit.roles = request.input("roles");
       }
       //*Aunque profile figure con error en rojo, es solo un aviso de que puede estar nulo, salvo casos muy raros jamas estara vacio
@@ -113,7 +111,6 @@ export default class UsersController {
       userEdit.save();
       const picture = request.file('picture');
       if (picture) {
-        console.log('fotosubida')
         const currentDate = DateTime.local().toFormat('dd-MM-yyyy');
         const fileName = `${user.id}-${currentDate}.${picture.extname}`;
         await picture.move(Application.publicPath('profilePictures'), {
