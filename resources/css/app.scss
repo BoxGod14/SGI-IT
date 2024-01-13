@@ -10,8 +10,10 @@ body {
   font-family: $font-family-p;
 }
 
-h2 {
+h2, h3, h4 {
   font-family: $font-family-header;
+}
+h2 {
   margin: 0;
 }
 main {

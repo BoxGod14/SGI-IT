@@ -141,8 +141,6 @@ export default class TicketsController {
     return html;
   }
 
-  public async edit({}: HttpContextContract) {}
-
   public async update({request, auth, response}: HttpContextContract) {
     //Obtener usuario y comprobar su rol
     const user = await auth.use("web").authenticate();
@@ -171,7 +169,6 @@ export default class TicketsController {
           role: Roles.REQUESTER,          
         },
       })      
-      //TODO AÑADIR POSIBILIDAD DE SER REQUESTER Y TECHINICIAN EL MISMO(Poner despues de terminar proyecto).
       await trx.commit;
       return response.status(200);
     } catch (error) {
@@ -181,13 +178,19 @@ export default class TicketsController {
   }
 
   public async destroy({request, response, auth}: HttpContextContract) {
+    //Obtener
     const user = await auth.use("web").authenticate();
-    if (user.roles == Roles.REQUESTER) {
-      return response.status(400);
-    }
+    
     const trx = await Database.transaction()
     try {
       const ticket = await Ticket.findOrFail(request.input('ticketId'));
+      //En caso de ser solicitante comprobar que eres el solicitante del ticket
+      if (user.roles == Roles.REQUESTER) {
+        const requester = await ticket.related('User').query().wherePivot('role', Roles.REQUESTER).firstOrFail()
+        if (requester.id != user.id) {
+          return response.status(400);
+        }        
+      }
       await ticket.delete();
       await trx.commit;
       return response.status(200);
