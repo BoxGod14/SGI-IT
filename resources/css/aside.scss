@@ -51,10 +51,10 @@ aside {
         div {
             padding: 10px;
             cursor: pointer;
-            background-color: #fff; 
+            background-color: $color-background-card; 
             border-bottom: 1px solid #d4d4d4; 
             &:hover {
-                background-color: #e9e9e9; 
+                background-color: $color-aside-hover; 
             }
         }
     }
