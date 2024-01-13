@@ -26,28 +26,29 @@
             </div>
             {{--Bucle para mostrar tickets creados--}}
             @each(ticket in tickets)
-            <div class="ticket data-url" data-url="{{route('TicketsController.show', [ticket.id])}}">
-              <p class="subject">{{ticket.subject}}</p>    
-              <p class="requester">
-                @each(user in ticket.User)
-                @if(user.$extras.pivot_role == Roles.REQUESTER)
-                <a href="{{route('UsersController.show', [user.id])}}">{{user.profile.fullName}}</a>
-                @endif
-                @endeach
-              </p>
-      
-              <p class="state">{{ t('enums.states', { state: ticket.state }) }}</p>
-      
-              <p class="technician">
-                @each(user in ticket.User)
-                @if(user.$extras.pivot_role == Roles.TECHNICIAN)
-                {{user.profile.fullName}}
-                @endif
-                @endeach
-              </p>
-      
-              <p class="createdAt">{{ t('tickets.date', {date: ticket.createdAt}) }} </p>
-            </div>          
+              <div class="ticket data-url" data-url="{{route('TicketsController.show', [ticket.id])}}">
+                <p class="subject">{{ticket.subject}}</p>    
+                <p class="requester">
+                  @each(user in ticket.User)
+                  @if(user.$extras.pivot_role == Roles.REQUESTER)
+                  <a href="{{route('UsersController.show', [user.id])}}">{{user.profile.fullName}}</a>
+                  @endif
+                  @endeach
+                </p>
+                {{--Obtener el estado actual--}}
+                <p class="state">{{ t('enums.states', { state: ticket.state }) }}</p>
+
+                {{--Obtener el tecnico en caso que este tenga--}}
+                <p class="technician">
+                  @each(user in ticket.User)
+                    @if(user.$extras.pivot_role == Roles.TECHNICIAN)
+                    {{user.profile.fullName}}
+                    @endif
+                  @endeach
+                </p>
+                {{--Cuando fue creado el ticket--}}
+                <p class="createdAt">{{ t('tickets.date', {date: ticket.createdAt}) }} </p>
+              </div>          
             @endeach
           </div>
           {{--En caso de que haya paginas, se mostrara la paginación--}}
@@ -58,7 +59,8 @@
             @end
             @each(anchor in tickets.getUrlsForRange(tickets.currentPage - 2, tickets.currentPage + 3))
               @if(anchor.page >= tickets.firstPage && anchor.page <= tickets.lastPage) 
-                <a class= 
+                <a class=
+                  {{--Cambiar estilo segun si es la pagina actual o no--}} 
                   @if(anchor.page == tickets.currentPage)
                   "page page-active"
                   @else
