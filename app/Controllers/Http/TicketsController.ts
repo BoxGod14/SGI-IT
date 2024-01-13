@@ -71,11 +71,15 @@ export default class TicketsController {
     response,
     auth,
   }: HttpContextContract) {
+    //Obtener solo el asunto y descripción
     const ticketData = request.only(["subject", "description"]);
     const trx = await Database.transaction();
     try {
+      //Ejecutar validar para comprobar la validad del input
       await request.validate(CreateTicketValidator);
+      //Obtener usuario actual
       const user = await auth.use("web").authenticate();
+      //Crear ticket relacionado con el usuario y asignarle el rol Solicitante al ser el creador.
       const ticket = await user.related("tickets").create(
         {
           subject: ticketData.subject,
@@ -90,8 +94,9 @@ export default class TicketsController {
       return;
     } catch (error) {
       await trx.rollback();
+      //En caso de no funcionar la creación, se obtendra el primer error de los que haya.
       response.status(400).json({ message: error.messages[Object.keys(error.messages)[0]][0] })
-      return; //Si no se hace el return puede continuar el codigo
+      return;
     }
   }
 
