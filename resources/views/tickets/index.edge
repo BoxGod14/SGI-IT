@@ -31,7 +31,11 @@
                 <p class="requester">
                   @each(user in ticket.User)
                   @if(user.$extras.pivot_role == Roles.REQUESTER)
-                  <a href="{{route('UsersController.show', [user.id])}}">{{user.profile.fullName}}</a>
+                    @if(auth.user.roles == Roles.ADMIN)
+                      <a href="{{route('UsersController.show', [user.id])}}">{{user.profile.fullName}}</a>
+                    @else
+                      {{user.profile.fullName}}
+                    @end
                   @endif
                   @endeach
                 </p>
@@ -42,7 +46,11 @@
                 <p class="technician">
                   @each(user in ticket.User)
                     @if(user.$extras.pivot_role == Roles.TECHNICIAN)
-                    {{user.profile.fullName}}
+                    @if(auth.user.roles == Roles.ADMIN)
+                      <a href="{{route('UsersController.show', [user.id])}}">{{user.profile.fullName}}</a>
+                    @else
+                      {{user.profile.fullName}}
+                    @end
                     @endif
                   @endeach
                 </p>
