@@ -34,7 +34,7 @@
     <section>
         <label for="state">{{ t('tickets.state') }}</label>        
             @if(auth.user.roles == Roles.REQUESTER)
-                <p>{{ t('enums.states', { state: ticket.states }) }}</p>
+                <p>{{ t('enums.states', { state: ticket.state }) }}</p>
             @else
             <select name="state" id="state">
                 {{--Rellenar los posibles estados y preseleccionar el actual--}}
