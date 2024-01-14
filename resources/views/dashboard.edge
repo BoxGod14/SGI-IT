@@ -54,17 +54,18 @@
       <div>
         <section class="dashboard">
             <section>
+                
+                <a href="{{route('TicketsController.index')}}?requester={{auth.user.id}}">
+                    <h3>{{ t('generalPages.ticketCreatedBy', {username: auth.user.username}) }}</h3>
+                    <i class="material-icons">confirmation_number</i>
+                </a>
+                
                 @if(auth.user.roles != Roles.REQUESTER)
-                    <a href="{{route('TicketsController.index')}}?requester={{auth.user.id}}">
-                        <h3>{{ t('generalPages.ticketCreatedBy', {username: auth.user.username}) }}</h3>
-                        <i class="material-icons">confirmation_number</i>
+                    <a href="{{route('TicketsController.index')}}?technician={{auth.user.id}}">
+                        <h3>{{ t('generalPages.AssignedTickets') }}</h3>
+                        <i class="material-icons">business_center</i>
                     </a>
                 @endif
-                
-                <a href="{{route('TicketsController.index')}}?technician={{auth.user.id}}">
-                    <h3>{{ t('generalPages.AssignedTickets') }}</h3>
-                    <i class="material-icons">business_center</i>
-                </a>
                 <a href="#create_ticket" title="{{ t('generalPages.CreateTicket') }}" id="create_ticketButton">
                     <h3>{{ t('generalPages.CreateTicket') }}</h3>
                     <i class="material-icons">add</i>
