@@ -1,0 +1,32 @@
+services:
+  db:
+    image: mysql:8.0
+    environment:
+      MYSQL_DATABASE: SGI-IT
+      MYSQL_USER: sgi
+      MYSQL_PASSWORD: sgi
+      MYSQL_ROOT_PASSWORD: root
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "127.0.0.1", "-usgi", "-psgi"]
+      interval: 5s
+      retries: 20
+    volumes:
+      - db-data:/var/lib/mysql
+
+  app:
+    build: .
+    depends_on:
+      db:
+        condition: service_healthy
+    environment:
+      MYSQL_HOST: db
+      MYSQL_PORT: 3306
+      MYSQL_USER: sgi
+      MYSQL_PASSWORD: sgi
+      MYSQL_DB_NAME: SGI-IT
+    command: sh -c "node ace migration:run --force && node ace db:seed && dumb-init node server.js"
+    ports:
+      - "3333:3333"
+
+volumes:
+  db-data:

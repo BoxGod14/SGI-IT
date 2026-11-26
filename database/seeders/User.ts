@@ -14,7 +14,7 @@ export default class extends BaseSeeder {
         password: "admin",
         roles: Roles.ADMIN,
       });
-      user.related("profile").create({
+      await user.related("profile").create({
         name: "Administrador",
         surname: "Super administrador",
         birthday: DateTime.fromObject({
@@ -22,7 +22,7 @@ export default class extends BaseSeeder {
           month: 12,
           day: 22})
       });
-      trx.commit;
+      await trx.commit();
     } catch (error) {
       await trx.rollback();
     }
